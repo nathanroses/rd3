@@ -26,20 +26,20 @@ export default function Testimonials() {
     {
       img: TestimonialImg01,
       quote: "The ability to capture responses is a game-changer. If a user gets tired of the sign up and leaves, that data is still persisted. Additionally, it's great to be able to select between formats.ture responses is a game-changer.",
-      name: 'Jack Conway',
-      role: 'Manager at SAP'
+      name: 'Ryan Lieu',
+      role: 'Manager at Bank of America'
     },
     {
       img: TestimonialImg02,
-      quote: "I have been using this product for a few weeks now and I am blown away by the results. My skin looks visibly brighter and smoother, and I have received so many compliments on my complexion.",
+      quote: "Needed help Aquiring more Leads and Sales. I was able to get the help I needed and now I am able to get more leads and sales. I am very happy with the results. I would recommend this to anyone who needs help with their business.",
       name: 'Tice',
       role: 'Founder of Tice Services'
     },
     {
       img: TestimonialImg03,
       quote: "As a busy professional, I don't have a lot of time to devote to working out. But with this fitness program, I have seen amazing results in just a few short weeks. The workouts are efficient and effective.",
-      name: 'John Rose',
-      role: 'CEO of The Leading Edge Supply'
+      name: 'Amanda Equihua',
+      role: 'CEO of Carolina Boat Company'
     }
   ]
 
