@@ -17,18 +17,9 @@ export default function Recruitment() {
 
   const items: Item[] = [
     {
-      area: 'Sales & Marketing',
+      area: '',
       positions: [
-        {
-          title: 'Marketing Intern',
-          location: 'Remote / North America',
-          link: '#0',
-        },
-        {
-          title: 'Global Sales Manager',
-          location: 'Remote',
-          link: '#0',
-        },
+        
       ]
     },
   ]

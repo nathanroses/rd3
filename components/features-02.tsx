@@ -66,8 +66,8 @@ export default function Features02() {
                       <div className="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8 md:pr-0">
                         <div className="mb-5">
                           <div>
-                            <h3 className="inline-flex text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-1">Optimized for Business</h3>
-                            <p className="text-slate-400">Optimize for user experience and privacy. Experience unmatched uptime and robust security, ensuring your business stays online and secure around the clock.</p>
+                          <h3 className="inline-flex text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-1">Your All-in-One Solution</h3>
+                          <p className="text-slate-400">Streamline your online presence with our unified service. Enjoy seamless integration of website creation, hosting, and targeted marketing strategies. Save time and money by consolidating your digital needs with us, ensuring your business thrives online with continuity and expert support.</p>
                           </div>
                         </div>
                         <div>

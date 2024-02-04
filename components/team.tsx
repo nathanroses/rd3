@@ -55,12 +55,7 @@ export default function Team() {
       role: 'Software Engineer',
       twitter: '#0',
     },
-    {
-      img: Member08,
-      name: 'Katie Foster',
-      role: 'Marketing Manager',
-      twitter: '#0',
-    },
+
   ]
 
   return (

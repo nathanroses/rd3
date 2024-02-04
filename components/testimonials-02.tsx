@@ -31,7 +31,7 @@ export default function Testimonials02() {
     },
     {
       img: Testimonial03,
-      name: 'Lucas Martinez',
+      name: 'Ashely Martinez',
       role: 'Partner, Martinez & Co.',
       twitter: '#0',
       quote: "The strategic insights and analytical expertise provided by Rose Development have been crucial in navigating complex market dynamics. They are a valuable asset to our business operations.",
