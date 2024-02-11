@@ -119,7 +119,7 @@ export default function Recruitment() {
         </div>
 
         <div className="max-w-3xl mx-auto py-12 md:py-20">
-          <h3 className="h3 inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8 md:pb-16">Open positions</h3>
+          
           <div className="space-y-8">
 
             {items.map((item, index) => (

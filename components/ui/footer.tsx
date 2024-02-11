@@ -52,9 +52,6 @@ export default function Footer() {
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Pricing & Plans</a>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Changelog</a>
-              </li>
-              <li>
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Our method</a>
               </li>
             </ul>
@@ -66,12 +63,6 @@ export default function Footer() {
             <ul className="text-sm space-y-2">
               <li>
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">About us</a>
-              </li>
-              <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Careers</a>
-              </li>
-              <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Financial statements</a>
               </li>
             </ul>
           </div>

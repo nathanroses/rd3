@@ -51,8 +51,8 @@ export default function Team() {
     },
     {
       img: Member05,
-      name: 'Jack Nicholson',
-      role: 'Software Engineer',
+      name: 'Dave Rose',
+      role: 'Sales Manager',
       twitter: '#0',
     },
 
