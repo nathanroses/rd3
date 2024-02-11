@@ -49,7 +49,7 @@ export default function CustomerSingle() {
     <img className="rounded-full" src="../images/team-01.png" width="32" height="32" alt="Leading Edge Avatar" />
     <div>
       <div className="text-slate-300 font-medium">Nathan Rose</div>
-      <div className="text-slate-500">Chief Strategy Officer</div>
+      <div className="text-slate-500">Chief Technology Officer</div>
     </div>
   </div>
 </header>
@@ -86,7 +86,7 @@ export default function CustomerSingle() {
   </p>
   <blockquote>
     <p>
-      "The partnership with Rose Development was a game-changer for Leading Edge. Their strategic insight and digital expertise have propelled our brand to new heights, resulting in unprecedented growth." - Nathan Rose, Chief Strategy Officer at Leading Edge
+      "The partnership with Rose Development was a game-changer for Leading Edge. Their strategic insight and digital expertise have propelled our brand to new heights, resulting in unprecedented growth." - Nathan Rose, Chief Technology Officer at Leading Edge
     </p>
   </blockquote>
   <p>

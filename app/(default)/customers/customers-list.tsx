@@ -115,28 +115,28 @@ export default function CustomersList() {
       <div className="flex flex-col items-center justify-center text-center p-4">
         <p className="font-medium bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-3">
           <span className="line-clamp-4">
-            We struggled to bring all our conversations into one place until we found Rose Development. The UI is very clean and we love the integration with Spark.”
+          We took our business to the next level with Rose Development. Building better marketing strategies.
           </span>
         </p>
         <div className="inline-flex mb-2">
-          <Image className="rounded-full" src={CustomerAvatar01} width={32} height={32} alt="Customer Avatar 01" />
+        John Rose
         </div>
         <div className="text-sm font-medium text-slate-300">
-          Mike Hunt <span className="text-slate-700">-</span> <a className="text-purple-500 hover:underline" href="#0">Thunderbolt</a>
+         <a className="text-purple-500 hover:underline" href="#0">The Leading Edge Supply</a>
         </div>
       </div>
       {/* Testimonial #02 */}
       <div className="flex flex-col items-center justify-center text-center p-4">
         <p className="font-medium bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-3">
           <span className="line-clamp-4">
-            “We struggled to bring all our conversations into one place until we found Rose Development. The UI is very clean and we love the integration with Spark.”
+            We turned our recruitment process into a competitive advantage with Rose Development. We are now able to attract the best talent.
           </span>
         </p>
         <div className="inline-flex mb-2">
-          <Image className="rounded-full" src={CustomerAvatar02} width={32} height={32} alt="Customer Avatar 02" />
+        Zach
         </div>
         <div className="text-sm font-medium text-slate-300">
-          Zach <span className="text-slate-700">-</span> <a className="text-purple-500 hover:underline" href="#0">Eco Shield</a>
+     <a className="text-purple-500 hover:underline" href="#0">Eco Shield</a>
         </div>
       </div>
 
