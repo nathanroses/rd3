@@ -48,7 +48,7 @@ export default function Pricing() {
             <div className="mb-1">
               <span className="text-lg font-medium text-slate-500">$</span><span className="text-3xl font-bold text-slate-50">{annual ? '500' : '50'}</span><span className="text-sm text-slate-600 font-medium">{annual ? '/payment' : '/month'}</span>
             </div>
-            <div className="text-slate-500">Silver</div>
+            <div className="text-slate-500">Custom Buisness Website </div>
           </div>
           <div className="pb-4 border-b border-slate-800">
             <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://buy.stripe.com/dR68A102AgtB13y4gm" : "https://buy.stripe.com/9AQ3fHdTqa5deUo7sz"}>
@@ -63,7 +63,7 @@ export default function Pricing() {
             <div className="mb-1">
               <span className="text-lg font-medium text-slate-500">$</span><span className="text-3xl font-bold text-slate-50">{annual ? '750' : '100'}</span><span className="text-sm text-slate-600 font-medium">{annual ? '/payment' : '/month'}</span>
             </div>
-            <div className="text-slate-500">Gold</div>
+            <div className="text-slate-500">Custom App Creation</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
           <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://buy.stripe.com/8wM17z4iQ7X527C5kl" : "https://buy.stripe.com/7sI9E52aIfpx3bGdQV"}>
@@ -78,7 +78,7 @@ export default function Pricing() {
             <div className="mb-1">
               <span className="text-lg font-medium text-slate-500">$</span><span className="text-3xl font-bold text-slate-50">{annual ? '2000' : '200'}</span><span className="text-sm text-slate-600 font-medium">{annual ? '/payment' : '/month'}</span>
             </div>
-            <div className="text-slate-500">Diamond</div>
+            <div className="text-slate-500">Buisness Ai Evaluator</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
           <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://buy.stripe.com/4gw9E5cPma5d8w0dQS" : "https://buy.stripe.com/6oEcQh16Eb9hfYs28b"}>
