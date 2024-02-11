@@ -1,4 +1,4 @@
-# CHANGELOG.md
+# Upgrade.md
 
 ## [2.0.0] - 2023-12-11
 

@@ -60,16 +60,13 @@ export default function MobileMenu() {
             <Link className="flex font-medium text-sm text-slate-300 hover:text-white py-1.5" href="/about">About</Link>
           </li>
           <li>
-            <Link className="flex font-medium text-sm text-slate-300 hover:text-white py-1.5" href="/integrations">Integrations</Link>
-          </li>
-          <li>
             <Link className="flex font-medium text-sm text-slate-300 hover:text-white py-1.5" href="/pricing">Pricing</Link>
           </li>
           <li>
             <Link className="flex font-medium text-sm text-slate-300 hover:text-white py-1.5" href="/customers">Customers</Link>
           </li>
           <li>
-            <Link className="flex font-medium text-sm text-slate-300 hover:text-white py-1.5" href="/changelog">Changelog</Link>
+            <Link className="flex font-medium text-sm text-slate-300 hover:text-white py-1.5" href="/changelog">Upgrade</Link>
           </li>
         </ul>
       </nav>

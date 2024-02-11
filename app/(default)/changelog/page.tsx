@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Changelog - Rose Development',
+  title: 'Upgrade - Rose Development',
   description: 'Page description',
 }
 
@@ -9,7 +9,7 @@ import Illustration from '@/public/images/page-illustration.svg'
 import PostItem from './post-item'
 import Cta from '@/components/cta-03'
 
-export default function Changelog() {
+export default function Upgrade() {
 
   // Sort posts by date
   allUpdates.sort((a, b) => {
