@@ -115,14 +115,14 @@ export default function CustomersList() {
       <div className="flex flex-col items-center justify-center text-center p-4">
         <p className="font-medium bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-3">
           <span className="line-clamp-4">
-          We took our business to the next level with Rose Development. Building better marketing strategies.
+          We took our business to the next level with Rose Development. Building better technology for tommorow.
           </span>
         </p>
         <div className="inline-flex mb-2">
-        John Rose
+        Goetz 
         </div>
         <div className="text-sm font-medium text-slate-300">
-         <a className="text-purple-500 hover:underline" href="#0">The Leading Edge Supply</a>
+         <a className="text-purple-500 hover:underline" href="#0">Tools United</a>
         </div>
       </div>
       {/* Testimonial #02 */}
