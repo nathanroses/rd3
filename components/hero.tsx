@@ -30,8 +30,8 @@ export default function Hero() {
                 </a>
               </div>
             </div>
-            <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4" data-aos="fade-down">Your Complete Digital Solution</h1>
-            <p className="text-lg text-slate-300 mb-8" data-aos="fade-down" data-aos-delay="200">We are the new way of thinking when it comes to tech services. We cater to those who want a hands-off approach to the digital era but still want to improve the customer experience. </p>
+            <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4" data-aos="fade-down">Your Complete Buisness Solution</h1>
+            <p className="text-lg text-slate-300 mb-8" data-aos="fade-down" data-aos-delay="200">We deliver customized AI and digital solutions, including websites, data scrapers, chatbots, and more. Our hands-off approach lets you innovate without the hassle, tailored to fit your unique needs. Focus on growing your business while we handle the rest.</p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:inline-flex sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4" data-aos="fade-down" data-aos-delay="400">
               <div>
                 <a className="btn text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href="/pricing">
