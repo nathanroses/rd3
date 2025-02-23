@@ -50,8 +50,8 @@ export default function Team() {
       twitter: '#0',
     },
     {
-      img: Member04,
-      name: 'Jeffery Buck',
+      img: Member07,
+      name: 'Aiden Levy',
       role: 'Sales Manager',
       twitter: '#0',
     },
