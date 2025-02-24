@@ -34,17 +34,15 @@ export default function Story() {
               <div className="max-w-[548px] mx-auto">
                 <div className="text-slate-400 space-y-6">
                   <p>
-                  The creation of Rose Development in Dover, Delaware, was fueled by a shared vision to innovate within traditional sectors and the digital landscape. Born from the experiences gained while navigating the academic and practical realms of Vanderbilt University and collaborating with industry leaders, the idea was simple yet profound: to offer businesses a hands-off yet highly effective online presence.
+                   Rose Development was founded in Dover, Delaware, with a clear mission: to bridge the gap between artificial intelligence and small businesses. It all started at Vanderbilt University, where a deep curiosity about AI evolved into a realization—mom-and-pop shops were being left behind in the digital age. While large corporations leveraged advanced technology, smaller businesses struggled to integrate AI into their operations. This insight led to the creation of Rose Development, initially focused on building websites, apps, and software solutions to make technology more accessible.  
                   </p>
                   <p>
-                  At its core, Rose Development was conceived as a <strong className="text-slate-50 font-medium"> solution to a common problem faced by business owners </strong> seeking success in the digital age without the need to immerse themselves in the complexities of technology, The aim was to blend the latest technological advancements with a personalized approach, ensuring that each client's unique needs were met with precision and creativity.
+                   As we grew, so did its vision. It was never just about creating software—it was about redefining how businesses interact with technology. We saw a pressing need to help companies streamline outdated processes and embrace innovation without unnecessary complexity. Our core values are simple but non-negotiable: prioritize our customers above all else, build solutions that don’t just compete but stand out, and use technology to drive real, positive change in the world.  
                   </p>
-                  <p>
-                  Driven by a passion for learning and innovation, the foundation of Rose Development was about more than just creating a product. It was about  establishing a platform for discussion, knowledge sharing  and bringing together diverse perspectives to make technology more accessible  and easier to understand.
-                  </p>
-                  <p>
-                  The essence of Rose Development lies in its ability to connect people around topics and ideas that excite them, using technology to elevate the experience to <a className="text-purple-500 font-medium hover:underline" href="#0">new dimensions</a> It's about diving deep into the details that make up a product, sharing transformative moments, and discussing compelling ideas. The goal has always been to create a space for discussion and knowledge convergence, making it simpler and more approachable.
-                  </p>
+                   <p>
+                   What truly sets us apart is our commitment to privacy, transparency, and genuine collaboration. Unlike many tech firms, we refuse to profit from our customers' data, ensuring that their information remains secure and uncompromised. We work alongside businesses, not just as service providers but as partners invested in their success. Our mission is to simplify AI integration, helping companies create more efficient, future-ready work environments without unnecessary complications. Rose Development isn’t just about building technology—it’s about empowering businesses to harness it in ways that make a lasting impact.  
+                   </p>
+
                 </div>
               </div>
             </div>
