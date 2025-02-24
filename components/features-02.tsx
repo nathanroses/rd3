@@ -21,7 +21,7 @@ export default function Features02() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Faster. Smarter.</h2>
-            <p className="text-lg text-slate-400">We do things faster and smarter all so you can have a hands-free experience. Still get what your looking for and more.</p>
+            <p className="text-lg text-slate-400">We make it easy and efficient, so you get more with less effort.</p>
           </div>
 
           {/* Highlighted boxes */}
@@ -67,7 +67,7 @@ export default function Features02() {
                         <div className="mb-5">
                           <div>
                           <h3 className="inline-flex text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-1">Your All-in-One Solution</h3>
-                          <p className="text-slate-400">Streamline your online presence with our unified service. Enjoy seamless integration of website creation, hosting, and targeted marketing strategies. Save time and money by consolidating your digital needs with us, ensuring your business thrives online with continuity and expert support.</p>
+                          <p className="text-slate-400">Eliminate guesswork with AI-driven analytics. We integrate your data, automate workflows, and provide real-time insights to help you optimize operations, cut costs, and scale efficiently—all without the complexity.</p>
                           </div>
                         </div>
                         <div>
