@@ -24,8 +24,8 @@ export default function Features05() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12">
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Stop overpaying for websites</h2>
-            <p className="text-lg text-slate-400">We give you multiple payment options including paying one time for your dream website.</p>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Stop overpaying for Data Solutions</h2>
+            <p className="text-lg text-slate-400">Get flexible pricing options that fit your business—whether it's a one-time investment or a scalable plan tailored to your needs.</p>
           </div>
 
           {/* Rings illustration */}
