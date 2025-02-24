@@ -25,21 +25,21 @@ export default function Testimonials() {
   const items: Item[] = [
     {
       img: TestimonialImg01,
-      quote: "The ability to capture responses is a game-changer. If a user gets tired of the sign up and leaves, that data is still persisted. Additionally, it's great to be able to select between formats.ture responses is a game-changer.",
-      name: 'Ryan Lieu',
-      role: 'Manager at Bank of America'
+      quote: "We were losing valuable customer data every time someone dropped off during sign-up. Now, we can track those interactions and optimize our process, which has led to a noticeable boost in conversions.",
+      name: 'Jake Miller',
+      role: 'COO at Atlanta Automation'
     },
     {
       img: TestimonialImg02,
-      quote: "Needed help Aquiring more Leads and Sales. I was able to get the help I needed and now I am able to get more leads and sales. I am very happy with the results. I would recommend this to anyone who needs help with their business.",
-      name: 'Tice',
-      role: 'Founder of Tice Services'
+          quote: "Before this, we were constantly playing catch-up with demand. Now, our data updates in real time, helping us make faster and smarter decisions that keep operations running smoothly.",
+          name: 'Tice',
+          role: 'Founder of Tice Services'
     },
     {
       img: TestimonialImg03,
-      quote: "As a busy professional, I don't have a lot of time to devote to working out. But with this fitness program, I have seen amazing results in just a few short weeks. The workouts are efficient and effective.",
-      name: 'Amanda Equihua',
-      role: 'CEO of Carolina Boat Company'
+      quote: "Finding the right leads was always hit or miss, but with AI-driven analytics, we’re closing deals faster than ever. The insights are clear, actionable, and actually make a difference in our sales process.",
+      name: 'Melissa Tran',
+      role: 'Product Manager of Arcane Digital'
     }
   ]
 
