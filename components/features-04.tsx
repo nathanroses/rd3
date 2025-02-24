@@ -21,7 +21,7 @@ export default function Features04() {
           {/* Section header */}
           <div className="max-w-3xl pb-12 md:pb-20">
             <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Why trust us?</h2>
-            <p className="text-lg text-slate-400">Unlike many website creation platforms that rely on generic templates, We craft tailored digital experiences with a personal touch, ensuring your vision comes to life with precision and flair.</p>
+            <p className="text-lg text-slate-400">Unlike one-size-fits-all solutions, we harness AI-driven analytics to provide tailored insights and automation, helping businesses optimize operations, reduce inefficiencies, and make smarter decisions with confidence.</p>
           </div>
 
           {/* Rows */}
