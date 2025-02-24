@@ -25,8 +25,8 @@ export default function Features03() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">More than a website</h2>
-            <p className="text-lg text-slate-400">Rose Development transcends the standard, crafting bespoke digital platforms that propel businesses forward with innovative design and strategic functionality.</p>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">More Than Just Data</h2>
+            <p className="text-lg text-slate-400">Rose Development goes beyond basic analytics, delivering custom AI-driven solutions that turn complex data into clear, actionable strategies for business growth.</p>
           </div>
 
           <div className="max-w-3xl mx-auto">
