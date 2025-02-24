@@ -26,10 +26,10 @@ export default function PricingSection() {
 
           {/* Section header */}
           <div className="text-center pb-12 md:pb-20">
-            <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">The First Ai + Developer Service</div>
+            <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">The Next Generation of Data Analytics</div>
             <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Simple plans for everyone</h1>
             <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-slate-400">Cut down overhead costs and ditch clunky websites. Get a flexible, purpose-built website that's built to last. Contact us today for more details.</p>
+              <p className="text-lg text-slate-400">Optimize overhead with AI-driven analytics. Replace outdated systems with flexible, purpose-built solutions. Contact us today.</p>
             </div>
           </div>
           <Pricing />
