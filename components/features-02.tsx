@@ -122,8 +122,8 @@ export default function Features02() {
                       {/* Text */}
                       <div className="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8">
                         <div>
-                          <h3 className="inline-flex text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-1">Infinite Customization</h3>
-                          <p className="text-slate-400">Craft a unique digital identity with our advanced customization options that set you apart from the cookie-cutter sites of Wix and Squarespace.</p>
+                          <h3 className="inline-flex text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-1">Ai Engine</h3>
+                          <p className="text-slate-400">Transform raw data into real-time intelligence with continuous optimization and pattern detection for smarter decisions.</p>
                         </div>
                       </div>
                       {/* Image */}
