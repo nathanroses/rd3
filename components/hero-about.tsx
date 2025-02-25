@@ -28,7 +28,7 @@ export default function HeroAbout() {
         {/* Hero content */}
         <div className="text-center">
           <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">The folks behind the company</div>
-          <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-6">Tuning Ai for Innovation</h1>
+          <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-6">Tuning for Innovation</h1>
           {/* Rings illustration */}
           <div className="inline-flex items-center justify-center relative">
             {/* Particles animation */}
