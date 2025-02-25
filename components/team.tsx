@@ -34,25 +34,25 @@ export default function Team() {
     {
       img: Member01,
       name: 'Nathan Rose',
-      role: 'CEO & Founder',
+      role: 'Founder',
       twitter: '#0',
     },
     {
       img: Member02,
       name: 'Lee Alverson',
-      role: 'Finance Manager',
+      role: 'Data Scientist',
       twitter: '#0',
     },
     {
       img: Member03,
       name: 'Jonathan Mandano',
-      role: 'Software Engineer',
+      role: 'Data Engineer',
       twitter: '#0',
     },
     {
       img: Member07,
-      name: 'Aiden Levy',
-      role: 'Sales Manager',
+      name: 'Rachel Livestine',
+      role: 'Administration',
       twitter: '#0',
     },
 
