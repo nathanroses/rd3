@@ -6,7 +6,7 @@ export const metadata = {
 import Link from 'next/link'
 import Image from 'next/image'
 import Illustration from '@/public/images/page-illustration.svg'
-import CustomerBadge from '@/public/images/customer-badge.png'
+import CustomerBadge from '@/public/images/customer-badge2.png'
 import Particles from '@/components/particles'
 import RelatedPosts from './related-posts'
 
