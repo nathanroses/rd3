@@ -40,7 +40,7 @@ export default function Team() {
     {
       img: Member02,
       name: 'Lee Alverson',
-      role: 'Data Scientist',
+      role: 'AI Architect',
       twitter: '#0',
     },
     {
