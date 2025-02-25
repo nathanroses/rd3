@@ -25,7 +25,7 @@ export default function Cta03() {
             <div>
               <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Never miss an update</div>
             </div>
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Take control of your business</h2>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">The Future of Ai</h2>
             <form className="inline-flex max-w-sm w-full" action="https://api.web3forms.com/submit" method="POST">
   <div className="w-full flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-none">
     <input type="hidden" name="access_key" value="f2067b63-d646-435c-9d01-ddd282c4f90d" />
