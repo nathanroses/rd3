@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import CustomerImg01 from '@/public/images/'
+import CustomerImg01 from '@/public/images/team-10.png'
 import CustomerBg01 from '@/public/images/customer-bg-01.png'
 import CustomerImg02 from '@/public/images/team-11.png'
 import CustomerBg02 from '@/public/images/customer-bg-02.png'
