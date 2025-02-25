@@ -47,13 +47,13 @@ export default function CustomerSingle() {
 
                   <header>
                     <h1 className="h2 inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">
-                      AI-Driven Data Analytics: Transforming Operations at The Leading Edge
+                      AI-Driven Data Analytics: Transforming Operations 
                     </h1>
                     <div className="text-sm flex items-center space-x-4 mb-8">
                       <img className="rounded-full" src="../images/team-01.png" width="32" height="32" alt="Leading Edge Avatar" />
                       <div>
                         <div className="text-slate-300 font-medium">Nathan Rose</div>
-                        <div className="text-slate-500">Chief Technology Officer</div>
+                        <div className="text-slate-500">Founder</div>
                       </div>
                     </div>
                   </header>
@@ -62,31 +62,31 @@ export default function CustomerSingle() {
                   <div className="prose max-w-none text-slate-400 prose-headings:text-slate-50 prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4 prose-p:leading-relaxed prose-a:text-blue-500 prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-50 prose-strong:font-medium prose-blockquote:pl-5 prose-blockquote:xl:-ml-5 prose-blockquote:border-l-2 prose-blockquote:border-blue-500 prose-blockquote:font-medium prose-blockquote:text-slate-300 prose-blockquote:italic">
                     
                     <p>
-                      The Leading Edge, a key player in the manufacturing sector, faced operational inefficiencies due to data silos and limited real-time insights. To remain competitive, they partnered with Rose Development to implement an **AI-driven data analytics platform** that optimized operations, reduced downtime, and enhanced profitability.
+                      Tice Services, a key player in the construction sector, faced operational inefficiencies due to data silos and limited real-time insights. To remain competitive, they partnered with Rose Development to implement an AI-driven data analytics platform that optimized operations, reduced downtime, and enhanced profitability.
                     </p>
 
                     <h2>Harnessing AI for Smarter Decision-Making</h2>
                     <p>
-                      Rose Development introduced a **comprehensive AI-powered data analytics system** that revolutionized The Leading Edge’s approach to manufacturing. The solution focused on:
+                      Rose Development introduced a comprehensive AI-powered data analytics system that revolutionized The Leading Edge’s approach to manufacturing. The solution focused on:
                     </p>
                     <ul>
                       <li>
-                        **Predictive Maintenance** – AI algorithms analyzed equipment data, identifying potential failures before they occurred, reducing downtime by 40%.
+                        Predictive Maintenance – AI algorithms analyzed equipment data, identifying potential failures before they occurred, reducing downtime by 40%.
                       </li>
                       <li>
-                        **Supply Chain Optimization** – Real-time demand forecasting improved inventory management, reducing waste by 25%.
+                        Supply Chain Optimization – Real-time demand forecasting improved inventory management, reducing waste by 25%.
                       </li>
                       <li>
-                        **Operational Efficiency** – AI-driven insights streamlined production processes, increasing output while lowering costs.
+                        Operational Efficiency – AI-driven insights streamlined production processes, increasing output while lowering costs.
                       </li>
                       <li>
-                        **Customer Analytics** – Advanced models predicted customer demand, enhancing marketing precision and boosting sales conversions.
+                        Customer Analytics – Advanced models predicted customer demand, enhancing marketing precision and boosting sales conversions.
                       </li>
                     </ul>
                     
                     <h2>Measurable Impact & Business Growth</h2>
                     <p>
-                      The implementation of AI analytics led to **tangible improvements across multiple business areas**:
+                      The implementation of AI analytics led to tangible improvements across multiple business areas:
                     </p>
                     <ul>
                       <li><strong>40% Reduction</strong> in machine downtime through predictive analytics.</li>
@@ -98,12 +98,12 @@ export default function CustomerSingle() {
                     <blockquote>
                       <p>
                         “Integrating AI analytics into our operations was a game-changer. The insights provided by Rose Development allowed us to predict, adapt, and optimize like never before. This partnership has truly positioned us for future success.”  
-                        <br />— Nathan Rose, Chief Technology Officer at The Leading Edge
+                        <br />— Tice, Chief Executive Officer at Tice Services 
                       </p>
                     </blockquote>
 
                     <p>
-                      The Leading Edge’s transformation showcases the power of **AI-driven analytics in manufacturing**, setting a benchmark for businesses seeking data-driven operational excellence.
+                      The transformation showcases the power of AI-driven analytics in construction, setting a benchmark for businesses seeking data-driven operational excellence.
                     </p>
 
                   </div>
@@ -127,7 +127,7 @@ export default function CustomerSingle() {
                       <div className="mb-5">
                         <div className="flex items-center space-x-4">
                           <Image src={CustomerBadge} width={64} height={64} alt="Customer badge" />
-                          <div className="text-lg font-semibold text-slate-100">The Leading Edge</div>
+                          <div className="text-lg font-semibold text-slate-100">Tice Services</div>
                         </div>
                       </div>
                       <ul className="text-sm">
@@ -136,8 +136,8 @@ export default function CustomerSingle() {
                           <span className="text-slate-300 font-medium">Manufacturing</span>
                         </li>
                         <li className="flex items-center justify-between space-x-2 py-3">
-                          <span className="text-slate-400">Technology</span>
-                          <span className="text-slate-300 font-medium">AI Data Analytics</span>
+                          <span className="text-slate-400">Construction</span>
+                          <span className="text-slate-300 font-medium">AI Data Storage</span>
                         </li>
                       </ul>
                     </div>
