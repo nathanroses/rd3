@@ -119,7 +119,7 @@ export default function CustomersList() {
           </span>
         </p>
         <div className="inline-flex mb-2">
-        Goetz 
+        Tim 
         </div>
         <div className="text-sm font-medium text-slate-300">
          <a className="text-purple-500 hover:underline" href="#0">Carolina Boat Company</a>
