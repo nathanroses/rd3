@@ -122,7 +122,7 @@ export default function CustomersList() {
         Goetz 
         </div>
         <div className="text-sm font-medium text-slate-300">
-         <a className="text-purple-500 hover:underline" href="#0">Tools United</a>
+         <a className="text-purple-500 hover:underline" href="#0">CIMSOURCE</a>
         </div>
       </div>
       {/* Testimonial #02 */}
