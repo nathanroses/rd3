@@ -51,7 +51,7 @@ export default function Pricing() {
             <div className="text-slate-500">For businesses ready to start their AI journey with foundational tools and streamlined solutions.</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
-            <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://buy.stripe.com/dR68A102AgtB13y4gm" : "https://buy.stripe.com/9AQ3fHdTqa5deUo7sz"}>
+            <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://rosedevelopment.org/signin" : "https://rosedevelopment.org/signin"}>
               Get Started <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
             </a>
           </div>
@@ -66,7 +66,7 @@ export default function Pricing() {
             <div className="text-slate-500">For growing businesses ready to scale operations with data-driven AI and custom solutions.</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
-          <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://buy.stripe.com/8wM17z4iQ7X527C5kl" : "https://buy.stripe.com/7sI9E52aIfpx3bGdQV"}>
+          <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://rosedevelopment.org/signin" : "https://rosedevelopment.org/signin"}>
               Get Started <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
             </a>
           </div>
@@ -81,7 +81,7 @@ export default function Pricing() {
             <div className="text-slate-500">For enterprises seeking advanced AI-powered integrations and predictive systems to maximize efficiency.</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
-          <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://buy.stripe.com/4gw9E5cPma5d8w0dQS" : "https://buy.stripe.com/6oEcQh16Eb9hfYs28b"}>
+          <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://rosedevelopment.org/signin" : "https://rosedevelopment.org/signin"}>
               Get Started <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
             </a>
           </div>
