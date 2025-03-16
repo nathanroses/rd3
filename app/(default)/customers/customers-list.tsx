@@ -77,13 +77,13 @@ export default function CustomersShowcase() {
  const featuredCustomers: Customer[] = [
     {
       id: 0,
-      name: 'Carolina Boat Company',
-      position: { x: -20, y: 10, z: 15 },
-      img: CustomerImg01,
-      bg: CustomerBg01,
+      name: 'Tools United',
+      position: { x: 15, y: -20, z: 10 },
+      img: CustomerImg05,
+      bg: CustomerBg05,
       link: '/customers/single-post',
-      testimonial: 'We took our business to the next level by implementing cutting-edge technology. Building better solutions for tomorrow.',
-      person: 'Mike',
+      testimonial: 'We revolutionized our tool management system, bringing unprecedented efficiency to our daily operations.',
+      person: 'Ghetz',
       color: 'from-blue-600 to-blue-400'
     },
     {
@@ -119,17 +119,6 @@ export default function CustomersShowcase() {
       person: 'Tice',
       color: 'from-orange-500 to-amber-400'
     },
-    {
-      id: 4,
-      name: 'Tools United',
-      position: { x: 15, y: -20, z: 10 },
-      img: CustomerImg05,
-      bg: CustomerBg05,
-      link: '/customers/single-post',
-      testimonial: 'We revolutionized our tool management system, bringing unprecedented efficiency to our daily operations.',
-      person: 'Ghetz',
-      color: 'from-indigo-600 to-indigo-400'
-    }
   ];
   // Define the placeholder future customers
   const futureCustomers = [
