@@ -76,52 +76,51 @@ export default function CustomersShowcase() {
 
   // Define array of actual customers we have
   const featuredCustomers: Customer[] = [
-    {
-      id: 0,
-      name: 'Carolina Boat Company',
-      position: { x: -20, y: 10, z: 15 },
-      img: CustomerImg01,
-      bg: CustomerBg01,
-      link: '/customers/single-post',
-      testimonial: 'We took our business to the next level with Rose Development. Building better technology for tomorrow.',
-      person: 'Tim',
-      color: 'from-blue-600 to-blue-400'
-    },
-    {
-      id: 1,
-      name: 'Eco Shield',
-      position: { x: 25, y: -15, z: 5 },
-      img: CustomerImg02,
-      bg: CustomerBg02,
-      link: '/customers/single-post',
-      testimonial: 'We turned our recruitment process into a competitive advantage with Rose Development. We are now able to attract the best talent.',
-      person: 'Zach',
-      color: 'from-green-600 to-green-400'
-    },
-    {
-      id: 2,
-      name: 'Global Tech',
-      position: { x: 5, y: 30, z: -10 },
-      img: CustomerImg03,
-      bg: CustomerBg03,
-      link: '/customers/single-post',
-      testimonial: 'Rose Development transformed how we analyze our supply chain data. The insights have been incredible.',
-      person: 'Sarah',
-      color: 'from-purple-600 to-purple-400'
-    },
-    {
-      id: 3,
-      name: 'Tice Services',
-      position: { x: -30, y: -10, z: 20 },
-      img: CustomerImg04,
-      bg: CustomerBg04,
-      link: '/customers/single-post',
-      testimonial: 'Integrating AI analytics into our operations was a game-changer. The insights provided by Rose Development allowed us to predict, adapt, and optimize like never before.',
-      person: 'Tice',
-      color: 'from-orange-500 to-amber-400'
-    }
-  ];
-
+  {
+    id: 0,
+    name: 'Carolina Boat Company',
+    position: { x: -20, y: 10, z: 15 },
+    img: CustomerImg01,
+    bg: CustomerBg01,
+    link: '/customers/single-post',
+    testimonial: 'We took our business to the next level with Rose Development. Building better technology for tomorrow.',
+    person: 'Tim',
+    color: 'from-blue-600 to-blue-400'
+  },
+  {
+    id: 1,
+    name: 'Eco Shield',
+    position: { x: 25, y: -15, z: 5 },
+    img: CustomerImg02,
+    bg: CustomerBg02,
+    link: '/customers/single-post',
+    testimonial: 'We turned our recruitment process into a competitive advantage with Rose Development. We are now able to attract the best talent.',
+    person: 'Zach',
+    color: 'from-green-600 to-green-400'
+  },
+  {
+    id: 2,
+    name: 'Code Equity',
+    position: { x: 5, y: 30, z: -10 },
+    img: CustomerImg03,
+    bg: CustomerBg03,
+    link: '/customers/single-post',
+    testimonial: 'Rose Development transformed how we analyze our supply chain data. The insights have been incredible.',
+    person: 'Sarah',
+    color: 'from-purple-600 to-purple-400'
+  },
+  {
+    id: 3,
+    name: 'Tice Services',
+    position: { x: -30, y: -10, z: 20 },
+    img: CustomerImg04,
+    bg: CustomerBg04,
+    link: '/customers/single-post',
+    testimonial: 'Integrating AI analytics into our operations was a game-changer. The insights provided by Rose Development allowed us to predict, adapt, and optimize like never before.',
+    person: 'Tice',
+    color: 'from-orange-500 to-amber-400'
+  }
+];
   // Define the placeholder future customers
   const futureCustomers = [
     { id: 4, img: CustomerImg05, bg: CustomerBg05, position: { x: 35, y: 5, z: -20 } },
@@ -207,11 +206,12 @@ const findTappedCustomer = useCallback((touch: React.Touch): number | null => {
 }, [featuredCustomers, isMobile, calculate3DPosition]);
 
 // Improved touch end handling
-const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-  // Clear the tap timeout
-  if (touchTimeoutRef.current) {
-    clearTimeout(touchTimeoutRef.current);
-  }
+const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+  setTimeout(() => {
+    setInteracting(false);
+    setAutoRotate(true);
+  }, 0);
+};
 
   // If it was a tap, trigger customer selection
   if (isTap) {
@@ -232,19 +232,19 @@ const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
 
 
 
-  // Handle customer selection
-  const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
-    // Prevent default behavior
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Set the active customer and show testimonial
-    setActiveCustomer(customerId);
-    setShowingTestimonial(true);
-    
-    // Auto-hide testimonial after 7 seconds
-    setTimeout(() => setShowingTestimonial(false), 7000);
-  };
+  // Handle customer selection on touch
+const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
+  // Prevent default behavior
+  e.preventDefault();
+  e.stopPropagation();
+  
+  // Reset touch moved state
+  setTouchMoved(false);
+  
+  setActiveCustomer(customerId);
+  setShowingTestimonial(true);
+  setTimeout(() => setShowingTestimonial(false), 7000);
+};
 
   // Auto-rotation effect
   useEffect(() => {
