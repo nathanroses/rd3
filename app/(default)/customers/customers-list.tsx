@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import CustomerImg01 from '@/public/images/new-04.svg'
@@ -23,8 +23,6 @@ import CustomerImg09 from '@/public/images/customer-bg-01.png'
 import CustomerBg09 from '@/public/images/customer-bg-09.png'
 import CustomerImg10 from '@/public/images/customer-bg-01.png'
 import CustomerBg10 from '@/public/images/customer-bg-10.png'
-import CustomerAvatar01 from '@/public/images/new-05.svg'
-import CustomerAvatar02 from '@/public/images/new-08.svg'
 import Particles from '@/components/particles'
 
 interface Customer {
@@ -58,8 +56,11 @@ export default function CustomersShowcase() {
   const globeRef = useRef<HTMLDivElement>(null);
   const [autoRotate, setAutoRotate] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Improved touch interaction state
   const [touchStartPos, setTouchStartPos] = useState({ x: 0, y: 0 });
-  const [touchMoved, setTouchMoved] = useState(false);
+  const [isTap, setIsTap] = useState(false);
+  const touchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Check if we're on mobile
   useEffect(() => {
@@ -131,6 +132,118 @@ export default function CustomersShowcase() {
     { id: 9, img: CustomerImg10, bg: CustomerBg10, position: { x: -5, y: 40, z: 20 } }
   ];
 
+  // Improved touch start handling
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!globeRef.current) return;
+    
+    const touch = e.touches[0];
+    setLastTouch({ x: touch.clientX, y: touch.clientY });
+    setTouchStartPos({ x: touch.clientX, y: touch.clientY });
+    setIsTap(true);
+    setInteracting(true);
+    setAutoRotate(false);
+
+    // Set a timeout to distinguish between tap and drag
+    touchTimeoutRef.current = setTimeout(() => {
+      setIsTap(false);
+    }, 200); // Short delay to determine tap vs drag
+  }, []);
+  // Improved touch move handling
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!interacting || !globeRef.current) return;
+    
+    const touch = e.touches[0];
+    const { clientX, clientY } = touch;
+    
+    // Calculate movement from start position
+    const deltaX = clientX - touchStartPos.x;
+    const deltaY = clientY - touchStartPos.y;
+    
+    // If movement is significant, it's not a tap
+    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+      setIsTap(false);
+      
+      // Update rotation based on touch movement
+      setRotation(prev => ({
+        x: prev.x + deltaY * 0.3,
+        y: prev.y - deltaX * 0.3
+      }));
+      
+      // Update last touch position for continuous dragging
+      setLastTouch({ x: clientX, y: clientY });
+    }
+  }, [interacting, touchStartPos]);
+
+  // Improved touch end handling
+  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    // Clear the tap timeout
+    if (touchTimeoutRef.current) {
+      clearTimeout(touchTimeoutRef.current);
+    }
+
+    // If it was a tap, trigger customer selection
+    if (isTap) {
+      // Find the tapped customer node
+      const touch = e.changedTouches[0];
+      const tappedCustomer = findTappedCustomer(touch);
+      
+      if (tappedCustomer !== null) {
+        handleCustomerTouch(tappedCustomer, e);
+      }
+    }
+
+    // Reset interaction states
+    setInteracting(false);
+    setIsTap(false);
+    setTimeout(() => setAutoRotate(true), 2000);
+  }, [isTap]);
+
+  // Helper function to find tapped customer
+  const findTappedCustomer = (touch: Touch): number | null => {
+    if (!globeRef.current) return null;
+    
+    const rect = globeRef.current.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    for (let i = 0; i < featuredCustomers.length; i++) {
+      const customer = featuredCustomers[i];
+      const pos = calculate3DPosition(customer.position);
+      
+      // Calculate node position
+      const nodeX = rect.width / 2 + pos.x * (isMobile ? 3 : 5);
+      const nodeY = rect.height / 2 + pos.y * (isMobile ? 2.5 : 4);
+      
+      // Node size for hit detection (slightly larger on mobile)
+      const nodeSize = isMobile ? 40 : 28;
+      
+      // Check if touch is within the node
+      const distance = Math.sqrt(
+        Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2)
+      );
+      
+      if (distance < nodeSize / 2) {
+        return customer.id;
+      }
+    }
+    
+    return null;
+  };
+
+  // Handle customer selection
+  const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
+    // Prevent default behavior
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Set the active customer and show testimonial
+    setActiveCustomer(customerId);
+    setShowingTestimonial(true);
+    
+    // Auto-hide testimonial after 7 seconds
+    setTimeout(() => setShowingTestimonial(false), 7000);
+  };
+
   // Auto-rotation effect
   useEffect(() => {
     let rotationInterval: NodeJS.Timeout | null = null;
@@ -172,89 +285,6 @@ export default function CustomersShowcase() {
     };
   }, [interacting, autoRotate, featuredCustomers.length]);
 
-  // Handle mouse movement for interactive rotation
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!interacting || !globeRef.current) return;
-    
-    const { clientX, clientY } = e;
-    const { width, height } = globeRef.current.getBoundingClientRect();
-    const centerX = width / 2;
-    const centerY = height / 2;
-    
-    const deltaX = (clientX - centerX) / centerX;
-    const deltaY = (clientY - centerY) / centerY;
-    
-    setRotation({
-      x: deltaY * 30,
-      y: -deltaX * 30
-    });
-  };
-  
-  // Handle touch start for mobile
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!globeRef.current) return;
-    
-    const touch = e.touches[0];
-    setLastTouch({ x: touch.clientX, y: touch.clientY });
-    setTouchStartPos({ x: touch.clientX, y: touch.clientY });
-    setTouchMoved(false);
-    setInteracting(true);
-    setAutoRotate(false);
-  };
-  
-  // Handle touch movement for mobile - improved for better sensitivity
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!interacting || !globeRef.current) return;
-    
-    const touch = e.touches[0];
-    const { clientX, clientY } = touch;
-    
-    // Calculate delta from last position
-    const deltaX = clientX - lastTouch.x;
-    const deltaY = clientY - lastTouch.y;
-    
-    // Detect if touch has moved significantly
-    const distanceMoved = Math.sqrt(
-      Math.pow(clientX - touchStartPos.x, 2) + 
-      Math.pow(clientY - touchStartPos.y, 2)
-    );
-    
-    if (distanceMoved > 10) {
-      setTouchMoved(true);
-    }
-    
-    // Update last touch position
-    setLastTouch({ x: clientX, y: clientY });
-    
-    // Apply rotation with improved sensitivity for mobile
-    setRotation(prev => ({
-      x: prev.x + deltaY * 0.3,
-      y: prev.y - deltaX * 0.3
-    }));
-  };
-
-  // Handle touch end with click detection
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    setInteracting(false);
-    setTimeout(() => setAutoRotate(true), 2000);
-  };
-
-  // Handle customer selection on touch
-  const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
-    // Prevent default behavior
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Only trigger if this wasn't a drag operation (for mobile)
-    if (e.type === 'touchend' && touchMoved) {
-      return;
-    }
-    
-    setActiveCustomer(customerId);
-    setShowingTestimonial(true);
-    setTimeout(() => setShowingTestimonial(false), 7000);
-  };
-
   // Calculate 3D position with rotation for each customer point
   const calculate3DPosition = (position: { x: number; y: number; z: number }, size = 1.2): Position3D => {
     // Convert to radians
@@ -294,16 +324,15 @@ export default function CustomersShowcase() {
       brightness
     };
   };
-
-  // Show active customer detail - optimized for mobile
+  // Show active customer detail - optimized for mobile and improved layout
   const showCustomerDetail = (customer: Customer | undefined) => {
     if (!customer) return null;
     
     return (
-      <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 z-30">
-        <div className={`bg-slate-900/80 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/50 transform transition-all duration-500 ${showingTestimonial ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <div className="flex flex-col md:flex-row items-start gap-4">
-            <div className={`bg-gradient-to-br ${customer.color} rounded-xl p-px overflow-hidden flex-shrink-0 shadow-lg mx-auto md:mx-0`}>
+      <div className="fixed bottom-0 left-0 w-full p-4 z-50 pointer-events-none">
+        <div className={`bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/50 transform transition-all duration-500 ${showingTestimonial ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className={`bg-gradient-to-br ${customer.color} rounded-xl p-px overflow-hidden flex-shrink-0 shadow-lg`}>
               <div className="bg-slate-900 p-3 rounded-xl">
                 <Image 
                   src={customer.img} 
@@ -339,6 +368,8 @@ export default function CustomersShowcase() {
       </div>
     );
   };
+
+  // Render method
   return (
     <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
       {/* Interactive customer showcase */}
@@ -359,7 +390,6 @@ export default function CustomersShowcase() {
             setTimeout(() => setAutoRotate(true), 2000);
           }
         }}
-        onMouseMove={handleMouseMove}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -387,7 +417,7 @@ export default function CustomersShowcase() {
                 left: `calc(50% + ${pos.x * (isMobile ? 2.5 : 4)}px)`,
                 top: `calc(50% + ${pos.y * (isMobile ? 2 : 3)}px)`,
                 zIndex: Math.round(pos.z),
-                opacity: pos.opacity * 0.6, // Increased opacity
+                opacity: pos.opacity * 0.6,
                 filter: `brightness(${pos.brightness}%)`,
               }}
             >
