@@ -1,55 +1,249 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Logo from './logo'
-import MobileMenu from './mobile-menu'
+import { usePathname } from 'next/navigation'
+import { useAuth } from '@/app/context/auth-context'
+import Image from 'next/image'
+import Logo from '@/public/images/logo.svg'
 
 export default function Header() {
+  const pathname = usePathname()
+  const [top, setTop] = useState<boolean>(true)
+  const { user, signOut } = useAuth()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+
+  // Handle nav on page scroll
+  const scrollHandler = () => {
+    window.scrollY > 10 ? setTop(false) : setTop(true)
+  }
+
+  useEffect(() => {
+    scrollHandler()
+    window.addEventListener('scroll', scrollHandler)
+    return () => {
+      window.removeEventListener('scroll', scrollHandler)
+    }
+  }, [top])
+
   return (
-    <header className="absolute w-full z-30">
+    <header className={`fixed w-full z-30 transition duration-300 ease-in-out ${!top ? 'bg-slate-900/80 backdrop-blur-sm shadow-lg' : ''}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
 
           {/* Site branding */}
-          <div className="flex-1">
-            <Logo />
+          <div className="shrink-0 mr-4">
+            <Link className="block" href="/" aria-label="Rose Development">
+              <Image src={Logo} width={42} height={42} alt="Rose Development" />
+            </Link>
           </div>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow">
-
             {/* Desktop menu links */}
-            <ul className="flex grow justify-center flex-wrap items-center">
+            <ul className="flex grow flex-wrap items-center font-medium">
               <li>
-                <Link className="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out" href="/about">About</Link>
+                <Link
+                  href="/about"
+                  className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/about' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+                >
+                  About
+                </Link>
               </li>
               <li>
-                <Link className="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out" href="/pricing">Pricing</Link>
+                <Link
+                  href="/integrations"
+                  className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/integrations' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Integrations
+                </Link>
               </li>
               <li>
-                <Link className="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out" href="/customers">Client List</Link>
+                <Link
+                  href="/customers"
+                  className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/customers' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Customers
+                </Link>
               </li>
               <li>
-                <Link className="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out" href="/changelog">Updates</Link>
+                <Link
+                  href="/changelog"
+                  className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/changelog' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Changelog
+                </Link>
               </li>
             </ul>
 
+            {/* Desktop sign in links */}
+            <ul className="flex items-center">
+              {user ? (
+                <li>
+                  <div className="flex items-center">
+                    <span className="text-sm text-slate-300 mr-3">
+                      Welcome, {user.name}
+                    </span>
+                    <button 
+                      onClick={signOut}
+                      className="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      href="/signin"
+                      className="text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 flex items-center text-sm font-medium"
+                    >
+                      Sign In
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/signup" 
+                      className="btn-sm text-white bg-purple-500 hover:bg-purple-600 ml-3"
+                    >
+                      Get Started
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
           </nav>
 
-          {/* Desktop sign in links */}
-          <ul className="flex-1 flex justify-end items-center">
-            <li>
-              <Link className="font-medium text-sm text-slate-300 hover:text-white whitespace-nowrap transition duration-150 ease-in-out" href="/signin">Sign in</Link>
-            </li>
-            <li className="ml-6">
-              <Link className="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out w-full group [background:linear-gradient(theme(colors.slate.900),_theme(colors.slate.900))_padding-box,_conic-gradient(theme(colors.slate.400),_theme(colors.slate.700)_25%,_theme(colors.slate.700)_75%,_theme(colors.slate.400)_100%)_border-box] relative before:absolute before:inset-0 before:bg-slate-800/30 before:rounded-full before:pointer-events-none" href="/signup">
-                <span className="relative inline-flex items-center">
-                  Sign up <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-                </span>
-              </Link>
-            </li>
-          </ul>
+          {/* Mobile menu */}
+          <div className="flex md:hidden">
+            {/* Hamburger button */}
+            <button
+              className={`hamburger ${mobileNavOpen ? 'active' : ''}`}
+              aria-controls="mobile-nav"
+              aria-expanded={mobileNavOpen}
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+            >
+              <span className="sr-only">Menu</span>
+              <svg
+                className="w-6 h-6 fill-current text-slate-300 hover:text-white transition duration-150 ease-in-out"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect y="4" width="24" height="2" rx="1" />
+                <rect y="11" width="24" height="2" rx="1" />
+                <rect y="18" width="24" height="2" rx="1" />
+              </svg>
+            </button>
 
-          <MobileMenu />
+            {/* Mobile navigation */}
+            <div
+              id="mobile-nav"
+              className={`fixed top-0 z-20 left-0 w-full h-screen bg-slate-900 overflow-auto transition-all duration-300 ease-in-out ${
+                mobileNavOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+            >
+              <div className="py-5 px-4">
+                {/* Logo */}
+                <div className="flex justify-between mb-6">
+                  <Link href="/" aria-label="Rose Development">
+                    <Image src={Logo} width={42} height={42} alt="Rose Development" />
+                  </Link>
+                  {/* Close button */}
+                  <button
+                    className="text-slate-300 hover:text-white"
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    <span className="sr-only">Close</span>
+                    <svg
+                      className="w-6 h-6 fill-current"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M18.707 6.707L17.293 5.293 12 10.586 6.707 5.293 5.293 6.707 10.586 12 5.293 17.293 6.707 18.707 12 13.414 17.293 18.707 18.707 17.293 13.414 12z" />
+                    </svg>
+                  </button>
+                </div>
 
+                {/* Links */}
+                <div>
+                  <ul className="mb-6">
+                    <li>
+                      <Link
+                        href="/about"
+                        className="flex text-slate-300 hover:text-white py-2"
+                        onClick={() => setMobileNavOpen(false)}
+                      >
+                        About
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/integrations"
+                        className="flex text-slate-300 hover:text-white py-2"
+                        onClick={() => setMobileNavOpen(false)}
+                      >
+                        Integrations
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/customers"
+                        className="flex text-slate-300 hover:text-white py-2"
+                        onClick={() => setMobileNavOpen(false)}
+                      >
+                        Customers
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/changelog"
+                        className="flex text-slate-300 hover:text-white py-2"
+                        onClick={() => setMobileNavOpen(false)}
+                      >
+                        Changelog
+                      </Link>
+                    </li>
+                  </ul>
+                  <div className="border-t border-slate-800 pt-6">
+                    {user ? (
+                      <div className="mb-4">
+                        <span className="text-slate-300 mb-2 block">
+                          Welcome, {user.name}
+                        </span>
+                        <button 
+                          onClick={() => {
+                            signOut();
+                            setMobileNavOpen(false);
+                          }}
+                          className="btn-sm text-white bg-purple-500 hover:bg-purple-600 w-full mb-4"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="mb-4">
+                        <Link
+                          href="/signin"
+                          className="btn-sm text-white bg-slate-700 hover:bg-slate-600 w-full mb-2"
+                          onClick={() => setMobileNavOpen(false)}
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          href="/signup"
+                          className="btn-sm text-white bg-purple-500 hover:bg-purple-600 w-full"
+                          onClick={() => setMobileNavOpen(false)}
+                        >
+                          Get Started
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
