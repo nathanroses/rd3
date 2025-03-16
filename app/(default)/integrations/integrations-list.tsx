@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import Star from '@/public/images/star.svg'
 import IntegrationsImg01 from '@/public/images/integrations-01.svg'
 import IntegrationsImg02 from '@/public/images/integrations-02.svg'
@@ -27,248 +30,352 @@ import IntegrationsImg23 from '@/public/images/integrations-23.svg'
 import IntegrationsImg24 from '@/public/images/integrations-24.svg'
 
 export default function IntegrationsList() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [filteredItems, setFilteredItems] = useState<any[]>([])
+  const [scrolledToSection, setScrolledToSection] = useState(false)
 
   const items = [
+    // Data Sources
     {
       img: IntegrationsImg06,
-      name: 'Vercel',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Snowflake',
+      description: 'Connect your Snowflake data warehouse to Rose Development for powerful AI analytics on your enterprise data with secure end-to-end encryption.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Engineering'
+      category: 'Data Sources'
     },
     {
       img: IntegrationsImg07,
-      name: 'Sentry',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'MongoDB Atlas',
+      description: 'Bring your MongoDB document data into Rose Development to apply advanced predictive analytics and AI-driven insights to your NoSQL data.',
       link: '/integrations/single-post',
-      featured: false,
-      category: 'Engineering'
+      featured: true,
+      category: 'Data Sources'
     },
     {
       img: IntegrationsImg04,
-      name: 'Jira',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'AWS S3',
+      description: 'Seamlessly connect your S3 data lake to Rose Development to transform raw storage into actionable analytics insights and visualizations.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Engineering'
+      category: 'Data Sources'
     },
     {
       img: IntegrationsImg08,
-      name: 'GitHub',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Google BigQuery',
+      description: 'Transform your BigQuery datasets into predictive models with Rose Development\'s AI-powered analytics engine and custom visualization tools.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Engineering'
+      category: 'Data Sources'
     },
     {
       img: IntegrationsImg05,
-      name: 'GitLab',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Azure Synapse',
+      description: 'Connect Rose Development to your Azure Synapse Analytics environment for comprehensive AI-powered business intelligence and data pipelines.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'Engineering'
+      featured: false,
+      category: 'Data Sources'
     },
     {
       img: IntegrationsImg01,
-      name: 'Retool',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'PostgreSQL',
+      description: 'Analyze your PostgreSQL data with Rose Development\'s machine learning models for deeper customer insights and predictive analytics.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'Engineering'
+      featured: false,
+      category: 'Data Sources'
     },
+    
+    // BI & Visualization
     {
       img: IntegrationsImg02,
-      name: 'Zapier',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Tableau',
+      description: 'Enhance your Tableau dashboards with Rose Development\'s AI predictions and anomaly detection for smarter, more actionable visualizations.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'No-code'
+      category: 'BI & Visualization'
     },
     {
       img: IntegrationsImg03,
-      name: 'Airtable',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Power BI',
+      description: 'Integrate Rose Development\'s AI analytics capabilities directly into Microsoft Power BI for enhanced forecasting and automated insights.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'No-code'
+      category: 'BI & Visualization'
     },
     {
       img: IntegrationsImg09,
-      name: 'Framer',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Looker',
+      description: 'Combine Looker\'s data exploration capabilities with Rose Development\'s predictive AI to create forward-looking business intelligence.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'No-code'
+      category: 'BI & Visualization'
     },
     {
       img: IntegrationsImg10,
-      name: 'Jotform',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Grafana',
+      description: 'Add AI-powered anomaly detection and predictive alerts to your Grafana monitoring dashboards with the Rose Development integration.',
       link: '/integrations/single-post',
       featured: false,
-      category: 'No-code'
+      category: 'BI & Visualization'
     },
     {
       img: IntegrationsImg11,
-      name: 'Webflow',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Qlik',
+      description: 'Enhance Qlik Sense with Rose Development\'s machine learning models for deeper data insights and automated pattern recognition.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'No-code'
+      featured: false,
+      category: 'BI & Visualization'
     },
     {
       img: IntegrationsImg12,
-      name: 'Coda',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Domo',
+      description: 'Bring Rose Development\'s AI analytics capabilities into your Domo environment for more intelligent data-driven decision making.',
       link: '/integrations/single-post',
       featured: false,
-      category: 'No-code'
+      category: 'BI & Visualization'
     },
+    
+    // ML & AI Platforms
     {
       img: IntegrationsImg13,
-      name: 'Asana',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'TensorFlow',
+      description: 'Seamlessly integrate your TensorFlow models with Rose Development to deploy and monitor AI solutions at enterprise scale.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Collaboration'
+      category: 'ML & AI Platforms'
     },
     {
       img: IntegrationsImg14,
-      name: 'Myngo',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'PyTorch',
+      description: 'Deploy and operationalize your PyTorch models through Rose Development\'s enterprise-grade AI management and monitoring platform.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Collaboration'
+      category: 'ML & AI Platforms'
     },
     {
       img: IntegrationsImg15,
-      name: 'Bonsai',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Databricks',
+      description: 'Connect your Databricks lakehouse to Rose Development for enhanced ML model governance, monitoring and business value tracking.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Collaboration'
+      category: 'ML & AI Platforms'
     },
     {
       img: IntegrationsImg16,
-      name: 'Decipad',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Hugging Face',
+      description: 'Deploy and operationalize Hugging Face transformer models through Rose Development\'s enterprise AI platform with full governance.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'Collaboration'
+      featured: false,
+      category: 'ML & AI Platforms'
     },
     {
       img: IntegrationsImg17,
-      name: 'Miro',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'MLflow',
+      description: 'Integrate MLflow model tracking with Rose Development to add enterprise-grade deployment, monitoring and observability.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'Collaboration'
+      featured: false,
+      category: 'ML & AI Platforms'
     },
     {
       img: IntegrationsImg18,
-      name: 'Popform',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'SageMaker',
+      description: 'Extend your AWS SageMaker capabilities with Rose Development\'s specialized analytics pipelines and business value tracking.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Collaboration'
+      category: 'ML & AI Platforms'
     },
+    
+    // Business Systems
     {
       img: IntegrationsImg19,
-      name: 'Linear',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Salesforce',
+      description: 'Apply Rose Development\'s AI analytics to your Salesforce data for predictive sales forecasting and customer churn prevention.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Productivity'
+      category: 'Business Systems'
     },
     {
       img: IntegrationsImg20,
-      name: 'Microsoft',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'SAP',
+      description: 'Transform your SAP ERP data into predictive insights with Rose Development\'s specialized analytics connectors and AI models.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Productivity'
+      category: 'Business Systems'
     },
     {
       img: IntegrationsImg21,
-      name: 'Google Drive',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'HubSpot',
+      description: 'Enhance your HubSpot marketing data with Rose Development\'s AI-powered customer segmentation and predictive lead scoring.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'Productivity'
+      featured: false,
+      category: 'Business Systems'
     },
     {
       img: IntegrationsImg22,
-      name: 'InVision',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'ServiceNow',
+      description: 'Apply intelligent automation to your IT service management with Rose Development\'s predictive analytics for ServiceNow.',
       link: '/integrations/single-post',
-      featured: true,
-      category: 'Productivity'
+      featured: false,
+      category: 'Business Systems'
     },
     {
       img: IntegrationsImg23,
-      name: 'WeTransfer',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Workday',
+      description: 'Bring AI-powered workforce analytics to your Workday data with Rose Development\'s specialized HR prediction models.',
       link: '/integrations/single-post',
       featured: false,
-      category: 'Productivity'
+      category: 'Business Systems'
     },
     {
       img: IntegrationsImg24,
-      name: 'Hotjar',
-      description: 'Rose Development makes it easy to build extensions by providing an authentication provider that handles the OAuth flow.',
+      name: 'Shopify',
+      description: 'Leverage Rose Development\'s AI to transform your Shopify data into actionable customer insights and inventory predictions.',
       link: '/integrations/single-post',
       featured: true,
-      category: 'Productivity'
+      category: 'Business Systems'
     }
   ]
+
+  // Filter items based on search term and category
+  useEffect(() => {
+    setFilteredItems(
+      items.filter(item => {
+        // Filter by category if not 'all'
+        const categoryMatch = activeCategory === 'all' ? true : item.category === activeCategory;
+        
+        // Filter by search term
+        const searchMatch = searchTerm === '' ? true : 
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+          item.description.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        return categoryMatch && searchMatch;
+      })
+    );
+  }, [searchTerm, activeCategory]);
+
+  // Scroll to selected category section
+  useEffect(() => {
+    if (activeCategory !== 'all' && !scrolledToSection) {
+      const element = document.getElementById(activeCategory.toLowerCase().replace(/\s+/g, '-'));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setScrolledToSection(true);
+      }
+    }
+  }, [activeCategory, scrolledToSection]);
+
+  // Reset scroll flag when category changes
+  useEffect(() => {
+    setScrolledToSection(false);
+  }, [activeCategory]);
+
+  // Handle category click
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
+  };
+
+  // Get unique categories for displaying sections
+  const categories = ['Data Sources', 'BI & Visualization', 'ML & AI Platforms', 'Business Systems'];
 
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
         <div className="pb-12 md:pb-20">
-          {/* Tobpabr */}
+          {/* Topbar */}
           <div className="flex justify-between items-center py-6 border-b [border-image:linear-gradient(to_right,transparent,theme(colors.slate.800),transparent)1] space-x-8 overflow-x-scroll no-scrollbar">
             {/* Links */}
             <ul className="flex flex-nowrap text-sm font-medium space-x-8">
               <li>
-                <a className="flex items-center text-slate-50 hover:text-white whitespace-nowrap transition-colors space-x-2" href="#engineering">
-                  <svg className="fill-slate-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-                    <path d="m7.7 7.3-5-5c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4L5.6 8l-4.3 4.3c-.4.4-.4 1 0 1.4.2.2.4.3.7.3.3 0 .5-.1.7-.3l5-5c.4-.4.4-1 0-1.4ZM8 12h7v2H8z" />
+                <button 
+                  className={`flex items-center whitespace-nowrap transition-colors space-x-2 ${
+                    activeCategory === 'all' 
+                      ? 'text-purple-500 hover:text-purple-400' 
+                      : 'text-slate-50 hover:text-white'
+                  }`}
+                  onClick={() => handleCategoryClick('all')}
+                >
+                  <svg className="fill-purple-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <path d="M0 8.5L11 8.5 5.5 14 7 15.5 15.5 7 7 -1.5 5.5 0 11 5.5 0 5.5z" />
                   </svg>
-                  <span>Engineering</span>
-                </a>
+                  <span>All Integrations</span>
+                </button>
               </li>
               <li>
-                <a className="flex items-center text-slate-50 hover:text-white whitespace-nowrap transition-colors space-x-2" href="#nocode">
+                <button 
+                  className={`flex items-center whitespace-nowrap transition-colors space-x-2 ${
+                    activeCategory === 'Data Sources' 
+                      ? 'text-purple-500 hover:text-purple-400' 
+                      : 'text-slate-50 hover:text-white'
+                  }`}
+                  onClick={() => handleCategoryClick('Data Sources')}
+                >
                   <svg className="fill-slate-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-                    <path d="M10 15c-.4 0-.8-.3-.9-.7L5.8 4.6 3.9 8.4c-.2.4-.5.6-.9.6H0V7h2.4l2.7-5.4c.2-.4.6-.6 1-.6s.7.3.9.7l3.2 9.7 1.9-3.8c.2-.4.5-.6.9-.6h3v2h-2.4l-2.7 5.4c-.2.4-.5.6-.9.6Z" />
+                    <path d="M8 0C3.6 0 0 1.8 0 4v8c0 2.2 3.6 4 8 4s8-1.8 8-4V4c0-2.2-3.6-4-8-4zm0 2c3.3 0 6 1.3 6 2s-2.7 2-6 2-6-1.3-6-2 2.7-2 6-2zm0 12c-3.3 0-6-1.3-6-2V9.5c1.3.9 3.5 1.5 6 1.5s4.7-.6 6-1.5V12c0 .7-2.7 2-6 2zm0-4c-3.3 0-6-1.3-6-2V5.5c1.3.9 3.5 1.5 6 1.5s4.7-.6 6-1.5V8c0 .7-2.7 2-6 2z" />
                   </svg>
-                  <span>No-code</span>
-                </a>
+                  <span>Data Sources</span>
+                </button>
               </li>
               <li>
-                <a className="flex items-center text-slate-50 hover:text-white whitespace-nowrap transition-colors space-x-2" href="#collaboration">
+                <button 
+                  className={`flex items-center whitespace-nowrap transition-colors space-x-2 ${
+                    activeCategory === 'BI & Visualization' 
+                      ? 'text-purple-500 hover:text-purple-400' 
+                      : 'text-slate-50 hover:text-white'
+                  }`}
+                  onClick={() => handleCategoryClick('BI & Visualization')}
+                >
                   <svg className="fill-slate-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-                    <path d="M7.3 9.7c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0ZM7.3 15.7c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0ZM.3 10.7c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0Z" />
+                    <path d="M0 12h4V4H0v8zm6 4h4V0H6v16zm6-8h4V4h-4v4z" />
                   </svg>
-                  <span>Collaboration</span>
-                </a>
+                  <span>BI & Visualization</span>
+                </button>
               </li>
               <li>
-                <a className="flex items-center text-slate-50 hover:text-white whitespace-nowrap transition-colors space-x-2" href="#productivity">
+                <button 
+                  className={`flex items-center whitespace-nowrap transition-colors space-x-2 ${
+                    activeCategory === 'ML & AI Platforms' 
+                      ? 'text-purple-500 hover:text-purple-400' 
+                      : 'text-slate-50 hover:text-white'
+                  }`}
+                  onClick={() => handleCategoryClick('ML & AI Platforms')}
+                >
                   <svg className="fill-slate-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-                    <path d="M11.505 14.135a1 1 0 0 1 .175-1.403A5.967 5.967 0 0 0 14 8c0-3.309-2.691-6-6-6S2 4.691 2 8c0 1.858.846 3.583 2.32 4.731a1 1 0 0 1-1.228 1.578A7.951 7.951 0 0 1 0 8c0-4.411 3.589-8 8-8s8 3.589 8 8a7.955 7.955 0 0 1-3.092 6.31 1.001 1.001 0 0 1-1.403-.175Z" />
-                    <path d="M9.045 10.973a1 1 0 0 1 .175-1.404A1.98 1.98 0 0 0 10 8c0-1.103-.897-2-2-2s-2 .897-2 2c0 .611.284 1.184.78 1.569a1 1 0 1 1-1.228 1.578A3.967 3.967 0 0 1 4 8c0-2.206 1.794-4 4-4s4 1.794 4 4c0 1.232-.565 2.38-1.552 3.147a.999.999 0 0 1-1.403-.174Z" />
+                    <path d="M8 0a8 8 0 100 16A8 8 0 008 0zm.5 13.5c-3 0-5.5-2.5-5.5-5.5C3 5 5.5 2.5 8.5 2.5c2.5 0 4.5 2 5.3 4.2l-2.8 1c-.4-1-1.4-1.7-2.5-1.7-1.7 0-3 1.3-3 3s1.3 3 3 3c1.1 0 2.1-.7 2.5-1.7l2.8 1c-.8 2.2-2.8 4.2-5.3 4.2z" />
                   </svg>
-                  <span>Productivity</span>
-                </a>
+                  <span>ML & AI Platforms</span>
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`flex items-center whitespace-nowrap transition-colors space-x-2 ${
+                    activeCategory === 'Business Systems' 
+                      ? 'text-purple-500 hover:text-purple-400' 
+                      : 'text-slate-50 hover:text-white'
+                  }`}
+                  onClick={() => handleCategoryClick('Business Systems')}
+                >
+                  <svg className="fill-slate-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <path d="M15 4h-4V1c0-.6-.4-1-1-1H6c-.6 0-1 .4-1 1v3H1c-.6 0-1 .4-1 1v10c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1zM6 2h4v2H6V2zm8 12H2V6h12v8z" />
+                    <path d="M7 9h2v2H7z" />
+                  </svg>
+                  <span>Business Systems</span>
+                </button>
               </li>
             </ul>
             <div>
               <form className="relative flex items-center">
-                <input className="form-input pl-10 bg-transparent rounded-none focus:border-transparent focus:border-b-slate-700 lg:w-9 lg:focus:w-[200px] transition-[width]" type="text" id="search" aria-label="Search…" placeholder="Search…" autoComplete="off" />
+                <input 
+                  className="form-input pl-10 bg-transparent rounded-none focus:border-transparent focus:border-b-slate-700 lg:w-32 lg:focus:w-[200px] transition-[width]" 
+                  type="text" 
+                  id="search" 
+                  aria-label="Search…" 
+                  placeholder="Search…" 
+                  autoComplete="off"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
                 <div className="absolute inset-0 w-9 flex items-center justify-center pointer-events-none">
                   <svg className="absolute fill-slate-50 mx-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
                     <path d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7ZM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5Zm8.707 12.293a.999.999 0 1 1-1.414 1.414L11.9 13.314a8.019 8.019 0 0 0 1.414-1.414l2.393 2.393Z" />
@@ -280,58 +387,51 @@ export default function IntegrationsList() {
 
           {/* Cards */}
           <div>
-            {/* Section #1 */}
-            <div className="mt-12 md:mt-16">
-              <h3 id="engineering" className="scroll-mt-8 text-2xl font-bold inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8">Engineering</h3>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                {items.map((item, index) => (
-                  item.category === 'Engineering' && (
-                    <IntegrationCard item={item} index={index} />
-                  )
-                ))}
-
+            {activeCategory === 'all' ? (
+              /* Display all categories */
+              categories.map((category) => {
+                const categoryItems = items.filter(item => item.category === category);
+                
+                if (categoryItems.length === 0) return null;
+                
+                return (
+                  <div key={category} className="mt-12 md:mt-16">
+                    <h3 
+                      id={category.toLowerCase().replace(/\s+/g, '-')} 
+                      className="scroll-mt-8 text-2xl font-bold inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8"
+                    >
+                      {category}
+                    </h3>
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {categoryItems.map((item, index) => (
+                        <IntegrationCard key={`${category}-${index}`} item={item} index={index} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              /* Display single category or search results */
+              <div className="mt-12 md:mt-16">
+                <h3 
+                  id={activeCategory.toLowerCase().replace(/\s+/g, '-')} 
+                  className="scroll-mt-8 text-2xl font-bold inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8"
+                >
+                  {activeCategory === 'all' && searchTerm ? 'Search Results' : activeCategory}
+                </h3>
+                {filteredItems.length > 0 ? (
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {filteredItems.map((item, index) => (
+                      <IntegrationCard key={`filtered-${index}`} item={item} index={index} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-slate-400">No integrations found. Try a different search term or category.</p>
+                  </div>
+                )}
               </div>
-            </div>
-            {/* Section #2 */}
-            <div className="mt-12 md:mt-16">
-              <h3 id="nocode" className="scroll-mt-8 text-2xl font-bold inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8">No-code</h3>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                {items.map((item, index) => (
-                  item.category === 'No-code' && (
-                    <IntegrationCard item={item} index={index} />
-                  )
-                ))}
-
-              </div>
-            </div>
-            {/* Section #3 */}
-            <div className="mt-12 md:mt-16">
-              <h3 id="collaboration" className="scroll-mt-8 text-2xl font-bold inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8">Collaboration</h3>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                {items.map((item, index) => (
-                  item.category === 'Collaboration' && (
-                    <IntegrationCard item={item} index={index} />
-                  )
-                ))}
-
-              </div>
-            </div>
-            {/* Section #4 */}
-            <div className="mt-12 md:mt-16">
-              <h3 id="productivity" className="scroll-mt-8 text-2xl font-bold inline-flex bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-8">Productivity</h3>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                {items.map((item, index) => (
-                  item.category === 'Productivity' && (
-                    <IntegrationCard item={item} index={index} />
-                  )
-                ))}
-
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -353,20 +453,47 @@ type CardProps = {
 }
 
 export function IntegrationCard({ item, index }: CardProps) {
+  // Add animation to cards
+  const getAnimationDelay = () => {
+    return `${100 + (index % 9) * 50}ms`;
+  };
+  
   return (
-    <div key={index} className="bg-gradient-to-tr from-slate-800 to-slate-800/25 rounded-3xl border border-slate-800 hover:border-slate-700/60 transition-colors group relative">
+    <div 
+      key={index} 
+      className="bg-gradient-to-tr from-slate-800 to-slate-800/25 rounded-3xl border border-slate-800 hover:border-slate-700/60 transition-all duration-300 group relative transform hover:-translate-y-1" 
+      style={{ animationDelay: getAnimationDelay() }}
+      data-aos="fade-up"
+    >
       <div className="flex flex-col p-5 h-full">
         <div className="flex items-center space-x-3 mb-3">
           <div className="relative">
-            <Image src={item.img} width="40" height="40" alt={item.name} />
+            <Image src={item.img} width="40" height="40" alt={item.name} className="transition-transform group-hover:scale-110 duration-300" />
             {item.featured && (
               <Image className="absolute top-0 -right-1" src={Star} width={16} height={16} alt="Star" aria-hidden="true" />
             )}
           </div>
-          <Link className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 group-hover:before:absolute group-hover:before:inset-0" href={item.link}>{item.name}</Link>
+          <Link 
+            className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 group-hover:from-purple-400 group-hover:to-purple-200 group-hover:before:absolute group-hover:before:inset-0 transition-all duration-300" 
+            href={item.link}
+          >
+            {item.name}
+          </Link>
         </div>
         <div className="grow">
-          <div className="text-sm text-slate-400">{item.description}</div>
+          <div className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300">{item.description}</div>
+        </div>
+        <div className="mt-4 flex justify-between items-center">
+          <span className="text-xs text-slate-500">{item.category}</span>
+          <Link 
+            href={item.link} 
+            className="text-xs text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out flex items-center"
+          >
+            Connect
+            <svg className="w-3 h-3 ml-1 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.602 11l-.875-.864L9.33 6.534H0v-1.25h9.33L5.727 1.693l.875-.875 5.091 5.091z" />
+            </svg>
+          </Link>
         </div>
       </div>
     </div>
