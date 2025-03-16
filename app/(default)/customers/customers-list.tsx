@@ -171,8 +171,7 @@ export default function CustomersShowcase() {
       if (testimonialTimeout) clearTimeout(testimonialTimeout);
     };
   }, [interacting, autoRotate, featuredCustomers.length]);
-
-  // Handle mouse movement for interactive rotation
+ // Handle mouse movement for interactive rotation
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!interacting || !globeRef.current) return;
     
@@ -190,7 +189,7 @@ export default function CustomersShowcase() {
     });
   };
   
-  // Handle touch start for mobile
+  // Simplified touch start for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!globeRef.current) return;
     
@@ -198,57 +197,75 @@ export default function CustomersShowcase() {
     setLastTouch({ x: touch.clientX, y: touch.clientY });
     setTouchStartPos({ x: touch.clientX, y: touch.clientY });
     setTouchMoved(false);
-    setInteracting(true);
-    setAutoRotate(false);
+    
+    // Don't immediately set interacting - wait to see if it's a drag
+    setTimeout(() => {
+      if (!touchMoved) {
+        setInteracting(true);
+        setAutoRotate(false);
+      }
+    }, 100);
   };
   
-  // Handle touch movement for mobile - improved for better sensitivity
+  // Handle touch movement for mobile - improved for better tap detection
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!interacting || !globeRef.current) return;
-    
     const touch = e.touches[0];
     const { clientX, clientY } = touch;
     
-    // Calculate delta from last position
-    const deltaX = clientX - lastTouch.x;
-    const deltaY = clientY - lastTouch.y;
-    
-    // Detect if touch has moved significantly
+    // Calculate distance moved
     const distanceMoved = Math.sqrt(
       Math.pow(clientX - touchStartPos.x, 2) + 
       Math.pow(clientY - touchStartPos.y, 2)
     );
     
-    if (distanceMoved > 10) {
+    // Only consider it a move/drag if moved more than threshold
+    if (distanceMoved > 15) {
       setTouchMoved(true);
+      setInteracting(true);
+      setAutoRotate(false);
+      
+      // Calculate delta from last position
+      const deltaX = clientX - lastTouch.x;
+      const deltaY = clientY - lastTouch.y;
+      
+      // Update last touch position
+      setLastTouch({ x: clientX, y: clientY });
+      
+      // Apply rotation with improved sensitivity for mobile
+      setRotation(prev => ({
+        x: prev.x + deltaY * 0.3,
+        y: prev.y - deltaX * 0.3
+      }));
+    }
+  };
+  
+  // Handle touch end with improved tap detection
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    // If the user didn't move (or moved very little), it's a tap, not a drag
+    if (!touchMoved) {
+      // Check if we tapped on a customer node
+      const target = e.target as HTMLElement;
+      const customerNode = target.closest('[data-customer-id]');
+      
+      if (customerNode) {
+        const customerId = parseInt(customerNode.getAttribute('data-customer-id') || '0', 10);
+        setActiveCustomer(customerId);
+        setShowingTestimonial(true);
+        setTimeout(() => setShowingTestimonial(false), 7000);
+      }
     }
     
-    // Update last touch position
-    setLastTouch({ x: clientX, y: clientY });
-    
-    // Apply rotation with improved sensitivity for mobile
-    setRotation(prev => ({
-      x: prev.x + deltaY * 0.3,
-      y: prev.y - deltaX * 0.3
-    }));
-  };
-
-  // Handle touch end with click detection
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    // Reset state
     setInteracting(false);
+    setTouchMoved(false);
     setTimeout(() => setAutoRotate(true), 2000);
   };
 
-  // Handle customer selection on touch
-  const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
-    // Prevent default behavior
+  // Handle customer selection (for mouse clicks)
+  const handleCustomerClick = (customerId: number, e: React.MouseEvent) => {
+    // Prevent event from bubbling up to the container
     e.preventDefault();
     e.stopPropagation();
-    
-    // Only trigger if this wasn't a drag operation (for mobile)
-    if (e.type === 'touchend' && touchMoved) {
-      return;
-    }
     
     setActiveCustomer(customerId);
     setShowingTestimonial(true);
@@ -435,10 +452,11 @@ export default function CustomersShowcase() {
                   }}
                 ></div>
               )}
+              
               <div 
                 className={`relative group ${isActive ? 'scale-110' : 'scale-100'} transition-transform duration-300`}
-                onClick={(e) => handleCustomerTouch(customer.id, e)}
-                onTouchEnd={(e) => handleCustomerTouch(customer.id, e)}
+                onClick={(e) => handleCustomerClick(customer.id, e)}
+                data-customer-id={customer.id}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-blue-500/40 blur-lg rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 
@@ -462,11 +480,28 @@ export default function CustomersShowcase() {
                 <div 
                   className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap text-xs font-medium text-white bg-slate-900/90 px-2 py-1 rounded backdrop-blur-sm border border-slate-700/50 transition-all duration-300 ${isActive || interacting ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
                   style={{
-                    textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                    zIndex: 30 // Ensure the tooltip is visible
                   }}
                 >
                   {customer.name}
                 </div>
+                
+                {/* Mobile-specific helper - invisible but larger touch target */}
+                {isMobile && (
+                  <div 
+                    className="absolute inset-0 cursor-pointer"
+                    style={{
+                      width: `${nodeSize * 2}px`,
+                      height: `${nodeSize * 2}px`,
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      zIndex: 25
+                    }}
+                    data-customer-id={customer.id}
+                  />
+                )}
               </div>
             </div>
           );
@@ -519,12 +554,219 @@ export default function CustomersShowcase() {
         </svg>
         
         {/* Instructions overlay - mobile optimized */}
-        <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/70 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-300 pointer-events-none transition-opacity duration-500 opacity-70 border border-slate-700/30 ${isMobile ? 'w-72 text-center' : ''}`}>
+        <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-200 pointer-events-none transition-opacity duration-500 opacity-90 border border-slate-700/50 ${isMobile ? 'w-72 text-center' : ''}`}>
           {isMobile
-            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap any customer to view their story')
+            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap the colored dots to view customer stories')
             : (interacting ? '🔄 Drag to explore our customer universe' : '🖱️ Click on any customer to see their story')}
         </div>
       </div>
+      
+      {/* Active customer detail */}
+      {showCustomerDetail(featuredCustomers[activeCustomer])}
+      return (
+    <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
+      {/* Interactive customer showcase */}
+      <div 
+        ref={globeRef}
+        className="absolute inset-0 w-full h-full cursor-move"
+        onMouseDown={() => {
+          setInteracting(true);
+          setAutoRotate(false);
+        }}
+        onMouseUp={() => {
+          setInteracting(false);
+          setTimeout(() => setAutoRotate(true), 2000);
+        }}
+        onMouseLeave={() => {
+          if (interacting) {
+            setInteracting(false);
+            setTimeout(() => setAutoRotate(true), 2000);
+          }
+        }}
+        onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Enhanced background effects - larger blobs */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-purple-500/10 blur-3xl animate-pulse"></div>
+        <div className="absolute left-1/3 top-1/3 -translate-x-1/2 -translate-y-1/2 w-40 md:w-64 h-40 md:h-64 rounded-full bg-blue-500/15 blur-3xl animate-pulse duration-7000"></div>
+        <div className="absolute left-2/3 top-2/3 -translate-x-1/2 -translate-y-1/2 w-48 md:w-72 h-48 md:h-72 rounded-full bg-orange-500/10 blur-3xl animate-pulse duration-5000"></div>
+        
+        {/* Particles for cosmic effect - slightly increased quantity */}
+        <Particles className="absolute inset-0" quantity={isMobile ? 30 : 60} />
+        
+        {/* Future customer points - reduced on mobile */}
+        {(!isMobile || futureCustomers.length < 4) && futureCustomers.map((customer) => {
+          const pos = calculate3DPosition(customer.position, 0.8);
+          
+          // Only render if in front of the "camera" for performance
+          if (pos.z < -10) return null;
+          
+          return (
+            <div
+              key={customer.id}
+              className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
+              style={{
+                left: `calc(50% + ${pos.x * (isMobile ? 2.5 : 4)}px)`,
+                top: `calc(50% + ${pos.y * (isMobile ? 2 : 3)}px)`,
+                zIndex: Math.round(pos.z),
+                opacity: pos.opacity * 0.6, // Increased opacity
+                filter: `brightness(${pos.brightness}%)`,
+              }}
+            >
+              <div className="w-3 h-3 md:w-4 md:h-4 bg-slate-500/40 rounded-full backdrop-blur-sm border border-slate-400/30 animate-pulse"></div>
+            </div>
+          );
+        })}
+        
+        {/* Featured customer points - Larger size and improved interaction */}
+        {featuredCustomers.map((customer) => {
+          const pos = calculate3DPosition(customer.position);
+          const isActive = activeCustomer === customer.id;
+          
+          // Skip rendering if behind the camera for performance
+          if (pos.z < -15) return null;
+          
+          // Increased node size
+          const nodeSize = isMobile ? 20 : 28;
+          const glowSize = isMobile ? 40 : 64;
+          
+          return (
+            <div
+              key={customer.id}
+              className={`absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out ${isActive ? 'z-20' : ''}`}
+              style={{
+                left: `calc(50% + ${pos.x * (isMobile ? 3 : 5)}px)`,
+                top: `calc(50% + ${pos.y * (isMobile ? 2.5 : 4)}px)`,
+                zIndex: Math.round(pos.z) + (isActive ? 10 : 0),
+                opacity: pos.opacity,
+                filter: `brightness(${pos.brightness}%)`,
+                transform: `translate(-50%, -50%) scale(${isActive ? pos.scale * 1.2 : pos.scale})`
+              }}
+            >
+              {/* Enhanced glow effect for active node */}
+              {isActive && (
+                <div 
+                  className="absolute rounded-full animate-pulse-slow"
+                  style={{
+                    width: `${glowSize}px`,
+                    height: `${glowSize}px`,
+                    background: `radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0) 70%)`,
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                ></div>
+              )}
+              
+              <div 
+                className={`relative group ${isActive ? 'scale-110' : 'scale-100'} transition-transform duration-300`}
+                onClick={(e) => handleCustomerClick(customer.id, e)}
+                data-customer-id={customer.id}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-blue-500/40 blur-lg rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                
+                {/* Larger customer node with improved visual appearance */}
+                <div 
+                  className={`p-1 rounded-full backdrop-blur bg-gradient-to-r ${customer.color} shadow-lg overflow-hidden transition-all duration-500 ${isActive ? 'ring-2 ring-purple-400 ring-offset-2 ring-offset-slate-900' : ''}`}
+                  style={{width: `${nodeSize}px`, height: `${nodeSize}px`}}
+                >
+                  <div className="w-full h-full rounded-full bg-slate-900/80 flex items-center justify-center p-2">
+                    <Image 
+                      src={customer.img} 
+                      alt={customer.name} 
+                      width={nodeSize - 4} 
+                      height={nodeSize - 4} 
+                      className="w-full h-full object-contain drop-shadow-xl"
+                    />
+                  </div>
+                </div>
+                
+                {/* Customer name tooltip - improved visibility */}
+                <div 
+                  className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap text-xs font-medium text-white bg-slate-900/90 px-2 py-1 rounded backdrop-blur-sm border border-slate-700/50 transition-all duration-300 ${isActive || interacting ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+                  style={{
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                    zIndex: 30 // Ensure the tooltip is visible
+                  }}
+                >
+                  {customer.name}
+                </div>
+                
+                {/* Mobile-specific helper - invisible but larger touch target */}
+                {isMobile && (
+                  <div 
+                    className="absolute inset-0 cursor-pointer"
+                    style={{
+                      width: `${nodeSize * 2}px`,
+                      height: `${nodeSize * 2}px`,
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      zIndex: 25
+                    }}
+                    data-customer-id={customer.id}
+                  />
+                )}
+              </div>
+            </div>
+          );
+        })}
+        {/* Connection lines - enhanced with color gradients */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(139, 92, 246, 0.15)" />
+              <stop offset="50%" stopColor="rgba(139, 92, 246, 0.3)" />
+              <stop offset="100%" stopColor="rgba(139, 92, 246, 0.15)" />
+            </linearGradient>
+            <linearGradient id="ticeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(249, 115, 22, 0.15)" />
+              <stop offset="50%" stopColor="rgba(249, 115, 22, 0.3)" />
+              <stop offset="100%" stopColor="rgba(249, 115, 22, 0.15)" />
+            </linearGradient>
+          </defs>
+          
+          {featuredCustomers.map((customer, index) => {
+            const pos1 = calculate3DPosition(customer.position);
+            const nextIndex = (index + 1) % featuredCustomers.length;
+            const pos2 = calculate3DPosition(featuredCustomers[nextIndex].position);
+            
+            // Only render if both points are in front
+            if (pos1.z > -10 && pos2.z > -10) {
+              const opacity = Math.min(pos1.opacity, pos2.opacity) * 0.7;
+              // Use Tice gradient for connections to/from Tice Services
+              const useOrangeGradient = customer.name === 'Tice Services' || featuredCustomers[nextIndex].name === 'Tice Services';
+              const gradientId = useOrangeGradient ? 'ticeGradient' : 'lineGradient';
+              
+              return (
+                <line
+                  key={`line-${index}`}
+                  x1={`calc(50% + ${pos1.x * (isMobile ? 3 : 5)}px)`}
+                  y1={`calc(50% + ${pos1.y * (isMobile ? 2.5 : 4)}px)`}
+                  x2={`calc(50% + ${pos2.x * (isMobile ? 3 : 5)}px)`}
+                  y2={`calc(50% + ${pos2.y * (isMobile ? 2.5 : 4)}px)`}
+                  stroke={`url(#${gradientId})`}
+                  strokeWidth="2"
+                  strokeDasharray="5,5"
+                  opacity={opacity}
+                  className="animate-pulse"
+                />
+              );
+            }
+            return null;
+          })}
+        </svg>
+        
+        {/* Instructions overlay - mobile optimized */}
+        <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-200 pointer-events-none transition-opacity duration-500 opacity-90 border border-slate-700/50 ${isMobile ? 'w-72 text-center' : ''}`}>
+          {isMobile
+            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap the colored dots to view customer stories')
+            : (interacting ? '🔄 Drag to explore our customer universe' : '🖱️ Click on any customer to see their story')}
+        </div>
+      </div>
+      
       {/* Active customer detail */}
       {showCustomerDetail(featuredCustomers[activeCustomer])}
       
