@@ -27,17 +27,38 @@ import CustomerAvatar01 from '@/public/images/new-05.svg'
 import CustomerAvatar02 from '@/public/images/new-08.svg'
 import Particles from '@/components/particles'
 
+interface Customer {
+  id: number;
+  name: string;
+  position: { x: number; y: number; z: number };
+  img: any;
+  bg: any;
+  link: string;
+  testimonial: string;
+  person: string;
+  color: string;
+}
+
+interface Position3D {
+  x: number;
+  y: number;
+  z: number;
+  scale: number;
+  opacity: number;
+  brightness: number;
+}
+
 export default function CustomersShowcase() {
   // State for the interactive globe experience
   const [activeCustomer, setActiveCustomer] = useState(0);
   const [interacting, setInteracting] = useState(false);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const globeRef = useRef(null);
+  const globeRef = useRef<HTMLDivElement>(null);
   const [autoRotate, setAutoRotate] = useState(true);
   const [showingTestimonial, setShowingTestimonial] = useState(false);
 
   // Define array of actual customers we have
-  const featuredCustomers = [
+  const featuredCustomers: Customer[] = [
     {
       id: 0,
       name: 'Carolina Boat Company',
@@ -86,7 +107,7 @@ export default function CustomersShowcase() {
 
   // Auto-rotation effect
   useEffect(() => {
-    let rotationInterval;
+    let rotationInterval: NodeJS.Timeout | null = null;
     
     if (autoRotate && !interacting) {
       rotationInterval = setInterval(() => {
@@ -97,29 +118,42 @@ export default function CustomersShowcase() {
       }, 50);
     }
     
-    return () => clearInterval(rotationInterval);
+    return () => {
+      if (rotationInterval) clearInterval(rotationInterval);
+    };
   }, [autoRotate, interacting]);
 
   // Handle auto-rotation and customer cycling
   useEffect(() => {
+    let customerInterval: NodeJS.Timeout | null = null;
+    let testimonialTimeout: NodeJS.Timeout | null = null;
+    
     if (!interacting && autoRotate) {
-      const interval = setInterval(() => {
+      customerInterval = setInterval(() => {
         setActiveCustomer(prev => (prev + 1) % featuredCustomers.length);
         setShowingTestimonial(true);
         
         // Hide testimonial after a delay
-        setTimeout(() => {
+        testimonialTimeout = setTimeout(() => {
           setShowingTestimonial(false);
         }, 7000);
       }, 10000);
       
-      return () => clearInterval(interval);
+      return () => {
+        if (customerInterval) clearInterval(customerInterval);
+        if (testimonialTimeout) clearTimeout(testimonialTimeout);
+      };
     }
+    
+    return () => {
+      if (customerInterval) clearInterval(customerInterval);
+      if (testimonialTimeout) clearTimeout(testimonialTimeout);
+    };
   }, [interacting, autoRotate, featuredCustomers.length]);
 
   // Handle mouse movement for interactive rotation
-  const handleMouseMove = (e) => {
-    if (!interacting) return;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!interacting || !globeRef.current) return;
     
     const { clientX, clientY } = e;
     const { width, height } = globeRef.current.getBoundingClientRect();
@@ -136,7 +170,7 @@ export default function CustomersShowcase() {
   };
 
   // Calculate 3D position with rotation for each customer point
-  const calculate3DPosition = (position, size = 1) => {
+  const calculate3DPosition = (position: { x: number; y: number; z: number }, size = 1): Position3D => {
     // Convert to radians
     const radX = (rotation.x * Math.PI) / 180;
     const radY = (rotation.y * Math.PI) / 180;
@@ -173,7 +207,7 @@ export default function CustomersShowcase() {
   };
 
   // Show active customer detail
-  const showCustomerDetail = (customer) => {
+  const showCustomerDetail = (customer: Customer | undefined) => {
     if (!customer) return null;
     
     return (
