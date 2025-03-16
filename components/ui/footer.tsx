@@ -1,102 +1,135 @@
-import Logo from './logo'
+import Link from 'next/link'
+import Image from 'next/image'
+import Logo from '@/public/images/logo.svg'
 
 export default function Footer() {
   return (
     <footer>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-        {/* Blocks */}
+        {/* Top area: Blocks */}
         <div className="grid sm:grid-cols-12 gap-8 py-8 md:py-12">
 
           {/* 1st block */}
-          <div className="sm:col-span-12 lg:col-span-4 order-1 lg:order-none">
-            <div className="h-full flex flex-col sm:flex-row lg:flex-col justify-between">
-              <div className="mb-4 sm:mb-0">
-                <div className="mb-4">
-                  <Logo />
-                </div>
-                <div className="text-sm text-slate-300">rosedevelopment.org <span className="text-slate-500">-</span> all rights reserved</div>
-              </div>
-              {/* Social links */}
-              <ul className="flex">
-
-                <li className="ml-2">
-                  <a className="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out" href="#0" aria-label="Dev.to">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                      <path className="w-8 h-8 fill-current" d="M12.29 14.3a.69.69 0 0 0-.416-.155h-.623v3.727h.623a.689.689 0 0 0 .416-.156.543.543 0 0 0 .21-.466v-2.488a.547.547 0 0 0-.21-.462ZM22.432 8H9.568C8.704 8 8.002 8.7 8 9.564v12.872A1.568 1.568 0 0 0 9.568 24h12.864c.864 0 1.566-.7 1.568-1.564V9.564A1.568 1.568 0 0 0 22.432 8Zm-8.925 9.257a1.631 1.631 0 0 1-1.727 1.687h-1.657v-5.909h1.692a1.631 1.631 0 0 1 1.692 1.689v2.533ZM17.1 14.09h-1.9v1.372h1.163v1.057H15.2v1.371h1.9v1.056h-2.217a.72.72 0 0 1-.74-.7v-4.471a.721.721 0 0 1 .7-.739H17.1v1.054Zm3.7 4.118c-.471 1.1-1.316.88-1.694 0l-1.372-5.172H18.9l1.058 4.064 1.056-4.062h1.164l-1.378 5.17Z" />
-                    </svg>
-                  </a>
-                </li>
-                <li className="ml-2">
-                  <a className="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out" href="#0" aria-label="Github">
-                    <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16 8.2c-4.4 0-8 3.6-8 8 0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4V22c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8.6-.2 1.3-.3 2-.3s1.4.1 2 .3c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.7-3.7 3.9.3.4.6.9.6 1.6v2.2c0 .2.1.5.6.4 3.2-1.1 5.5-4.1 5.5-7.6-.1-4.4-3.7-8-8.1-8z" />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
+          <div className="sm:col-span-12 lg:col-span-4 lg:max-w-xs">
+            <div className="mb-2">
+              <Link href="/" aria-label="Cruip">
+                <Image src={Logo} width={38} height={38} alt="Rose Development" />
+              </Link>
+            </div>
+            <div className="text-sm text-slate-300">
+              <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Terms</Link> · <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Privacy Policy</Link>
             </div>
           </div>
 
           {/* 2nd block */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-sm text-slate-50 font-medium mb-2">Products</h6>
+            <h6 className="text-sm text-slate-200 font-medium mb-2">Products</h6>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Features</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">AI Analytics</Link>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Integrations</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Data Processing</Link>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Pricing & Plans</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Predictive Models</Link>
               </li>
-              
+              <li>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Enterprise Solutions</Link>
+              </li>
             </ul>
           </div>
 
           {/* 3rd block */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-sm text-slate-50 font-medium mb-2">Company</h6>
+            <h6 className="text-sm text-slate-200 font-medium mb-2">Resources</h6>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">About us</a>
+                <Link href="/integrations" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Integrations</Link>
+              </li>
+              <li>
+                <Link href="/customers" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Customers</Link>
+              </li>
+              <li>
+                <Link href="/changelog" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Changelog</Link>
+              </li>
+              <li>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Documentation</Link>
               </li>
             </ul>
           </div>
 
           {/* 4th block */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-sm text-slate-50 font-medium mb-2">Resources</h6>
+            <h6 className="text-sm text-slate-200 font-medium mb-2">Company</h6>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Community</a>
+                <Link href="/about" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">About us</Link>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Terms of service</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Diversity & Inclusion</Link>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Report a vulnerability</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Blog</Link>
+              </li>
+              <li>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Careers</Link>
               </li>
             </ul>
           </div>
 
           {/* 5th block */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-sm text-slate-50 font-medium mb-2">Legals</h6>
+            <h6 className="text-sm text-slate-200 font-medium mb-2">Connect</h6>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Refund policy</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Twitter</Link>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Terms & Conditions</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">LinkedIn</Link>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Privacy policy</a>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Facebook</Link>
               </li>
-              
+              <li>
+                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Contact us</Link>
+              </li>
             </ul>
           </div>
+
+        </div>
+
+        {/* Bottom area */}
+        <div className="md:flex md:items-center md:justify-between py-6 md:py-8 border-t border-slate-800">
+
+          {/* Social links */}
+          <ul className="flex space-x-6 mb-4 md:order-1 md:ml-4 md:mb-0">
+            <li>
+              <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out" aria-label="Twitter">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 10.025C20 4.491 15.52 0 10 0S0 4.491 0 10.025c0 4.852 3.44 8.892 8 9.825v-6.817H6v-3.008h2V7.52a3.508 3.508 0 0 1 3.5-3.509H14v3.008h-2c-.55 0-1 .45-1 1.002v2.005h3v3.008h-3V20c5.05-.501 9-4.772 9-9.975Z" />
+                </svg>
+              </Link>
+            </li>
+            <li>
+              <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out" aria-label="Twitter">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 3.897c-.75.33-1.5.574-2.25.676.8-.486 1.4-1.262 1.7-2.202-.75.461-1.6.773-2.5.972-.75-.815-1.8-1.343-2.95-1.343-2.2 0-4 1.8-4 4.062 0 .301.05.614.1.904-3.35-.164-6.3-1.793-8.3-4.218-.35.591-.55 1.306-.55 2.032 0 1.4.7 2.651 1.8 3.381-.65 0-1.3-.204-1.8-.506v.059c0 1.953 1.4 3.595 3.2 3.953-.3.103-.65.14-1.05.14-.25 0-.5 0-.75-.055.5 1.605 2 2.757 3.75 2.795-1.4 1.097-3.1 1.754-5 1.754-.35 0-.65-.023-.95-.059 1.75 1.133 3.85 1.789 6.15 1.789 7.4 0 11.45-6.154 11.45-11.5 0-.181 0-.34-.05-.521.8-.301 1.45-1.038 2-1.731Z" />
+                </svg>
+              </Link>
+            </li>
+            <li>
+              <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out" aria-label="Github">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.041 0C4.52 0 0 4.612 0 10.25c0 4.526 2.845 8.37 6.862 9.737.502.085.669-.257.669-.516v-1.813c-2.761.602-3.347-1.357-3.347-1.357-.443-1.159-1.095-1.458-1.095-1.458-.894-.642.084-.6.084-.6.973.073 1.5 1.043 1.5 1.043.885 1.587 2.307 1.117 2.846.857.085-.643.335-1.083.627-1.33-2.22-.257-4.555-1.158-4.555-5.113 0-1.13.39-2.057 1.026-2.773-.084-.257-.46-1.287.126-2.688 0 0 .837-.257 2.761 1.073a9.167 9.167 0 0 1 2.51-.344c.852 0 1.705.114 2.51.344 1.924-1.33 2.76-1.073 2.76-1.073.586 1.401.21 2.43.127 2.688.627.716 1.026 1.643 1.026 2.773 0 3.956-2.345 4.856-4.566 5.113.376.33.71.945.71 1.9v2.83c0 .26.167.602.67.516C17.158 18.62 20 14.784 20 10.25 20 4.612 15.5 0 10.041 0Z" />
+                </svg>
+              </Link>
+            </li>
+          </ul>
+
+          {/* Copyrights note */}
+          <div className="text-sm text-slate-400 mr-4">&copy; Rose Development. All rights reserved.</div>
 
         </div>
 
@@ -104,3 +137,4 @@ export default function Footer() {
     </footer>
   )
 }
+ 
