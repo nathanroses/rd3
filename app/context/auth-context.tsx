@@ -1,3 +1,4 @@
+
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
@@ -7,6 +8,7 @@ interface User {
   id: string
   email: string
   name: string
+  provider?: string
 }
 
 interface AuthContextType {
@@ -17,6 +19,7 @@ interface AuthContextType {
   signUp: (email: string, name: string, company: string, password: string, referrer: string) => Promise<void>
   signOut: () => void
   resetPassword: (email: string) => Promise<void>
+  signInWithSocial: (provider: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -31,7 +34,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      try {
+        setUser(JSON.parse(storedUser))
+      } catch (err) {
+        localStorage.removeItem('user')
+      }
     }
     setLoading(false)
   }, [])
@@ -49,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise(resolve => setTimeout(resolve, 800))
       
       // Create a dummy user (in a real app, this would come from your backend)
       const newUser = {
@@ -71,6 +78,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  // Social sign-in function
+  const signInWithSocial = async (provider: string) => {
+    try {
+      setLoading(true)
+      setError(null)
+      
+      // In a real app, this would redirect to OAuth flow
+      // For demo purposes, we'll create a mock user
+      await new Promise(resolve => setTimeout(resolve, 800))
+      
+      const mockEmails: Record<string, string> = {
+        'twitter': 'user@twitter.com',
+        'github': 'user@github.com'
+      }
+      
+      const newUser = {
+        id: Math.random().toString(36).substring(2, 9),
+        email: mockEmails[provider.toLowerCase()] || `user@${provider.toLowerCase()}.com`,
+        name: `${provider} User`,
+        provider
+      }
+      
+      localStorage.setItem('user', JSON.stringify(newUser))
+      setUser(newUser)
+      
+      router.push('/')
+    } catch (err: any) {
+      setError(err.message || `Failed to sign in with ${provider}`)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // Mock sign-up function
   const signUp = async (email: string, name: string, company: string, password: string, referrer: string) => {
     try {
@@ -83,7 +123,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise(resolve => setTimeout(resolve, 800))
       
       // Create a dummy user
       const newUser = {
@@ -123,7 +163,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise(resolve => setTimeout(resolve, 800))
       
       // In a real app, this would send a password reset email
       
@@ -137,7 +177,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, signIn, signUp, signOut, resetPassword }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading, 
+      error, 
+      signIn, 
+      signUp, 
+      signOut, 
+      resetPassword,
+      signInWithSocial 
+    }}>
       {children}
     </AuthContext.Provider>
   )
