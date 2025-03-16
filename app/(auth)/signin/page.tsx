@@ -3,20 +3,73 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import AuthLogo from '../auth-logo'
-import { useAuth } from '@/app/context/auth-context'
 
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { signIn, loading, error, signInWithSocial } = useAuth()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await signIn(email, password)
+    
+    // Basic validation
+    if (!email || !email.includes('@')) {
+      setError('Please enter a valid email address')
+      return
+    }
+    
+    if (!password || password.length < 6) {
+      setError('Password must be at least 6 characters')
+      return
+    }
+    
+    setLoading(true)
+    setError(null)
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 800))
+      
+      // Store user info in localStorage to simulate login
+      localStorage.setItem('user', JSON.stringify({
+        id: '1',
+        email,
+        name: email.split('@')[0]
+      }))
+      
+      // Reload the page to update UI
+      window.location.href = '/'
+    } catch (err) {
+      setError('Failed to sign in. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleSocialSignIn = async (provider: string) => {
-    await signInWithSocial(provider)
+    setLoading(true)
+    setError(null)
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 800))
+      
+      // Store user info in localStorage to simulate login
+      localStorage.setItem('user', JSON.stringify({
+        id: Math.random().toString(36).substring(2, 9),
+        email: `user@${provider.toLowerCase()}.com`,
+        name: `${provider} User`,
+        provider
+      }))
+      
+      // Reload the page to update UI
+      window.location.href = '/'
+    } catch (err) {
+      setError(`Failed to sign in with ${provider}. Please try again.`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -97,6 +150,7 @@ export default function SignIn() {
         {/* Social login */}
         <div className="flex space-x-3">
           <button 
+            type="button"
             className="btn text-slate-300 hover:text-white transition duration-150 ease-in-out w-full group [background:linear-gradient(theme(colors.slate.900),_theme(colors.slate.900))_padding-box,_conic-gradient(theme(colors.slate.400),_theme(colors.slate.700)_25%,_theme(colors.slate.700)_75%,_theme(colors.slate.400)_100%)_border-box] relative before:absolute before:inset-0 before:bg-slate-800/30 before:rounded-full before:pointer-events-none h-9"
             onClick={() => handleSocialSignIn('Twitter')}
             disabled={loading}
@@ -109,6 +163,7 @@ export default function SignIn() {
             </span>
           </button>
           <button 
+            type="button"
             className="btn text-slate-300 hover:text-white transition duration-150 ease-in-out w-full group [background:linear-gradient(theme(colors.slate.900),_theme(colors.slate.900))_padding-box,_conic-gradient(theme(colors.slate.400),_theme(colors.slate.700)_25%,_theme(colors.slate.700)_75%,_theme(colors.slate.400)_100%)_border-box] relative before:absolute before:inset-0 before:bg-slate-800/30 before:rounded-full before:pointer-events-none h-9"
             onClick={() => handleSocialSignIn('GitHub')}
             disabled={loading}
