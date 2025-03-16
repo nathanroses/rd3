@@ -81,7 +81,7 @@ export default function CustomersShowcase() {
       position: { x: 15, y: -20, z: 10 },
       img: CustomerImg05,
       bg: CustomerBg05,
-      link: '/customers/single-post',
+      link: '/customers/single-post/page.tsx',
       testimonial: 'We revolutionized our tool management system, bringing unprecedented efficiency to our daily operations.',
       person: 'Ghetz',
       color: 'from-blue-600 to-blue-400'
@@ -92,7 +92,7 @@ export default function CustomersShowcase() {
       position: { x: 25, y: -15, z: 5 },
       img: CustomerImg02,
       bg: CustomerBg02,
-      link: '/customers/single-post',
+      link: '/customers/single-post/page.tsx',
       testimonial: 'We transformed our recruitment process into a competitive advantage. We now attract the best talent in the industry.',
       person: 'Zach',
       color: 'from-green-600 to-green-400'
@@ -103,7 +103,7 @@ export default function CustomersShowcase() {
       position: { x: 5, y: 30, z: -10 },
       img: CustomerImg03,
       bg: CustomerBg03,
-      link: '/customers/single-post',
+      link: '/customers/single-post/page.tsx',
       testimonial: 'We gained incredible insights into our supply chain data, enabling smarter decision-making.',
       person: 'Noor',
       color: 'from-purple-600 to-purple-400'
@@ -114,7 +114,7 @@ export default function CustomersShowcase() {
       position: { x: -30, y: -10, z: 20 },
       img: CustomerImg04,
       bg: CustomerBg04,
-      link: '/customers/single-post',
+      link: '/customers/single-post/page.tsx',
       testimonial: 'Integrating AI analytics into our operations was a game-changer. We can now predict, adapt, and optimize like never before.',
       person: 'Tice',
       color: 'from-orange-500 to-amber-400'
