@@ -229,37 +229,6 @@ const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
   setIsTap(false);
   setTimeout(() => setAutoRotate(true), 2000);
 }, [isTap, findTappedCustomer, handleCustomerTouch]);
-  // Helper function to find tapped customer
-  const findTappedCustomer = (touch: React.Touch): number | null => {
-    if (!globeRef.current) return null;
-    
-    const rect = globeRef.current.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-
-    for (let i = 0; i < featuredCustomers.length; i++) {
-      const customer = featuredCustomers[i];
-      const pos = calculate3DPosition(customer.position);
-      
-      // Calculate node position
-      const nodeX = rect.width / 2 + pos.x * (isMobile ? 3 : 5);
-      const nodeY = rect.height / 2 + pos.y * (isMobile ? 2.5 : 4);
-      
-      // Node size for hit detection (slightly larger on mobile)
-      const nodeSize = isMobile ? 40 : 28;
-      
-      // Check if touch is within the node
-      const distance = Math.sqrt(
-        Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2)
-      );
-      
-      if (distance < nodeSize / 2) {
-        return customer.id;
-      }
-    }
-    
-    return null;
-  };
 
 
 
