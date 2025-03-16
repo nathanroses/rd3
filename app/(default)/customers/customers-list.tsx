@@ -352,6 +352,7 @@ export default function CustomersShowcase() {
       </div>
     );
   };
+
   return (
     <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
       {/* Interactive customer showcase */}
