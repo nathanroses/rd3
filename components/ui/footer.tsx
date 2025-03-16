@@ -35,9 +35,6 @@ export default function Footer() {
               <li>
                 <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Predictive Models</Link>
               </li>
-              <li>
-                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Enterprise Solutions</Link>
-              </li>
             </ul>
           </div>
 
@@ -66,9 +63,6 @@ export default function Footer() {
             <ul className="text-sm space-y-2">
               <li>
                 <Link href="/about" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">About us</Link>
-              </li>
-              <li>
-                <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Diversity & Inclusion</Link>
               </li>
               <li>
                 <Link href="#0" className="text-slate-300 hover:text-white transition duration-150 ease-in-out">Blog</Link>
