@@ -51,7 +51,7 @@ export default function Team() {
     },
     {
       img: Member07,
-      name: 'Rachel Livestine',
+      name: 'Caroline Watkins',
       role: 'Administration',
       twitter: '#0',
     },
