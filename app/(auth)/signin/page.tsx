@@ -1,12 +1,20 @@
-export const metadata = {
-  title: 'Sign In - Rose Development',
-  description: 'Page description',
-}
+'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import AuthLogo from '../auth-logo'
+import { useAuth } from '@/app/context/auth-context'
 
 export default function SignIn() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { signIn, loading, error } = useAuth()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await signIn(email, password)
+  }
+
   return (
     <>
       {/* Page header */}
@@ -19,24 +27,52 @@ export default function SignIn() {
 
       {/* Form */}
       <div className="max-w-sm mx-auto">
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg p-3 mb-4">
+            {error}
+          </div>
+        )}
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="email">Email</label>
-              <input id="email" className="form-input w-full" type="email" required />
+              <input 
+                id="email" 
+                className="form-input w-full" 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required 
+              />
             </div>
             <div>
               <div className="flex justify-between">
                 <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="password">Password</label>
                 <Link className="text-sm font-medium text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out ml-2" href="/reset-password">Forgot?</Link>
               </div>
-              <input id="password" className="form-input w-full" type="password" autoComplete="on" required />
+              <input 
+                id="password" 
+                className="form-input w-full" 
+                type="password" 
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
             </div>
           </div>
           <div className="mt-6">
-            <button className="btn text-sm text-white bg-purple-500 hover:bg-purple-600 w-full shadow-sm group">
-              Sign In <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+            <button 
+              type="submit" 
+              className="btn text-sm text-white bg-purple-500 hover:bg-purple-600 w-full shadow-sm group"
+              disabled={loading}
+            >
+              {loading ? 'Signing in...' : (
+                <>
+                  Sign In <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+                </>
+              )}
             </button>
           </div>
         </form>
@@ -73,7 +109,6 @@ export default function SignIn() {
             </span>
           </button>
         </div>
-
       </div>
     </>
   )
