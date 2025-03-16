@@ -21,7 +21,8 @@ export default function TestimonialsCarousel() {
   const [swiperInitialized, setSwiperInitialized] = useState<boolean>(false)
 
   useEffect(() => {
-    const carousel = new Swiper('.Rose Development-carousel', {
+    // Fix: Changed the class selector to remove space and use a more valid CSS selector name
+    const carousel = new Swiper('.testimonials-carousel', {
       breakpoints: {
         320: {
           slidesPerView: 1
@@ -44,6 +45,13 @@ export default function TestimonialsCarousel() {
       },
     })
     setSwiperInitialized(true)
+
+    return () => {
+      // Clean up swiper when component unmounts
+      if (carousel && carousel.destroy) {
+        carousel.destroy();
+      }
+    }
   }, [])
 
   return (
@@ -63,7 +71,8 @@ export default function TestimonialsCarousel() {
           {/* Carousel built with Swiper.js [https://swiperjs.com/] */}
           {/* * Custom styles in src/css/additional-styles/theme.scss */}
           <div className="relative before:absolute before:inset-0 before:-translate-x-full before:z-20 before:bg-gradient-to-l before:from-transparent before:to-slate-900 before:to-20% after:absolute after:inset-0 after:translate-x-full after:z-20 after:bg-gradient-to-r after:from-transparent after:to-slate-900 after:to-20%">
-            <div className="Rose Development-carousel swiper-container group">
+            {/* Fix: Changed class name to a valid CSS selector */}
+            <div className="testimonials-carousel swiper-container group">
               <Highlighter className="swiper-wrapper w-fit" refresh={swiperInitialized}>
                 {/* Carousel items */}
                 <HighlighterItem className="swiper-slide h-auto group/slide">
@@ -95,7 +104,7 @@ export default function TestimonialsCarousel() {
                       <div className="absolute inset-0 translate-z-0 rounded-full bg-slate-800 group-[.swiper-slide-active]/slide:bg-purple-500 transition-colors duration-500 ease-in-out blur-[60px]" />
                     </div>
                     <div className="flex flex-col p-6 h-full">
-                      <Image className="mb-3" src={CarouselImg02} width={56} height={56} alt="Icon 01" />
+                      <Image className="mb-3" src={CarouselImg02} width={56} height={56} alt="Icon 02" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Bot Detection</div>
                         <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
@@ -115,7 +124,7 @@ export default function TestimonialsCarousel() {
                       <div className="absolute inset-0 translate-z-0 rounded-full bg-slate-800 group-[.swiper-slide-active]/slide:bg-purple-500 transition-colors duration-500 ease-in-out blur-[60px]" />
                     </div>
                     <div className="flex flex-col p-6 h-full">
-                      <Image className="mb-3" src={CarouselImg03} width={56} height={56} alt="Icon 01" />
+                      <Image className="mb-3" src={CarouselImg03} width={56} height={56} alt="Icon 03" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Social integrations</div>
                         <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
@@ -135,7 +144,7 @@ export default function TestimonialsCarousel() {
                       <div className="absolute inset-0 translate-z-0 rounded-full bg-slate-800 group-[.swiper-slide-active]/slide:bg-purple-500 transition-colors duration-500 ease-in-out blur-[60px]" />
                     </div>
                     <div className="flex flex-col p-6 h-full">
-                      <Image className="mb-3" src={CarouselImg04} width={56} height={56} alt="Icon 01" />
+                      <Image className="mb-3" src={CarouselImg04} width={56} height={56} alt="Icon 04" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Progressive Profiling</div>
                         <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
