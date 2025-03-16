@@ -18,6 +18,7 @@ import IntegrationsImg06 from '@/public/images/integrations-06.svg'
 export default function IntegrationsSection() {
   const [loaded, setLoaded] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
   const carouselRef = useRef<HTMLDivElement>(null)
 
   // Featured integrations
@@ -67,16 +68,30 @@ export default function IntegrationsSection() {
 
   // Move to next slide
   const nextSlide = () => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
     setCurrentIndex((prevIndex) => 
       prevIndex === featuredIntegrations.length - 1 ? 0 : prevIndex + 1
-    )
+    );
+    
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500);
   }
 
   // Move to previous slide
   const prevSlide = () => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? featuredIntegrations.length - 1 : prevIndex - 1
-    )
+    );
+    
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500);
   }
 
   return (
@@ -116,77 +131,99 @@ export default function IntegrationsSection() {
             </div>
           </div>
 
-          {/* Custom featured integrations carousel */}
-          <div ref={carouselRef} className="relative max-w-5xl mx-auto mb-20">
-            {/* Featured integration */}
-            <div className="bg-gradient-to-tr from-slate-800/80 to-slate-800/20 rounded-3xl border border-slate-700/50 p-8 overflow-hidden relative">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                {/* Text content */}
-                <div className="md:pr-6">
-                  <div className="text-sm font-medium text-purple-500 mb-2">Featured Integration</div>
-                  <h3 className="text-2xl font-bold text-white mb-3">{featuredIntegrations[currentIndex].name}</h3>
-                  <p className="text-slate-400 mb-6">{featuredIntegrations[currentIndex].description}</p>
-                  <Link 
-                    href={featuredIntegrations[currentIndex].link} 
-                    className="btn text-sm text-white bg-purple-500 hover:bg-purple-600 shadow-sm group"
-                  >
-                    Learn More <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-                  </Link>
-                </div>
-                
-                {/* Image */}
-                <div className="flex justify-center items-center bg-slate-900/40 rounded-2xl p-6 h-[240px]">
-                  <div className="relative w-32 h-32 transition-all duration-300 transform hover:scale-110">
-                    <Image 
-                      src={featuredIntegrations[currentIndex].image} 
-                      alt={featuredIntegrations[currentIndex].name} 
-                      fill 
-                      className="object-contain"
-                    />
+          {/* Apple-style featured integrations carousel */}
+          <div className="relative max-w-5xl mx-auto mb-16">
+            {/* Navigation controls */}
+            <div className="flex justify-between absolute top-1/2 -translate-y-1/2 -left-4 -right-4 z-10 opacity-0 hover:opacity-100 transition-opacity duration-300">
+              <button 
+                onClick={prevSlide}
+                className="w-12 h-12 rounded-full bg-slate-800/80 backdrop-blur-sm text-white hover:bg-purple-500 transition-colors duration-150 flex items-center justify-center shadow-lg"
+                aria-label="Previous"
+                disabled={isAnimating}
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
+                </svg>
+              </button>
+              <button 
+                onClick={nextSlide}
+                className="w-12 h-12 rounded-full bg-slate-800/80 backdrop-blur-sm text-white hover:bg-purple-500 transition-colors duration-150 flex items-center justify-center shadow-lg"
+                aria-label="Next"
+                disabled={isAnimating}
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Carousel content */}
+            <div ref={carouselRef} className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-500 ease-in-out" 
+                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              >
+                {featuredIntegrations.map((integration, index) => (
+                  <div key={index} className="w-full flex-shrink-0">
+                    <div className="bg-gradient-to-tr from-slate-800/80 to-slate-800/20 rounded-3xl border border-slate-700/50 p-10 transition-all duration-300 transform hover:shadow-lg">
+                      <div className="grid md:grid-cols-2 gap-12 items-center">
+                        {/* Image - Apple-style clean presentation */}
+                        <div className="flex justify-center items-center order-2 md:order-1">
+                          <div className="relative w-48 h-48 transition-all duration-500 transform hover:scale-105">
+                            <Image 
+                              src={integration.image} 
+                              alt={integration.name} 
+                              fill 
+                              className="object-contain drop-shadow-xl"
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Text content */}
+                        <div className="order-1 md:order-2">
+                          <div className="text-sm font-medium text-purple-500 mb-2">Featured Integration</div>
+                          <h3 className="text-3xl font-bold text-white mb-4">{integration.name}</h3>
+                          <p className="text-slate-400 mb-8 text-lg">{integration.description}</p>
+                          <Link 
+                            href={integration.link} 
+                            className="btn text-white bg-purple-500 hover:bg-purple-600 shadow-sm group"
+                          >
+                            Explore Integration <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              
-              {/* Navigation controls */}
-              <div className="flex justify-between absolute top-1/2 -translate-y-1/2 left-4 right-4">
-                <button 
-                  onClick={prevSlide}
-                  className="w-10 h-10 rounded-full bg-slate-800/60 text-white hover:bg-purple-500 transition-colors duration-150 flex items-center justify-center group"
-                  aria-label="Previous"
-                >
-                  <svg className="w-4 h-4 fill-current transform group-hover:-translate-x-0.5 transition-transform duration-150 ease-in-out" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9.4 13.4l1.4-1.4-4-4 4-4-1.4-1.4L4 8z" />
-                  </svg>
-                </button>
-                <button 
-                  onClick={nextSlide}
-                  className="w-10 h-10 rounded-full bg-slate-800/60 text-white hover:bg-purple-500 transition-colors duration-150 flex items-center justify-center group"
-                  aria-label="Next"
-                >
-                  <svg className="w-4 h-4 fill-current transform group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.6 13.4L5.2 12l4-4-4-4 1.4-1.4L12 8z" />
-                  </svg>
-                </button>
-              </div>
-              
-              {/* Indicators */}
-              <div className="flex justify-center mt-6 absolute bottom-4 left-0 right-0">
-                {featuredIntegrations.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`w-2 h-2 mx-1 rounded-full transition-colors duration-150 ${
-                      index === currentIndex ? 'bg-purple-500' : 'bg-slate-600'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
                 ))}
               </div>
+            </div>
+            
+            {/* Indicators - Apple-style minimal dots */}
+            <div className="flex justify-center mt-8">
+              {featuredIntegrations.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    if (!isAnimating) {
+                      setIsAnimating(true);
+                      setCurrentIndex(index);
+                      setTimeout(() => setIsAnimating(false), 500);
+                    }
+                  }}
+                  className={`w-2 h-2 mx-1.5 rounded-full transition-all duration-300 ${
+                    index === currentIndex 
+                      ? 'bg-purple-500 w-6' 
+                      : 'bg-slate-600 hover:bg-slate-500'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                  disabled={isAnimating}
+                />
+              ))}
             </div>
           </div>
           
           {/* CTA to explore all integrations */}
-          <div className="text-center mt-10">
+          <div className="text-center mt-12">
             <Link 
               href="/integrations" 
               className="btn text-white bg-purple-500 hover:bg-purple-600 shadow-sm group"
