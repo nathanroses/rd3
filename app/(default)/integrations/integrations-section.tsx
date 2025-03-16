@@ -127,7 +127,7 @@ export default function IntegrationsSection() {
             <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Seamless Connections</div>
             <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Unlock the Power of Your Data</h1>
             <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-slate-400">Rose Development's AI analytics platform integrates with your essential business systems and data sources. Connect once and transform your data into actionable insights that drive business growth.</p>
+              <p className="text-lg text-slate-400">Our analytics platform integrates with your essential business systems and data sources. Connect once and transform your data into actionable insights that drive business growth.</p>
             </div>
           </div>
 
