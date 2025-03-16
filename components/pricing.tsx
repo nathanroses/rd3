@@ -48,7 +48,7 @@ export default function Pricing() {
             <div className="mb-1">
               <span className="text-lg font-medium text-slate-500">$</span><span className="text-3xl font-bold text-slate-50">{annual ? '500' : '200'}</span><span className="text-sm text-slate-600 font-medium">{annual ? '/payment' : '/month'}</span>
             </div>
-            <div className="text-slate-500">For businesses ready to start their AI journey with foundational tools and streamlined solutions.</div>
+            <div className="text-slate-500">For businesses starting their AI journey with essential tools and streamlined workflows.</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
             <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://rosedevelopment.org/signin" : "https://rosedevelopment.org/signin"}>
@@ -63,7 +63,7 @@ export default function Pricing() {
             <div className="mb-1">
               <span className="text-lg font-medium text-slate-500">$</span><span className="text-3xl font-bold text-slate-50">{annual ? '1250' : '300'}</span><span className="text-sm text-slate-600 font-medium">{annual ? '/payment' : '/month'}</span>
             </div>
-            <div className="text-slate-500">For growing businesses ready to scale operations with data-driven AI and custom solutions.</div>
+            <div className="text-slate-500">For growing companies expanding operations with data-driven AI and tailored solutions.</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
           <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://rosedevelopment.org/signin" : "https://rosedevelopment.org/signin"}>
@@ -78,7 +78,7 @@ export default function Pricing() {
             <div className="mb-1">
               <span className="text-lg font-medium text-slate-500">$</span><span className="text-3xl font-bold text-slate-50">{annual ? '3000' : '500'}</span><span className="text-sm text-slate-600 font-medium">{annual ? '/payment' : '/month'}</span>
             </div>
-            <div className="text-slate-500">For enterprises seeking advanced AI-powered integrations and predictive systems to maximize efficiency.</div>
+            <div className="text-slate-500">For enterprises maximizing efficiency through advanced AI integrations and predictive systems.</div>
           </div>
           <div className="pb-4 border-b border-slate-800">
           <a className="btn-sm text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href={annual ? "https://rosedevelopment.org/signin" : "https://rosedevelopment.org/signin"}>
@@ -331,19 +331,6 @@ export default function Pricing() {
           </div>
         </div>
     
-        {/* # Support */}
-        <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-50 font-medium mt-4">Support</div>
-        </div>
-        <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-50 font-medium mt-4 hidden">Support</div>
-        </div>
-        <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-50 font-medium mt-4 md:hidden">Support</div>
-        </div>
-        <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-50 font-medium mt-4 md:hidden">Support</div>
-        </div>
         {/* Premium Support */}
         <div className="px-6 flex flex-col justify-end">
           <div className="py-2 text-slate-400 border-b border-slate-800">Premium Support</div>
