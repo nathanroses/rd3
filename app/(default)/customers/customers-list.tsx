@@ -58,6 +58,8 @@ export default function CustomersShowcase() {
   const globeRef = useRef<HTMLDivElement>(null);
   const [autoRotate, setAutoRotate] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [touchStartPos, setTouchStartPos] = useState({ x: 0, y: 0 });
+  const [touchMoved, setTouchMoved] = useState(false);
 
   // Check if we're on mobile
   useEffect(() => {
@@ -105,12 +107,22 @@ export default function CustomersShowcase() {
       testimonial: 'Rose Development transformed how we analyze our supply chain data. The insights have been incredible.',
       person: 'Sarah',
       color: 'from-purple-600 to-purple-400'
+    },
+    {
+      id: 3,
+      name: 'Tice Services',
+      position: { x: -30, y: -10, z: 20 },
+      img: CustomerImg04,
+      bg: CustomerBg04,
+      link: '/customers/single-post',
+      testimonial: 'Integrating AI analytics into our operations was a game-changer. The insights provided by Rose Development allowed us to predict, adapt, and optimize like never before.',
+      person: 'Tice',
+      color: 'from-orange-500 to-amber-400'
     }
   ];
 
   // Define the placeholder future customers
   const futureCustomers = [
-    { id: 3, img: CustomerImg04, bg: CustomerBg04, position: { x: -30, y: -20, z: -15 } },
     { id: 4, img: CustomerImg05, bg: CustomerBg05, position: { x: 35, y: 5, z: -20 } },
     { id: 5, img: CustomerImg06, bg: CustomerBg06, position: { x: -15, y: -35, z: 10 } },
     { id: 6, img: CustomerImg07, bg: CustomerBg07, position: { x: 40, y: 25, z: 5 } },
@@ -119,7 +131,7 @@ export default function CustomersShowcase() {
     { id: 9, img: CustomerImg10, bg: CustomerBg10, position: { x: -5, y: 40, z: 20 } }
   ];
 
-  // Auto-rotation effect - FIXED THE TYPE ERROR HERE
+  // Auto-rotation effect
   useEffect(() => {
     let rotationInterval: NodeJS.Timeout | null = null;
     
@@ -137,7 +149,7 @@ export default function CustomersShowcase() {
     };
   }, [autoRotate, interacting]);
 
-  // Handle auto-rotation and customer cycling - FIXED TYPE ERROR HERE TOO
+  // Handle auto-rotation and customer cycling
   useEffect(() => {
     let customerInterval: NodeJS.Timeout | null = null;
     let testimonialTimeout: NodeJS.Timeout | null = null;
@@ -178,11 +190,22 @@ export default function CustomersShowcase() {
     });
   };
   
-  // Handle touch movement for mobile
+  // Handle touch start for mobile
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!globeRef.current) return;
+    
+    const touch = e.touches[0];
+    setLastTouch({ x: touch.clientX, y: touch.clientY });
+    setTouchStartPos({ x: touch.clientX, y: touch.clientY });
+    setTouchMoved(false);
+    setInteracting(true);
+    setAutoRotate(false);
+  };
+  
+  // Handle touch movement for mobile - improved for better sensitivity
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!interacting || !globeRef.current) return;
     
-    e.preventDefault();
     const touch = e.touches[0];
     const { clientX, clientY } = touch;
     
@@ -190,26 +213,50 @@ export default function CustomersShowcase() {
     const deltaX = clientX - lastTouch.x;
     const deltaY = clientY - lastTouch.y;
     
+    // Detect if touch has moved significantly
+    const distanceMoved = Math.sqrt(
+      Math.pow(clientX - touchStartPos.x, 2) + 
+      Math.pow(clientY - touchStartPos.y, 2)
+    );
+    
+    if (distanceMoved > 10) {
+      setTouchMoved(true);
+    }
+    
     // Update last touch position
     setLastTouch({ x: clientX, y: clientY });
     
-    // Apply rotation with damping factor
+    // Apply rotation with improved sensitivity for mobile
     setRotation(prev => ({
-      x: prev.x + deltaY * 0.2,
-      y: prev.y - deltaX * 0.2
+      x: prev.x + deltaY * 0.3,
+      y: prev.y - deltaX * 0.3
     }));
   };
-  
-  // Set initial touch position
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const touch = e.touches[0];
-    setLastTouch({ x: touch.clientX, y: touch.clientY });
-    setInteracting(true);
-    setAutoRotate(false);
+
+  // Handle touch end with click detection
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    setInteracting(false);
+    setTimeout(() => setAutoRotate(true), 2000);
+  };
+
+  // Handle customer selection on touch
+  const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
+    // Prevent default behavior
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Only trigger if this wasn't a drag operation (for mobile)
+    if (e.type === 'touchend' && touchMoved) {
+      return;
+    }
+    
+    setActiveCustomer(customerId);
+    setShowingTestimonial(true);
+    setTimeout(() => setShowingTestimonial(false), 7000);
   };
 
   // Calculate 3D position with rotation for each customer point
-  const calculate3DPosition = (position: { x: number; y: number; z: number }, size = 1): Position3D => {
+  const calculate3DPosition = (position: { x: number; y: number; z: number }, size = 1.2): Position3D => {
     // Convert to radians
     const radX = (rotation.x * Math.PI) / 180;
     const radY = (rotation.y * Math.PI) / 180;
@@ -226,10 +273,10 @@ export default function CustomersShowcase() {
     const rotatedY = position.y * cosX + rotatedZ * sinX;
     const finalZ = rotatedZ * cosX - position.y * sinX;
     
-    // Adjust scale for mobile
-    const mobileScaleFactor = isMobile ? 0.7 : 1;
+    // Adjust scale for mobile - increased base size
+    const mobileScaleFactor = isMobile ? 0.8 : 1;
     
-    // Calculate scale based on z-position (depth)
+    // Calculate scale based on z-position (depth) - increased size factor
     const scale = size * (1 + finalZ / 100) * mobileScaleFactor;
     
     // Calculate opacity based on z-position
@@ -256,13 +303,13 @@ export default function CustomersShowcase() {
       <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 z-30">
         <div className={`bg-slate-900/80 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/50 transform transition-all duration-500 ${showingTestimonial ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="flex flex-col md:flex-row items-start gap-4">
-            <div className="bg-gradient-to-br rounded-xl p-px overflow-hidden flex-shrink-0 shadow-lg mx-auto md:mx-0">
+            <div className={`bg-gradient-to-br ${customer.color} rounded-xl p-px overflow-hidden flex-shrink-0 shadow-lg mx-auto md:mx-0`}>
               <div className="bg-slate-900 p-3 rounded-xl">
                 <Image 
                   src={customer.img} 
                   alt={customer.name} 
-                  width={isMobile ? 60 : 80} 
-                  height={isMobile ? 60 : 80} 
+                  width={isMobile ? 70 : 90} 
+                  height={isMobile ? 70 : 90} 
                   className="object-contain"
                 />
               </div>
@@ -292,7 +339,6 @@ export default function CustomersShowcase() {
       </div>
     );
   };
-
   return (
     <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
       {/* Interactive customer showcase */}
@@ -316,20 +362,19 @@ export default function CustomersShowcase() {
         onMouseMove={handleMouseMove}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
-        onTouchEnd={() => {
-          setInteracting(false);
-          setTimeout(() => setAutoRotate(true), 2000);
-        }}
+        onTouchEnd={handleTouchEnd}
       >
-        {/* Particles for cosmic effect - reduced quantity on mobile */}
-        <Particles className="absolute inset-0" quantity={isMobile ? 25 : 50} />
+        {/* Enhanced background effects - larger blobs */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-purple-500/10 blur-3xl animate-pulse"></div>
+        <div className="absolute left-1/3 top-1/3 -translate-x-1/2 -translate-y-1/2 w-40 md:w-64 h-40 md:h-64 rounded-full bg-blue-500/15 blur-3xl animate-pulse duration-7000"></div>
+        <div className="absolute left-2/3 top-2/3 -translate-x-1/2 -translate-y-1/2 w-48 md:w-72 h-48 md:h-72 rounded-full bg-orange-500/10 blur-3xl animate-pulse duration-5000"></div>
         
-        {/* Central glow */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 md:w-40 h-28 md:h-40 rounded-full bg-purple-500/20 blur-3xl animate-pulse"></div>
+        {/* Particles for cosmic effect - slightly increased quantity */}
+        <Particles className="absolute inset-0" quantity={isMobile ? 30 : 60} />
         
         {/* Future customer points - reduced on mobile */}
         {(!isMobile || futureCustomers.length < 4) && futureCustomers.map((customer) => {
-          const pos = calculate3DPosition(customer.position, 0.7);
+          const pos = calculate3DPosition(customer.position, 0.8);
           
           // Only render if in front of the "camera" for performance
           if (pos.z < -10) return null;
@@ -342,16 +387,16 @@ export default function CustomersShowcase() {
                 left: `calc(50% + ${pos.x * (isMobile ? 2.5 : 4)}px)`,
                 top: `calc(50% + ${pos.y * (isMobile ? 2 : 3)}px)`,
                 zIndex: Math.round(pos.z),
-                opacity: pos.opacity * 0.5,
+                opacity: pos.opacity * 0.6, // Increased opacity
                 filter: `brightness(${pos.brightness}%)`,
               }}
             >
-              <div className="w-2 h-2 md:w-3 md:h-3 bg-slate-500/30 rounded-full backdrop-blur-sm border border-slate-400/20 animate-pulse"></div>
+              <div className="w-3 h-3 md:w-4 md:h-4 bg-slate-500/40 rounded-full backdrop-blur-sm border border-slate-400/30 animate-pulse"></div>
             </div>
           );
         })}
         
-        {/* Featured customer points */}
+        {/* Featured customer points - Larger size and improved interaction */}
         {featuredCustomers.map((customer) => {
           const pos = calculate3DPosition(customer.position);
           const isActive = activeCustomer === customer.id;
@@ -359,11 +404,12 @@ export default function CustomersShowcase() {
           // Skip rendering if behind the camera for performance
           if (pos.z < -15) return null;
           
-          // Scale node size based on device
-          const nodeSize = isMobile ? 12 : 16;
+          // Increased node size
+          const nodeSize = isMobile ? 20 : 28;
+          const glowSize = isMobile ? 40 : 64;
           
           return (
-            <button
+            <div
               key={customer.id}
               className={`absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out ${isActive ? 'z-20' : ''}`}
               style={{
@@ -374,15 +420,29 @@ export default function CustomersShowcase() {
                 filter: `brightness(${pos.brightness}%)`,
                 transform: `translate(-50%, -50%) scale(${isActive ? pos.scale * 1.2 : pos.scale})`
               }}
-              onClick={() => {
-                setActiveCustomer(customer.id);
-                setShowingTestimonial(true);
-                setTimeout(() => setShowingTestimonial(false), 7000);
-              }}
             >
-              <div className={`relative group ${isActive ? 'scale-110' : 'scale-100'} transition-transform duration-300`}>
+              {/* Enhanced glow effect for active node */}
+              {isActive && (
+                <div 
+                  className="absolute rounded-full animate-pulse-slow"
+                  style={{
+                    width: `${glowSize}px`,
+                    height: `${glowSize}px`,
+                    background: `radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0) 70%)`,
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                ></div>
+              )}
+              <div 
+                className={`relative group ${isActive ? 'scale-110' : 'scale-100'} transition-transform duration-300`}
+                onClick={(e) => handleCustomerTouch(customer.id, e)}
+                onTouchEnd={(e) => handleCustomerTouch(customer.id, e)}
+              >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-blue-500/40 blur-lg rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 
+                {/* Larger customer node with improved visual appearance */}
                 <div 
                   className={`p-1 rounded-full backdrop-blur bg-gradient-to-r ${customer.color} shadow-lg overflow-hidden transition-all duration-500 ${isActive ? 'ring-2 ring-purple-400 ring-offset-2 ring-offset-slate-900' : ''}`}
                   style={{width: `${nodeSize}px`, height: `${nodeSize}px`}}
@@ -391,78 +451,88 @@ export default function CustomersShowcase() {
                     <Image 
                       src={customer.img} 
                       alt={customer.name} 
-                      width={isMobile ? 30 : 50} 
-                      height={isMobile ? 30 : 50} 
+                      width={nodeSize - 4} 
+                      height={nodeSize - 4} 
                       className="w-full h-full object-contain drop-shadow-xl"
                     />
                   </div>
                 </div>
                 
-                {/* Customer name tooltip */}
-                <div className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap text-xs text-white bg-slate-900/90 px-2 py-1 rounded backdrop-blur-sm border border-slate-700/50 transition-all duration-300 ${isActive || interacting ? 'opacity-100' : 'opacity-0'}`}>
+                {/* Customer name tooltip - improved visibility */}
+                <div 
+                  className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap text-xs font-medium text-white bg-slate-900/90 px-2 py-1 rounded backdrop-blur-sm border border-slate-700/50 transition-all duration-300 ${isActive || interacting ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+                  style={{
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+                  }}
+                >
                   {customer.name}
                 </div>
               </div>
-            </button>
+            </div>
           );
         })}
         
-        {/* Connection lines - conditional based on performance */}
-        {!isMobile && (
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-            <defs>
-              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(139, 92, 246, 0.15)" />
-                <stop offset="50%" stopColor="rgba(139, 92, 246, 0.3)" />
-                <stop offset="100%" stopColor="rgba(139, 92, 246, 0.15)" />
-              </linearGradient>
-            </defs>
+        {/* Connection lines - enhanced with color gradients */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(139, 92, 246, 0.15)" />
+              <stop offset="50%" stopColor="rgba(139, 92, 246, 0.3)" />
+              <stop offset="100%" stopColor="rgba(139, 92, 246, 0.15)" />
+            </linearGradient>
+            <linearGradient id="ticeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(249, 115, 22, 0.15)" />
+              <stop offset="50%" stopColor="rgba(249, 115, 22, 0.3)" />
+              <stop offset="100%" stopColor="rgba(249, 115, 22, 0.15)" />
+            </linearGradient>
+          </defs>
+          
+          {featuredCustomers.map((customer, index) => {
+            const pos1 = calculate3DPosition(customer.position);
+            const nextIndex = (index + 1) % featuredCustomers.length;
+            const pos2 = calculate3DPosition(featuredCustomers[nextIndex].position);
             
-            {featuredCustomers.map((customer, index) => {
-              const pos1 = calculate3DPosition(customer.position);
-              const nextIndex = (index + 1) % featuredCustomers.length;
-              const pos2 = calculate3DPosition(featuredCustomers[nextIndex].position);
+            // Only render if both points are in front
+            if (pos1.z > -10 && pos2.z > -10) {
+              const opacity = Math.min(pos1.opacity, pos2.opacity) * 0.7;
+              // Use Tice gradient for connections to/from Tice Services
+              const useOrangeGradient = customer.name === 'Tice Services' || featuredCustomers[nextIndex].name === 'Tice Services';
+              const gradientId = useOrangeGradient ? 'ticeGradient' : 'lineGradient';
               
-              // Only render if both points are in front
-              if (pos1.z > -10 && pos2.z > -10) {
-                const opacity = Math.min(pos1.opacity, pos2.opacity) * 0.7;
-                
-                return (
-                  <line
-                    key={`line-${index}`}
-                    x1={`calc(50% + ${pos1.x * 5}px)`}
-                    y1={`calc(50% + ${pos1.y * 4}px)`}
-                    x2={`calc(50% + ${pos2.x * 5}px)`}
-                    y2={`calc(50% + ${pos2.y * 4}px)`}
-                    stroke="url(#lineGradient)"
-                    strokeWidth="1"
-                    strokeDasharray="5,5"
-                    opacity={opacity}
-                    className="animate-pulse"
-                  />
-                );
-              }
-              return null;
-            })}
-          </svg>
-        )}
+              return (
+                <line
+                  key={`line-${index}`}
+                  x1={`calc(50% + ${pos1.x * (isMobile ? 3 : 5)}px)`}
+                  y1={`calc(50% + ${pos1.y * (isMobile ? 2.5 : 4)}px)`}
+                  x2={`calc(50% + ${pos2.x * (isMobile ? 3 : 5)}px)`}
+                  y2={`calc(50% + ${pos2.y * (isMobile ? 2.5 : 4)}px)`}
+                  stroke={`url(#${gradientId})`}
+                  strokeWidth="2"
+                  strokeDasharray="5,5"
+                  opacity={opacity}
+                  className="animate-pulse"
+                />
+              );
+            }
+            return null;
+          })}
+        </svg>
         
         {/* Instructions overlay - mobile optimized */}
-        <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/50 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-300 pointer-events-none transition-opacity duration-500 opacity-70 border border-slate-700/30 ${isMobile ? 'w-64 text-center' : ''}`}>
+        <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/70 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-300 pointer-events-none transition-opacity duration-500 opacity-70 border border-slate-700/30 ${isMobile ? 'w-72 text-center' : ''}`}>
           {isMobile
-            ? (interacting ? 'Drag to explore' : 'Tap a customer to view their story')
-            : (interacting ? 'Drag to explore our customers' : 'Click on a customer to see their story')}
+            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap any customer to view their story')
+            : (interacting ? '🔄 Drag to explore our customer universe' : '🖱️ Click on any customer to see their story')}
         </div>
       </div>
-      
       {/* Active customer detail */}
       {showCustomerDetail(featuredCustomers[activeCustomer])}
       
-      {/* Control panel - responsive */}
+      {/* Control panel - enhanced UI */}
       <div className="absolute bottom-4 right-4 z-30">
-        <div className="bg-slate-900/70 backdrop-blur-md rounded-full p-1 shadow-lg border border-slate-700/30 flex space-x-1">
+        <div className="bg-slate-900/80 backdrop-blur-md rounded-full p-1.5 shadow-lg border border-slate-700/40 flex space-x-2">
           <button 
-            className={`p-2 rounded-full ${autoRotate ? 'text-purple-400' : 'text-slate-400'} hover:text-white transition-colors`}
+            className={`p-2 rounded-full ${autoRotate ? 'text-purple-400 bg-purple-900/20' : 'text-slate-400'} hover:text-white transition-colors`}
             onClick={() => setAutoRotate(!autoRotate)}
             title={autoRotate ? "Disable auto-rotation" : "Enable auto-rotation"}
             aria-label={autoRotate ? "Disable auto-rotation" : "Enable auto-rotation"}
