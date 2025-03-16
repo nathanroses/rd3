@@ -130,7 +130,6 @@ export default function CustomersShowcase() {
     { id: 8, img: CustomerImg09, bg: CustomerBg09, position: { x: 10, y: -25, z: -30 } },
     { id: 9, img: CustomerImg10, bg: CustomerBg10, position: { x: -5, y: 40, z: 20 } }
   ];
-
   // Auto-rotation effect
   useEffect(() => {
     let rotationInterval: NodeJS.Timeout | null = null;
@@ -171,7 +170,8 @@ export default function CustomersShowcase() {
       if (testimonialTimeout) clearTimeout(testimonialTimeout);
     };
   }, [interacting, autoRotate, featuredCustomers.length]);
- // Handle mouse movement for interactive rotation
+
+  // Handle mouse movement for interactive rotation
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!interacting || !globeRef.current) return;
     
@@ -189,7 +189,7 @@ export default function CustomersShowcase() {
     });
   };
   
-  // Simplified touch start for mobile
+  // Handle touch start for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!globeRef.current) return;
     
@@ -197,75 +197,71 @@ export default function CustomersShowcase() {
     setLastTouch({ x: touch.clientX, y: touch.clientY });
     setTouchStartPos({ x: touch.clientX, y: touch.clientY });
     setTouchMoved(false);
-    
-    // Don't immediately set interacting - wait to see if it's a drag
-    setTimeout(() => {
-      if (!touchMoved) {
-        setInteracting(true);
-        setAutoRotate(false);
-      }
-    }, 100);
+    setInteracting(true);
+    setAutoRotate(false);
   };
   
-  // Handle touch movement for mobile - improved for better tap detection
+  // Handle touch movement for mobile - improved for better sensitivity
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!interacting || !globeRef.current) return;
+    
     const touch = e.touches[0];
     const { clientX, clientY } = touch;
     
-    // Calculate distance moved
+    // Calculate delta from last position
+    const deltaX = clientX - lastTouch.x;
+    const deltaY = clientY - lastTouch.y;
+    
+    // Detect if touch has moved significantly
     const distanceMoved = Math.sqrt(
       Math.pow(clientX - touchStartPos.x, 2) + 
       Math.pow(clientY - touchStartPos.y, 2)
     );
     
-    // Only consider it a move/drag if moved more than threshold
-    if (distanceMoved > 15) {
+    if (distanceMoved > 10) {
       setTouchMoved(true);
-      setInteracting(true);
-      setAutoRotate(false);
-      
-      // Calculate delta from last position
-      const deltaX = clientX - lastTouch.x;
-      const deltaY = clientY - lastTouch.y;
-      
-      // Update last touch position
-      setLastTouch({ x: clientX, y: clientY });
-      
-      // Apply rotation with improved sensitivity for mobile
-      setRotation(prev => ({
-        x: prev.x + deltaY * 0.3,
-        y: prev.y - deltaX * 0.3
-      }));
     }
+    
+    // Update last touch position
+    setLastTouch({ x: clientX, y: clientY });
+    
+    // Apply rotation with improved sensitivity for mobile
+    setRotation(prev => ({
+      x: prev.x + deltaY * 0.3,
+      y: prev.y - deltaX * 0.3
+    }));
   };
-  
+
   // Handle touch end with improved tap detection
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    // If the user didn't move (or moved very little), it's a tap, not a drag
+    // Check if it was a tap (not a drag)
     if (!touchMoved) {
-      // Check if we tapped on a customer node
+      // Find the element that was tapped
       const target = e.target as HTMLElement;
-      const customerNode = target.closest('[data-customer-id]');
+      const customerElement = target.closest('[data-customer-id]');
       
-      if (customerNode) {
-        const customerId = parseInt(customerNode.getAttribute('data-customer-id') || '0', 10);
-        setActiveCustomer(customerId);
+      if (customerElement) {
+        const id = parseInt(customerElement.getAttribute('data-customer-id') || '0', 10);
+        setActiveCustomer(id);
         setShowingTestimonial(true);
         setTimeout(() => setShowingTestimonial(false), 7000);
       }
     }
     
-    // Reset state
     setInteracting(false);
-    setTouchMoved(false);
     setTimeout(() => setAutoRotate(true), 2000);
   };
 
-  // Handle customer selection (for mouse clicks)
-  const handleCustomerClick = (customerId: number, e: React.MouseEvent) => {
-    // Prevent event from bubbling up to the container
+  // Handle customer selection on touch
+  const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
+    // Prevent default behavior
     e.preventDefault();
     e.stopPropagation();
+    
+    // Only trigger if this wasn't a drag operation (for mobile)
+    if (e.type === 'touchend' && touchMoved) {
+      return;
+    }
     
     setActiveCustomer(customerId);
     setShowingTestimonial(true);
@@ -312,42 +308,42 @@ export default function CustomersShowcase() {
     };
   };
 
-  // Show active customer detail - optimized for mobile
+  // Show active customer detail - improved design
   const showCustomerDetail = (customer: Customer | undefined) => {
     if (!customer) return null;
     
     return (
       <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 z-30">
-        <div className={`bg-slate-900/80 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/50 transform transition-all duration-500 ${showingTestimonial ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className={`bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/60 transform transition-all duration-500 max-w-3xl mx-auto ${showingTestimonial ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="flex flex-col md:flex-row items-start gap-4">
             <div className={`bg-gradient-to-br ${customer.color} rounded-xl p-px overflow-hidden flex-shrink-0 shadow-lg mx-auto md:mx-0`}>
-              <div className="bg-slate-900 p-3 rounded-xl">
+              <div className="bg-slate-800 p-3 rounded-xl">
                 <Image 
                   src={customer.img} 
                   alt={customer.name} 
-                  width={isMobile ? 70 : 90} 
-                  height={isMobile ? 70 : 90} 
+                  width={isMobile ? 80 : 100} 
+                  height={isMobile ? 80 : 100} 
                   className="object-contain"
                 />
               </div>
             </div>
             
             <div className="flex-1 text-center md:text-left">
-              <div className="flex flex-col md:flex-row md:justify-between items-center md:items-start mb-2">
-                <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/90 via-slate-100 to-slate-200/90">
+              <div className="flex flex-col md:flex-row md:justify-between items-center md:items-start mb-3">
+                <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-white to-slate-100 pb-1">
                   {customer.name}
                 </h3>
                 <Link 
                   href={customer.link}
-                  className="text-xs bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 mt-2 md:mt-0 rounded-full transition-colors duration-150"
+                  className="text-xs bg-purple-600 hover:bg-purple-700 text-white px-4 py-1.5 mt-2 md:mt-0 rounded-full transition-colors duration-150 font-medium"
                 >
                   View Case Study
                 </Link>
               </div>
               
-              <p className="text-slate-300 mb-3 text-sm md:text-base">{customer.testimonial}</p>
+              <p className="text-slate-200 mb-3 text-sm md:text-base leading-relaxed">{customer.testimonial}</p>
               
-              <div className="text-sm text-slate-400">
+              <div className="text-sm text-slate-300 font-medium">
                 — {customer.person}
               </div>
             </div>
@@ -437,6 +433,7 @@ export default function CustomersShowcase() {
                 filter: `brightness(${pos.brightness}%)`,
                 transform: `translate(-50%, -50%) scale(${isActive ? pos.scale * 1.2 : pos.scale})`
               }}
+              data-customer-id={customer.id}
             >
               {/* Enhanced glow effect for active node */}
               {isActive && (
@@ -452,11 +449,10 @@ export default function CustomersShowcase() {
                   }}
                 ></div>
               )}
-              
               <div 
                 className={`relative group ${isActive ? 'scale-110' : 'scale-100'} transition-transform duration-300`}
-                onClick={(e) => handleCustomerClick(customer.id, e)}
-                data-customer-id={customer.id}
+                onClick={(e) => handleCustomerTouch(customer.id, e)}
+                onTouchEnd={(e) => handleCustomerTouch(customer.id, e)}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-blue-500/40 blur-lg rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 
@@ -480,28 +476,11 @@ export default function CustomersShowcase() {
                 <div 
                   className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap text-xs font-medium text-white bg-slate-900/90 px-2 py-1 rounded backdrop-blur-sm border border-slate-700/50 transition-all duration-300 ${isActive || interacting ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
                   style={{
-                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
-                    zIndex: 30 // Ensure the tooltip is visible
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)'
                   }}
                 >
                   {customer.name}
                 </div>
-                
-                {/* Mobile-specific helper - invisible but larger touch target */}
-                {isMobile && (
-                  <div 
-                    className="absolute inset-0 cursor-pointer"
-                    style={{
-                      width: `${nodeSize * 2}px`,
-                      height: `${nodeSize * 2}px`,
-                      left: '50%',
-                      top: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      zIndex: 25
-                    }}
-                    data-customer-id={customer.id}
-                  />
-                )}
               </div>
             </div>
           );
@@ -556,14 +535,40 @@ export default function CustomersShowcase() {
         {/* Instructions overlay - mobile optimized */}
         <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-200 pointer-events-none transition-opacity duration-500 opacity-90 border border-slate-700/50 ${isMobile ? 'w-72 text-center' : ''}`}>
           {isMobile
-            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap the colored dots to view customer stories')
+            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap any customer to view their story')
             : (interacting ? '🔄 Drag to explore our customer universe' : '🖱️ Click on any customer to see their story')}
         </div>
       </div>
       
       {/* Active customer detail */}
       {showCustomerDetail(featuredCustomers[activeCustomer])}
-      return (
+      
+      {/* Control panel - enhanced UI */}
+      <div className="absolute bottom-4 right-4 z-30">
+        <div className="bg-slate-900/80 backdrop-blur-md rounded-full p-1.5 shadow-lg border border-slate-700/40 flex space-x-2">
+          <button 
+            className={`p-2 rounded-full ${autoRotate ? 'text-purple-400 bg-purple-900/20' : 'text-slate-400'} hover:text-white transition-colors`}
+            onClick={() => setAutoRotate(!autoRotate)}
+            title={autoRotate ? "Disable auto-rotation" : "Enable auto-rotation"}
+            aria-label={autoRotate ? "Disable auto-rotation" : "Enable auto-rotation"}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+              <path d="M16 16h5v5"></path>
+            </svg>
+          </button>
+          
+          <button 
+            className="p-2 rounded-full text-slate-400 hover:text-white transition-colors"
+            onClick={() => {
+              const newIndex = (activeCustomer - 1 + featuredCustomers.length) % featuredCustomers.length;
+              setActiveCustomer(newIndex);
+              setShowingTestimonial(true);
+              setTimeout(() => setShowingTestimonial(false), 7000);
+            }}
+            return (
     <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
       {/* Interactive customer showcase */}
       <div 
@@ -644,6 +649,7 @@ export default function CustomersShowcase() {
                 filter: `brightness(${pos.brightness}%)`,
                 transform: `translate(-50%, -50%) scale(${isActive ? pos.scale * 1.2 : pos.scale})`
               }}
+              data-customer-id={customer.id}
             >
               {/* Enhanced glow effect for active node */}
               {isActive && (
@@ -659,11 +665,10 @@ export default function CustomersShowcase() {
                   }}
                 ></div>
               )}
-              
               <div 
                 className={`relative group ${isActive ? 'scale-110' : 'scale-100'} transition-transform duration-300`}
-                onClick={(e) => handleCustomerClick(customer.id, e)}
-                data-customer-id={customer.id}
+                onClick={(e) => handleCustomerTouch(customer.id, e)}
+                onTouchEnd={(e) => handleCustomerTouch(customer.id, e)}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-blue-500/40 blur-lg rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 
@@ -687,32 +692,16 @@ export default function CustomersShowcase() {
                 <div 
                   className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap text-xs font-medium text-white bg-slate-900/90 px-2 py-1 rounded backdrop-blur-sm border border-slate-700/50 transition-all duration-300 ${isActive || interacting ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
                   style={{
-                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
-                    zIndex: 30 // Ensure the tooltip is visible
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)'
                   }}
                 >
                   {customer.name}
                 </div>
-                
-                {/* Mobile-specific helper - invisible but larger touch target */}
-                {isMobile && (
-                  <div 
-                    className="absolute inset-0 cursor-pointer"
-                    style={{
-                      width: `${nodeSize * 2}px`,
-                      height: `${nodeSize * 2}px`,
-                      left: '50%',
-                      top: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      zIndex: 25
-                    }}
-                    data-customer-id={customer.id}
-                  />
-                )}
               </div>
             </div>
           );
         })}
+        
         {/* Connection lines - enhanced with color gradients */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <defs>
@@ -762,7 +751,7 @@ export default function CustomersShowcase() {
         {/* Instructions overlay - mobile optimized */}
         <div className={`absolute top-4 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm px-4 py-2 rounded-full text-xs md:text-sm text-slate-200 pointer-events-none transition-opacity duration-500 opacity-90 border border-slate-700/50 ${isMobile ? 'w-72 text-center' : ''}`}>
           {isMobile
-            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap the colored dots to view customer stories')
+            ? (interacting ? '↔️ Drag to explore our customer network' : '👆 Tap any customer to view their story')
             : (interacting ? '🔄 Drag to explore our customer universe' : '🖱️ Click on any customer to see their story')}
         </div>
       </div>
