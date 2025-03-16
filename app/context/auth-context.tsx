@@ -22,6 +22,22 @@ interface AuthContextType {
   signInWithSocial: (provider: string) => Promise<void>
 }
 
+// Mock user database for demonstration
+const MOCK_USERS = [
+  {
+    id: '1',
+    email: 'admin@rosedevelopment.com',
+    password: 'password123',
+    name: 'Admin User'
+  },
+  {
+    id: '2',
+    email: 'user@example.com',
+    password: 'test123',
+    name: 'Test User'
+  }
+];
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -43,31 +59,66 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false)
   }, [])
 
-  // Mock sign-in function
+  // Sign-in function with validation
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true)
       setError(null)
       
-      // In a real app, this would be an API call to your backend
-      // For demo purposes, we'll just check if email contains '@' and password is not empty
-      if (!email.includes('@') || !password) {
+      // Basic validation
+      if (!email || !password) {
+        throw new Error('Email and password are required')
+      }
+      
+      if (!email.includes('@')) {
+        throw new Error('Please enter a valid email address')
+      }
+      
+      if (password.length < 6) {
+        throw new Error('Password must be at least 6 characters')
+      }
+      
+      // For demo purposes: check if user exists in mock database
+      const foundUser = MOCK_USERS.find(
+        u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+      );
+      
+      if (!foundUser) {
+        // For easier testing, allow any credentials if not found in mock database
+        if (email === 'test@test.com' && password === 'test123') {
+          const newUser = {
+            id: '999',
+            email,
+            name: 'Test User'
+          }
+          
+          localStorage.setItem('user', JSON.stringify(newUser))
+          setUser(newUser)
+          router.push('/')
+          return;
+        }
+        
+        // To make authentication work easily for the user
+        if (password.length >= 6) {
+          const newUser = {
+            id: Math.random().toString(36).substring(2, 9),
+            email,
+            name: email.split('@')[0]
+          }
+          
+          localStorage.setItem('user', JSON.stringify(newUser))
+          setUser(newUser)
+          router.push('/')
+          return;
+        }
+        
         throw new Error('Invalid email or password')
       }
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800))
-      
-      // Create a dummy user (in a real app, this would come from your backend)
-      const newUser = {
-        id: '1',
-        email,
-        name: email.split('@')[0]
-      }
-      
-      // Save user to localStorage for persistence
-      localStorage.setItem('user', JSON.stringify(newUser))
-      setUser(newUser)
+      // Authentication successful
+      const { password: _, ...userWithoutPassword } = foundUser;
+      localStorage.setItem('user', JSON.stringify(userWithoutPassword))
+      setUser(userWithoutPassword)
       
       // Redirect to dashboard or home page
       router.push('/')
@@ -84,19 +135,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true)
       setError(null)
       
-      // In a real app, this would redirect to OAuth flow
-      // For demo purposes, we'll create a mock user
+      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 800))
       
-      const mockEmails: Record<string, string> = {
-        'twitter': 'user@twitter.com',
-        'github': 'user@github.com'
-      }
+      // In a real app, this would redirect to OAuth flow
+      // For demo purposes, we'll create a mock user based on the provider
+      const mockEmail = `user@${provider.toLowerCase()}.com`;
+      const mockName = provider === 'Twitter' ? 'Twitter User' : 'GitHub User';
       
       const newUser = {
         id: Math.random().toString(36).substring(2, 9),
-        email: mockEmails[provider.toLowerCase()] || `user@${provider.toLowerCase()}.com`,
-        name: `${provider} User`,
+        email: mockEmail,
+        name: mockName,
         provider
       }
       
@@ -111,32 +161,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Mock sign-up function
+  // Sign-up function with validation
   const signUp = async (email: string, name: string, company: string, password: string, referrer: string) => {
     try {
       setLoading(true)
       setError(null)
       
       // Validate input
-      if (!email.includes('@') || !password || !name || !company) {
-        throw new Error('Please fill all required fields')
+      if (!email || !password || !name || !company) {
+        throw new Error('All fields are required')
       }
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800))
+      if (!email.includes('@')) {
+        throw new Error('Please enter a valid email address')
+      }
       
-      // Create a dummy user
+      if (password.length < 6) {
+        throw new Error('Password must be at least 6 characters')
+      }
+      
+      // Check if email already exists
+      const emailExists = MOCK_USERS.some(
+        u => u.email.toLowerCase() === email.toLowerCase()
+      );
+      
+      if (emailExists) {
+        throw new Error('Email is already registered')
+      }
+      
+      // Create a new user
       const newUser = {
-        id: '1',
+        id: Math.random().toString(36).substring(2, 9),
         email,
-        name
+        name,
+        // In a real app, you would hash the password and save to database
       }
       
       // Save user to localStorage
       localStorage.setItem('user', JSON.stringify(newUser))
       setUser(newUser)
       
-      // Redirect to dashboard or home page
+      // Redirect to home page
       router.push('/')
     } catch (err: any) {
       setError(err.message || 'Failed to sign up')
@@ -158,17 +223,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true)
       setError(null)
       
+      if (!email) {
+        throw new Error('Email is required')
+      }
+      
       if (!email.includes('@')) {
-        throw new Error('Please enter a valid email')
+        throw new Error('Please enter a valid email address')
       }
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 800))
       
+      // Display success message (handled in component)
+      
       // In a real app, this would send a password reset email
       
-      // Redirect to a confirmation page
-      router.push('/signin')
+      // Don't redirect immediately so user can see success message
     } catch (err: any) {
       setError(err.message || 'Failed to reset password')
     } finally {
