@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <title>Rose Development</title>
-        <meta name="description" content="We are the #1 web development company in the world. We build the best websites and web applications for your business." />
+        <meta name="description" content="Advanced data and AI tools that work. We turn complex information into clear business advantages, helping you make better decisions with your data." />
       </head>
       <body className={`${inter.variable} font-inter antialiased bg-slate-900 text-slate-100 tracking-tight`}>
         <AuthProvider>
