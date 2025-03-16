@@ -32,10 +32,10 @@ export default function Customers() {
 
             {/* Section header */}
             <div className="text-center pb-12 md:pb-20">
-              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Leaders love Rose Development</div>
-              <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Trusted by leading companies</h1>
+              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Trusted by Leaders</div>
+              <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Companies that define industries</h1>
               <div className="max-w-3xl mx-auto">
-                <p className="text-lg text-slate-400">High-impact teams, from ambitious startups to industry pioneers, are building the future. Their vision and expertise drive innovation, setting new standards in their fields.</p>
+                <p className="text-lg text-slate-400">From startups with vision to pioneers setting standards, we power the teams building tomorrow.</p>
               </div>
             </div>
 
