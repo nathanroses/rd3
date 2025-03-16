@@ -1,6 +1,6 @@
+
 import './css/style.css'
 import { Inter } from 'next/font/google'
-import ClientLayout from './client-layout'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,9 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-inter antialiased bg-slate-900 text-slate-100 tracking-tight`}>
-        <ClientLayout>
+        <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
           {children}
-        </ClientLayout>
+        </div>
       </body>
     </html>
   )
