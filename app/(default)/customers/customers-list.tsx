@@ -308,6 +308,65 @@ export default function CustomersShowcase() {
     };
   };
 
+  
+  // Show active customer detail - improved design
+  const showCustomerDetail = (customer: Customer | undefined) => {
+    if (!customer) return null;
+    
+    return (
+      <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 z-30">
+        <div className={`bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/60 transform transition-all duration-500 max-w-3xl mx-auto ${showingTestimonial ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <div className="flex flex-col md:flex-row items-start gap-4">
+            <div className={`bg-gradient-to-br ${customer.color} rounded-xl p-px overflow-hidden flex-shrink-0 shadow-lg mx-auto md:mx-0`}>
+              <div className="bg-slate-800 p-3 rounded-xl">
+                <Image 
+                  src={customer.img} 
+                  alt={customer.name} 
+                  width={isMobile ? 80 : 100} 
+                  height={isMobile ? 80 : 100} 
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex flex-col md:flex-row md:justify-between items-center md:items-start mb-3">
+                <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-white to-slate-100 pb-1">
+                  {customer.name}
+                </h3>
+                <Link 
+                  href={customer.link}
+                  className="text-xs bg-purple-600 hover:bg-purple-700 text-white px-4 py-1.5 mt-2 md:mt-0 rounded-full transition-colors duration-150 font-medium"
+                >
+                  View Case Study
+                </Link>
+              </div>
+              
+              <p className="text-slate-200 mb-3 text-sm md:text-base leading-relaxed">{customer.testimonial}</p>
+              
+              <div className="text-sm text-slate-300 font-medium">
+                — {customer.person}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+}; // <- THERE'S AN EXTRA CLOSING BRACKET HERE THAT NEEDS TO BE REMOVED
+
+return (
+  <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
+    {/* Interactive customer showcase */}
+    <div 
+      ref={globeRef}
+      className="absolute inset-0 w-full h-full cursor-move"
+      // Rest of your code...
+
+
+// Delete the extra closing bracket (the one right before the main return statement)
+// So it should look like this:
+
   // Show active customer detail - improved design
   const showCustomerDetail = (customer: Customer | undefined) => {
     if (!customer) return null;
