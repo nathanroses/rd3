@@ -353,7 +353,6 @@ export default function CustomersShowcase() {
       </div>
     );
   };
-}; // <- THERE'S AN EXTRA CLOSING BRACKET HERE THAT NEEDS TO BE REMOVED
 
 return (
   <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
@@ -361,13 +360,8 @@ return (
     <div 
       ref={globeRef}
       className="absolute inset-0 w-full h-full cursor-move"
-      // Rest of your code...
 
 
-// Delete the extra closing bracket (the one right before the main return statement)
-// So it should look like this:
-
-  // Show active customer detail - improved design
   const showCustomerDetail = (customer: Customer | undefined) => {
     if (!customer) return null;
     
