@@ -354,13 +354,6 @@ export default function CustomersShowcase() {
     );
   };
 
-return (
-  <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
-    {/* Interactive customer showcase */}
-    <div 
-      ref={globeRef}
-      className="absolute inset-0 w-full h-full cursor-move"
-
 
   const showCustomerDetail = (customer: Customer | undefined) => {
     if (!customer) return null;
