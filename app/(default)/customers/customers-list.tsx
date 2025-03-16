@@ -223,7 +223,7 @@ const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
       handleCustomerTouch(tappedCustomer, e);
     }
   }
-}, [isTap, findTappedCustomer, handleCustomerTouch]);
+}, []);
 
 
   // Handle customer selection on touch
