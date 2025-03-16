@@ -212,7 +212,6 @@ const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     setIsTap(false);
     setAutoRotate(true);
   }, 0);
-}, []);
 
   // If it was a tap, trigger customer selection
   if (isTap) {
@@ -224,13 +223,7 @@ const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
       handleCustomerTouch(tappedCustomer, e);
     }
   }
-
-  // Reset interaction states
-  setInteracting(false);
-  setIsTap(false);
-  setTimeout(() => setAutoRotate(true), 2000);
 }, [isTap, findTappedCustomer, handleCustomerTouch]);
-
 
 
   // Handle customer selection on touch
