@@ -400,73 +400,79 @@ export default function CustomersShowcase() {
   };
 
   return (
-    <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
-      <div 
-        ref={globeRef}
-        className="absolute inset-0 w-full h-full cursor-move"
-        onMouseDown={() => {
-          setInteracting(true);
-          setAutoRotate(false);
-        }}
-        onMouseUp={() => {
+  <div className="relative w-full h-[400px] md:h-[600px] max-w-6xl mx-auto overflow-hidden mb-10 md:mb-20">
+    <div 
+      ref={globeRef}
+      className="absolute inset-0 w-full h-full cursor-move"
+      onMouseDown={() => {
+        setInteracting(true);
+        setAutoRotate(false);
+      }}
+      onMouseUp={() => {
+        setInteracting(false);
+        setTimeout(() => setAutoRotate(true), 2000);
+      }}
+      onMouseLeave={() => {
+        if (interacting) {
           setInteracting(false);
           setTimeout(() => setAutoRotate(true), 2000);
-        }}
-        onMouseLeave={() => {
-          if (interacting) {
-            setInteracting(false);
-            setTimeout(() => setAutoRotate(true), 2000);
-          }
-        }}
-        onMouseMove={handleMouseMove}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Enhanced background effects - larger blobs */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-purple-500/10 blur-3xl animate-pulse"></div>
-        <div className="absolute left-1/3 top-1/3 -translate-x-1/2 -translate-y-1/2 w-40 md:w-64 h-40 md:h-64 rounded-full bg-blue-500/15 blur-3xl animate-pulse duration-7000"></div>
-        <div className="absolute left-2/3 top-2/3 -translate-x-1/2 -translate-y-1/2 w-48 md:w-72 h-48 md:h-72 rounded-full bg-orange-500/10 blur-3xl animate-pulse duration-5000"></div>
+        }
+      }}
+      onMouseMove={handleMouseMove}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Enhanced background effects - larger blobs */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-purple-500/10 blur-3xl animate-pulse"></div>
+      <div className="absolute left-1/3 top-1/3 -translate-x-1/2 -translate-y-1/2 w-40 md:w-64 h-40 md:h-64 rounded-full bg-blue-500/15 blur-3xl animate-pulse duration-7000"></div>
+      <div className="absolute left-2/3 top-2/3 -translate-x-1/2 -translate-y-1/2 w-48 md:w-72 h-48 md:h-72 rounded-full bg-orange-500/10 blur-3xl animate-pulse duration-5000"></div>
+      
+      {/* Particles for cosmic effect - slightly increased quantity */}
+      <Particles className="absolute inset-0" quantity={isMobile ? 30 : 60} />
+      
+      {/* Future customer points - reduced on mobile */}
+      {(!isMobile || futureCustomers.length < 4) && futureCustomers.map((customer) => {
+        const pos = calculate3DPosition(customer.position, 0.8);
         
-        {/* Particles for cosmic effect - slightly increased quantity */}
-        <Particles className="absolute inset-0" quantity={isMobile ? 30 : 60} />
+        // Only render if in front of the "camera" for performance
+        if (pos.z < -10) return null;
         
-        {/* Future customer points - reduced on mobile */}
-        {(!isMobile || futureCustomers.length < 4) && futureCustomers.map((customer) => {
-          const pos = calculate3DPosition(customer.position, 0.8);
-          
-          // Only render if in front of the "camera" for performance
-          if (pos.z < -10) return null;
-          
-          return (
-            <div
-              key={customer.id}
-              className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
-              style={{
-                left: `calc(50% + ${pos.x * (isMobile ? 2.5 : 4)}px)`,
-                top: `calc(50% + ${pos.y * (isMobile ? 2 : 3)}px)`,
-                zIndex: Math.round(pos.z),
-                opacity: pos.opacity * 0.6, // Increased opacity
-                filter: `brightness(${pos.brightness}%)`,
-              }}
-            >
-              <div className="w-3 h-3 md:w-4 md:h-4 bg-slate-500/40 rounded-full backdrop-blur-sm border border-slate-400/30 animate-pulse"></div>
-            </div>
-          );
-        })}
+        return (
+          <div
+            key={customer.id}
+            className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
+            style={{
+              left: `calc(50% + ${pos.x * (isMobile ? 2.5 : 4)}px)`,
+              top: `calc(50% + ${pos.y * (isMobile ? 2 : 3)}px)`,
+              zIndex: Math.round(pos.z),
+              opacity: pos.opacity * 0.6, // Increased opacity
+              filter: `brightness(${pos.brightness}%)`,
+            }}
+          >
+            <div className="w-3 h-3 md:w-4 md:h-4 bg-slate-500/40 rounded-full backdrop-blur-sm border border-slate-400/30 animate-pulse"></div>
+          </div>
+        );
+      })}
+      
+      {/* Featured customer points - Larger size and improved interaction */}
+      {featuredCustomers.map((customer) => {
+        const pos = calculate3DPosition(customer.position);
+        const isActive = activeCustomer === customer.id;
         
-        {/* Featured customer points - Larger size and improved interaction */}
-        {featuredCustomers.map((customer) => {
-          const pos = calculate3DPosition(customer.position);
-          const isActive = activeCustomer === customer.id;
-          
-          // Skip rendering if behind the camera for performance
-          if (pos.z < -15) return null;
-          
-          // Increased node size
-          const nodeSize = isMobile ? 20 : 28;
-          const glowSize = isMobile ? 40 : 64;
-          
+        // Skip rendering if behind the camera for performance
+        if (pos.z < -15) return null;
+        
+        // Increased node size
+        const nodeSize = isMobile ? 20 : 28;
+        const glowSize = isMobile ? 40 : 64;
+
+        // Your existing code continues here
+        // Make sure this section is complete and matches your original implementation
+      })}
+    </div>
+  </div>
+);
           return (
             <div
               key={customer.id}
