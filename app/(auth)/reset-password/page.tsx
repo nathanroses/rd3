@@ -36,7 +36,7 @@ export default function ResetPassword() {
 
         {resetSent ? (
           <div className="bg-green-500/10 border border-green-500/20 text-green-400 text-sm rounded-lg p-4">
-            <p>Check your email for a password reset link.</p>
+            <p>If your email is registered with us, you'll receive a password reset link shortly.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
