@@ -174,7 +174,7 @@ export default function CustomersShowcase() {
     }
   }, [interacting, touchStartPos]);
 
-  // Improved touch end handling
+ // Improved touch end handling
   const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     // Clear the tap timeout
     if (touchTimeoutRef.current) {
@@ -196,10 +196,10 @@ export default function CustomersShowcase() {
     setInteracting(false);
     setIsTap(false);
     setTimeout(() => setAutoRotate(true), 2000);
-  }, [isTap]);
+  }, [isTap, findTappedCustomer, handleCustomerTouch]);
 
   // Helper function to find tapped customer
-  const findTappedCustomer = (touch: Touch): number | null => {
+  const findTappedCustomer = (touch: React.Touch): number | null => {
     if (!globeRef.current) return null;
     
     const rect = globeRef.current.getBoundingClientRect();
@@ -229,6 +229,8 @@ export default function CustomersShowcase() {
     
     return null;
   };
+
+
 
   // Handle customer selection
   const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.TouchEvent) => {
