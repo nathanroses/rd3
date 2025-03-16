@@ -16,10 +16,10 @@ export default function PricingSection() {
           {/* Content */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <div>
-              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Pricing plans</div>
+              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Pricing</div>
             </div>
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Flexible plans and features</h2>
-            <p className="text-lg text-slate-400">Browse our service plans below. For custom solutions, please reach out for a personalized quote streamlined for the web.</p>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Solutions that scale with your needs</h2>
+            <p className="text-lg text-slate-400">Browse options below or contact us for a custom package tailored to your specific requirements.</p>
           </div>
           <Pricing />
         </div>
