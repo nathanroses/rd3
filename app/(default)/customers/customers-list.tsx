@@ -206,12 +206,13 @@ const findTappedCustomer = useCallback((touch: React.Touch): number | null => {
 }, [featuredCustomers, isMobile, calculate3DPosition]);
 
 // Improved touch end handling
-const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
   setTimeout(() => {
     setInteracting(false);
+    setIsTap(false);
     setAutoRotate(true);
   }, 0);
-};
+}, []);
 
   // If it was a tap, trigger customer selection
   if (isTap) {
