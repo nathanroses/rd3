@@ -233,8 +233,6 @@ const handleCustomerTouch = (customerId: number, e: React.MouseEvent | React.Tou
   e.stopPropagation();
   
   // Reset touch moved state
-  setTouchMoved(false);
-  
   setActiveCustomer(customerId);
   setShowingTestimonial(true);
   setTimeout(() => setShowingTestimonial(false), 7000);
