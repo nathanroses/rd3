@@ -3,15 +3,27 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useAuth } from '@/app/context/auth-context'
 import Image from 'next/image'
 import Logo from '@/public/images/logo.svg'
 
 export default function Header() {
   const pathname = usePathname()
   const [top, setTop] = useState<boolean>(true)
-  const { user, signOut } = useAuth()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
+
+  // Check for user on component mount
+  useEffect(() => {
+    const userString = localStorage.getItem('user')
+    if (userString) {
+      try {
+        setUser(JSON.parse(userString))
+      } catch (err) {
+        console.error('Error parsing user data:', err)
+        localStorage.removeItem('user')
+      }
+    }
+  }, [])
 
   // Handle nav on page scroll
   const scrollHandler = () => {
@@ -25,6 +37,12 @@ export default function Header() {
       window.removeEventListener('scroll', scrollHandler)
     }
   }, [top])
+
+  const handleSignOut = () => {
+    localStorage.removeItem('user')
+    setUser(null)
+    window.location.href = '/signin'
+  }
 
   return (
     <header className={`fixed w-full z-30 transition duration-300 ease-in-out ${!top ? 'bg-slate-900/80 backdrop-blur-sm shadow-lg' : ''}`}>
@@ -66,14 +84,7 @@ export default function Header() {
                   Customers
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/changelog"
-                  className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/changelog' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
-                >
-                  Changelog
-                </Link>
-              </li>
+              {/* Removed Changelog link from here */}
             </ul>
 
             {/* Desktop sign in links */}
@@ -82,10 +93,10 @@ export default function Header() {
                 <li>
                   <div className="flex items-center">
                     <span className="text-sm text-slate-300 mr-3">
-                      Welcome, {user.name}
+                      {user.name}
                     </span>
                     <button 
-                      onClick={signOut}
+                      onClick={handleSignOut}
                       className="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out"
                     >
                       Sign Out
@@ -195,15 +206,7 @@ export default function Header() {
                         Customers
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        href="/changelog"
-                        className="flex text-slate-300 hover:text-white py-2"
-                        onClick={() => setMobileNavOpen(false)}
-                      >
-                        Changelog
-                      </Link>
-                    </li>
+                    {/* Removed Changelog link from mobile menu as well */}
                   </ul>
                   <div className="border-t border-slate-800 pt-6">
                     {user ? (
@@ -213,7 +216,7 @@ export default function Header() {
                         </span>
                         <button 
                           onClick={() => {
-                            signOut();
+                            handleSignOut();
                             setMobileNavOpen(false);
                           }}
                           className="btn-sm text-white bg-purple-500 hover:bg-purple-600 w-full mb-4"
