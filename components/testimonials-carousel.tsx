@@ -65,7 +65,7 @@ export default function TestimonialsCarousel() {
               <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">The security first platform</div>
             </div>
             <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Spot issues faster</h2>
-            <p className="text-lg text-slate-400">We created an Ai Security Platform to help Monitor our Websites 24 Hours a Day.</p>
+            <p className="text-lg text-slate-400">Our intelligent monitoring system provides continuous protection and alerts you to potential vulnerabilities before they become issues.</p>
           </div>
 
           {/* Carousel built with Swiper.js [https://swiperjs.com/] */}
