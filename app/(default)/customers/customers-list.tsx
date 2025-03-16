@@ -319,10 +319,15 @@ const showCustomerDetail = (customer: Customer | undefined) => {
               <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/90 via-slate-100 to-slate-200/90">
                 {customer.name}
               </h3>
+              {/* Make the link element pointer-events-auto so it can be clicked */}
               <Link 
                 href={customer.link}
-                onClick={(e) => e.stopPropagation()}
-                className="text-xs bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 mt-2 md:mt-0 rounded-full transition-colors duration-150"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  window.location.href = customer.link;
+                }}
+                className="text-xs bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 mt-2 md:mt-0 rounded-full transition-colors duration-150 pointer-events-auto"
               >
                 View Case Study
               </Link>
