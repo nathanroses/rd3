@@ -203,7 +203,7 @@ const findTappedCustomer = useCallback((touch: React.Touch): number | null => {
   }
   
   return null;
-}, [featuredCustomers, isMobile, calculate3DPosition]);
+}, [featuredCustomers, isMobile]);
 
 // Improved touch end handling
 const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
