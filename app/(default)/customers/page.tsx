@@ -35,7 +35,7 @@ export default function Customers() {
               <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Trusted by Leaders</div>
               <h1 className="h1 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Companies that define industries</h1>
               <div className="max-w-3xl mx-auto">
-                <p className="text-lg text-slate-400">From startups with vision to pioneers setting standards, we power the teams building tomorrow.</p>
+                <p className="text-lg text-slate-400">From startups to trailblazing pioneers, we empower the teams shaping tomorrow.</p>
               </div>
             </div>
 
