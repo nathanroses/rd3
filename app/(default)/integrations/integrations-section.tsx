@@ -222,15 +222,7 @@ export default function IntegrationsSection() {
             </div>
           </div>
           
-          {/* CTA to explore all integrations */}
-          <div className="text-center mt-12">
-            <Link 
-              href="/integrations" 
-              className="btn text-white bg-purple-500 hover:bg-purple-600 shadow-sm group"
-            >
-              Explore All Integrations <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-            </Link>
-          </div>
+    
         </div>
       </div>
     </section>
