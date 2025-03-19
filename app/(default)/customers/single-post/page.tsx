@@ -87,15 +87,14 @@ export default function CustomerSingle() {
                     </p>
                     <ul>
                       <li><strong>40% Reduction</strong> in machine downtime through predictive analytics.</li>
-                      <li><strong>25% Decrease</strong> in raw material waste, improving sustainability.</li>
                       <li><strong>2x Increase</strong> in production efficiency, reducing overhead costs.</li>
                       <li><strong>Data-Driven Decision-Making</strong> empowered leadership with real-time insights.</li>
                     </ul>
 
                     <blockquote>
                       <p>
-                        “Integrating AI analytics into our operations was a game-changer. The insights provided by Rose Development allowed us to predict, adapt, and optimize like never before. This partnership has truly positioned us for future success.”  
-                        <br />— Tice, Chief Executive Officer at Tice Services 
+                        “Integrating AI analytics into our operations was a game-changer. The insights provided allowed us to predict, adapt, and optimize like never before. This partnership has truly positioned us for future success.”  
+                        <br />— Tice, Founder of Tice Services 
                       </p>
                     </blockquote>
 
