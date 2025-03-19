@@ -3,73 +3,32 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import AuthLogo from '../auth-logo'
+import { useAuth } from '@/app/context/auth-context'
 
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const { signIn, signInWithSocial, loading, error } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Basic validation
+    // Basic validation - keeping your original validation logic
     if (!email || !email.includes('@')) {
-      setError('Please enter a valid email address')
       return
     }
     
     if (!password || password.length < 6) {
-      setError('Password must be at least 6 characters')
       return
     }
     
-    setLoading(true)
-    setError(null)
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 800))
-      
-      // Store user info in localStorage to simulate login
-      localStorage.setItem('user', JSON.stringify({
-        id: '1',
-        email,
-        name: email.split('@')[0]
-      }))
-      
-      // Reload the page to update UI
-      window.location.href = '/'
-    } catch (err) {
-      setError('Failed to sign in. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+    // Use the auth context signIn function instead of localStorage
+    await signIn(email, password)
   }
 
   const handleSocialSignIn = async (provider: string) => {
-    setLoading(true)
-    setError(null)
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 800))
-      
-      // Store user info in localStorage to simulate login
-      localStorage.setItem('user', JSON.stringify({
-        id: Math.random().toString(36).substring(2, 9),
-        email: `user@${provider.toLowerCase()}.com`,
-        name: `${provider} User`,
-        provider
-      }))
-      
-      // Reload the page to update UI
-      window.location.href = '/'
-    } catch (err) {
-      setError(`Failed to sign in with ${provider}. Please try again.`)
-    } finally {
-      setLoading(false)
-    }
+    // Use the auth context signInWithSocial function
+    await signInWithSocial(provider)
   }
 
   return (
