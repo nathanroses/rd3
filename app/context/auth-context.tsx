@@ -219,14 +219,27 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
   }
 
   // Sign out function
-  const signOut = async () => {
-    try {
-      await supabase.auth.signOut()
-      router.push('/signin')
-    } catch (err: any) {
-      console.error('Sign out error:', err)
+const signOut = async () => {
+  try {
+    setLoading(true)
+    const { error } = await supabase.auth.signOut()
+    
+    if (error) {
+      console.error('Sign out error:', error)
+      throw error
     }
+    
+    // User will be set to null via the onAuthStateChange listener
+    console.log('User signed out successfully')
+    
+    // Navigate to signin page (this is also handled by the auth state listener)
+    router.push('/signin')
+  } catch (err: any) {
+    console.error('Sign out error:', err)
+  } finally {
+    setLoading(false)
   }
+}
 
   // Reset password function
   const resetPassword = async (email: string) => {
