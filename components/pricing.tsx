@@ -101,14 +101,14 @@ export default function Pricing() {
         </div>
         {/* Customers */}
         <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-400 border-b border-slate-800">Customers</div>
+          <div className="py-2 text-slate-400 border-b border-slate-800">Data</div>
         </div>
         <div className="px-6 flex flex-col justify-end">
           <div className="flex items-center h-full border-b border-slate-800 py-2 text-slate-400">
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Up to 100<span className="md:hidden">Customers</span></span>
+            <span>50 GB<span className="md:hidden">Data</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -116,7 +116,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Up to 1,000<span className="md:hidden">Customers</span></span>
+            <span>250 GB<span className="md:hidden">Data</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -124,7 +124,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Unlimited<span className="md:hidden">Customers</span></span>
+            <span>1 TB<span className="md:hidden">Data</span></span>
           </div>
         </div>
         {/* Storage Slots */}
@@ -136,7 +136,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>10 GB<span className="md:hidden">Data Storage</span></span>
+            <span>20 GB<span className="md:hidden">Storage</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -144,7 +144,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>100 GB<span className="md:hidden">Data Storage</span></span>
+            <span>100 GB<span className="md:hidden">Storage</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -152,19 +152,19 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>500 GB<span className="md:hidden">Data Storage</span></span>
+            <span>500 GB<span className="md:hidden">Storage</span></span>
           </div>
         </div>
         {/* User Role Management */}
         <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-400 border-b border-slate-800">User Management</div>
+          <div className="py-2 text-slate-400 border-b border-slate-800">Users</div>
         </div>
         <div className="px-6 flex flex-col justify-end">
           <div className="flex items-center h-full border-b border-slate-800 py-2 text-slate-400">
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Single Admin<span className="md:hidden">User Management</span></span>
+            <span>Single Admin<span className="md:hidden">Users</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -172,7 +172,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Up to 5<span className="md:hidden">User Management</span></span>
+            <span>Up to 5<span className="md:hidden">Users</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -180,7 +180,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Unlimited Users<span className="md:hidden">User Management</span></span>
+            <span>Unlimited<span className="md:hidden">Users</span></span>
           </div>
         </div>
         {/* Data Engines */}
@@ -192,7 +192,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>1 Prebuilt Tool<span className="md:hidden">AI Integrations</span></span>
+            <span>Basic anomaly detection<span className="md:hidden">AI Integrations</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -200,7 +200,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Up to 3 Custom Tools<span className="md:hidden">AI Integrations</span></span>
+            <span>Trend forecasting<span className="md:hidden">AI Integrations</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -208,7 +208,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span>Fully Customizable<span className="md:hidden">AI Integrations</span></span>
+            <span>Custom report generation<span className="md:hidden">AI Integrations</span></span>
           </div>
         </div>
         {/* # Features */}
@@ -226,14 +226,14 @@ export default function Pricing() {
         </div>
         {/* Development */}
         <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-400 border-b border-slate-800">Data Analytics</div>
+          <div className="py-2 text-slate-400 border-b border-slate-800">API</div>
         </div>
         <div className="px-6 flex flex-col justify-end">
           <div className="flex items-center h-full border-b border-slate-800 py-2 text-slate-400">
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Data Analytics</span></span>
+            <span><span className="md:hidden">API</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -241,7 +241,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Data Analytics</span></span>
+            <span><span className="md:hidden">API</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -249,19 +249,19 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Data Analytics</span></span>
+            <span><span className="md:hidden">API</span></span>
           </div>
         </div>
         {/* AI Integrationloyment Options */}
         <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-400 border-b border-slate-800">Chatbots</div>
+          <div className="py-2 text-slate-400 border-b border-slate-800">Retention</div>
         </div>
         <div className="px-6 flex flex-col justify-end">
           <div className="flex items-center h-full border-b border-slate-800 py-2 text-slate-400">
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Chatbots</span></span>
+            <span><span className="md:hidden">Retention</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -269,7 +269,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Chatbots</span></span>
+            <span><span className="md:hidden">Retention</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -277,19 +277,19 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Chatbots</span></span>
+            <span><span className="md:hidden">Retention</span></span>
           </div>
         </div>
         {/* E-Commerce */}
         <div className="px-6 flex flex-col justify-end">
-          <div className="py-2 text-slate-400 border-b border-slate-800">Inventory Tracking</div>
+          <div className="py-2 text-slate-400 border-b border-slate-800">Updates</div>
         </div>
         <div className="px-6 flex flex-col justify-end">
           <div className="flex items-center h-full border-b border-slate-800 py-2 text-slate-400">
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Inventory Tracking</span></span>
+            <span><span className="md:hidden">Updates</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -297,7 +297,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Inventory Tracking</span></span>
+            <span><span className="md:hidden">Updates</span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -305,7 +305,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Inventory Tracking</span></span>
+            <span><span className="md:hidden">Updates</span></span>
           </div>
         </div>
         {/* Hawkeyes 24/7 */}
@@ -319,7 +319,7 @@ export default function Pricing() {
         </div>
         <div className="px-6 flex flex-col justify-end">
           <div className="flex items-center border-b border-slate-800 py-2 text-slate-400 max-md:hidden">
-            <span><span className="md:hidden">Hawkeyes 24/7</span></span>
+            <span><span className="md:hidden">Hawkeyes </span></span>
           </div>
         </div>
         <div className="px-6 flex flex-col justify-end">
@@ -327,7 +327,7 @@ export default function Pricing() {
             <svg className="shrink-0 fill-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" width="12" height="9">
               <path d="M10.28.28 3.989 6.575 1.695 4.28A1 1 0 0 0 .28 5.695l3 3a1 1 0 0 0 1.414 0l7-7A1 1 0 0 0 10.28.28Z" />
             </svg>
-            <span><span className="md:hidden">Hawkeyes 24/7</span></span>
+            <span><span className="md:hidden">Hawkeyes </span></span>
           </div>
         </div>
     
