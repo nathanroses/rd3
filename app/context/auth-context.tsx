@@ -32,14 +32,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
 
   // Format Supabase user to our User type
-  const formatUser = (supabaseUser: SupabaseUser): User => {
-    return {
-      id: supabaseUser.id,
-      email: supabaseUser.email,
-      name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || null,
-      provider: supabaseUser.app_metadata?.provider || 'email'
-    }
+const formatUser = (supabaseUser: SupabaseUser): User => {
+  return {
+    id: supabaseUser.id,
+    email: supabaseUser.email || null, // Convert undefined to null
+    name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || null,
+    provider: supabaseUser.app_metadata?.provider || 'email'
   }
+}
 
   // Check auth status on mount and subscribe to changes
   useEffect(() => {
