@@ -97,30 +97,37 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
     }
   }, [])
 
-  // Sign-in function
-  const signIn = async (email: string, password: string) => {
-    try {
-      setLoading(true)
-      setError(null)
-      
-      // Basic validation
-      if (!email || !email.includes('@')) {
-        throw new Error('Please enter a valid email address')
-      }
-      
-      if (!password || password.length < 6) {
-        throw new Error('Password must be at least 6 characters')
-      }
-      
-      // Sign in with Supabase
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
+// Sign-in function
+const signIn = async (email: string, password: string) => {
+  try {
+    setLoading(true)
+    setError(null)
+    
+    // Basic validation
+    if (!email || !email.includes('@')) {
+      throw new Error('Please enter a valid email address')
+    }
+    
+    if (!password || password.length < 6) {
+      throw new Error('Password must be at least 6 characters')
+    }
+    
+    // Sign in with Supabase
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
       password
-             })
-
+    })
+    
     if (signInError) throw signInError
-
+    
     router.push('/dashboard')  // Changed from '/' to '/dashboard'
+  } catch (err: any) {
+    console.error('Sign in error:', err)
+    setError(err.message || 'Failed to sign in')
+  } finally {
+    setLoading(false)
+  }
+}
 
   // Sign-up function
   const signUp = async (email: string, name: string, company: string, password: string, referrer: string) => {
