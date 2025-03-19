@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
@@ -11,7 +11,9 @@ export default function Header() {
   const pathname = usePathname()
   const [top, setTop] = useState<boolean>(true)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const { user, signOut, loading } = useAuth()
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   // Handle nav on page scroll
   const scrollHandler = () => {
@@ -26,8 +28,23 @@ export default function Header() {
     }
   }, [top])
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   // Handle sign out
   const handleSignOut = async () => {
+    setUserMenuOpen(false)
     await signOut()
   }
 
@@ -76,23 +93,57 @@ export default function Header() {
             {/* Desktop sign in links */}
             <ul className="flex items-center">
               {user ? (
-                <li>
-                  <div className="flex items-center">
+                <li className="relative" ref={userMenuRef}>
+                  <button 
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 text-sm font-medium"
+                  >
+                    <span className="mr-1">{user.name || user.email?.split('@')[0]}</span>
+                    <svg 
+                      className={`w-4 h-4 ml-1 fill-current text-slate-400 transition-transform duration-150 ${userMenuOpen ? 'rotate-180' : ''}`} 
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </button>
+                  
+                  {/* User dropdown menu */}
+                  <div 
+                    className={`absolute right-0 mt-1 py-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-lg ${userMenuOpen ? 'block' : 'hidden'}`}
+                  >
+                    <div className="px-4 py-2 border-b border-slate-700">
+                      <div className="text-sm font-medium text-white">{user.name || 'User'}</div>
+                      <div className="text-xs text-slate-400 truncate">{user.email}</div>
+                    </div>
                     <Link 
-                      href="/dashboard"
-                      className="text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 flex items-center text-sm font-medium mr-2"
+                      href="/dashboard" 
+                      className={`block px-4 py-2 text-sm ${pathname === '/dashboard' ? 'text-purple-400' : 'text-slate-300 hover:text-white hover:bg-slate-700'}`}
+                      onClick={() => setUserMenuOpen(false)}
                     >
                       Dashboard
                     </Link>
-                    <span className="text-sm text-slate-300 mr-3">
-                      {user.name || user.email}
-                    </span>
-                    <button 
-                      onClick={handleSignOut}
-                      className="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out"
+                    <Link 
+                      href="/profile" 
+                      className={`block px-4 py-2 text-sm ${pathname === '/profile' ? 'text-purple-400' : 'text-slate-300 hover:text-white hover:bg-slate-700'}`}
+                      onClick={() => setUserMenuOpen(false)}
                     >
-                      Sign Out
-                    </button>
+                      Profile Settings
+                    </Link>
+                    <Link 
+                      href="/activity" 
+                      className={`block px-4 py-2 text-sm ${pathname === '/activity' ? 'text-purple-400' : 'text-slate-300 hover:text-white hover:bg-slate-700'}`}
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      Activity Log
+                    </Link>
+                    <div className="border-t border-slate-700 mt-2 pt-2">
+                      <button 
+                        onClick={handleSignOut}
+                        className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-slate-700"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
                   </div>
                 </li>
               ) : (
@@ -201,16 +252,44 @@ export default function Header() {
                   </ul>
                   <div className="border-t border-slate-800 pt-6">
                     {user ? (
-                      <div className="mb-4">
-                        <span className="text-slate-300 mb-2 block">
-                          Welcome, {user.name || user.email}
-                        </span>
+                      <div className="space-y-2">
+                        <div className="bg-slate-800/50 p-3 rounded-lg mb-4">
+                          <div className="text-white font-medium mb-1">
+                            {user.name || 'User'}
+                          </div>
+                          <div className="text-sm text-slate-400 truncate mb-3">
+                            {user.email}
+                          </div>
+                          <div className="space-y-2">
+                            <Link
+                              href="/dashboard"
+                              className="block text-slate-300 hover:text-white py-2 px-3 rounded-lg hover:bg-slate-800 transition-colors"
+                              onClick={() => setMobileNavOpen(false)}
+                            >
+                              Dashboard
+                            </Link>
+                            <Link
+                              href="/profile"
+                              className="block text-slate-300 hover:text-white py-2 px-3 rounded-lg hover:bg-slate-800 transition-colors"
+                              onClick={() => setMobileNavOpen(false)}
+                            >
+                              Profile Settings
+                            </Link>
+                            <Link
+                              href="/activity"
+                              className="block text-slate-300 hover:text-white py-2 px-3 rounded-lg hover:bg-slate-800 transition-colors"
+                              onClick={() => setMobileNavOpen(false)}
+                            >
+                              Activity Log
+                            </Link>
+                          </div>
+                        </div>
                         <button 
                           onClick={() => {
                             handleSignOut();
                             setMobileNavOpen(false);
                           }}
-                          className="btn-sm text-white bg-purple-500 hover:bg-purple-600 w-full mb-4"
+                          className="btn-sm text-white bg-purple-500 hover:bg-purple-600 w-full"
                         >
                           Sign Out
                         </button>
