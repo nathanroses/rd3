@@ -2,11 +2,13 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
+import { supabase } from '@/app/lib/supabase'
+import { AuthChangeEvent, Session, User as SupabaseUser } from '@supabase/supabase-js'
 
 interface User {
   id: string
-  email: string
-  name: string
+  email: string | null
+  name: string | null
   provider?: string
 }
 
@@ -16,7 +18,7 @@ interface AuthContextType {
   error: string | null
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, name: string, company: string, password: string, referrer: string) => Promise<void>
-  signOut: () => void
+  signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<void>
   signInWithSocial: (provider: string) => Promise<void>
 }
@@ -29,17 +31,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
-  // Check if user is already logged in on mount
+  // Format Supabase user to our User type
+  const formatUser = (supabaseUser: SupabaseUser): User => {
+    return {
+      id: supabaseUser.id,
+      email: supabaseUser.email,
+      name: supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || null,
+      provider: supabaseUser.app_metadata?.provider || 'email'
+    }
+  }
+
+  // Check auth status on mount and subscribe to changes
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
+    // Get initial session
+    const initUser = async () => {
+      setLoading(true)
       try {
-        setUser(JSON.parse(storedUser))
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (session?.user) {
+          setUser(formatUser(session.user))
+        } else {
+          setUser(null)
+        }
       } catch (err) {
-        localStorage.removeItem('user')
+        console.error('Error getting session:', err)
+        setUser(null)
+      } finally {
+        setLoading(false)
       }
     }
-    setLoading(false)
+
+    initUser()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event: AuthChangeEvent, session: Session | null) => {
+        if (session?.user) {
+          setUser(formatUser(session.user))
+        } else {
+          setUser(null)
+        }
+      }
+    )
+
+    return () => {
+      subscription.unsubscribe()
+    }
   }, [])
 
   // Sign-in function
@@ -57,21 +95,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Password must be at least 6 characters')
       }
       
-      // Simple mock authentication
-      // In a real application, this would be an API call
-      await new Promise(resolve => setTimeout(resolve, 800))
-      
-      const newUser = {
-        id: '1',
+      // Sign in with Supabase
+      const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
-        name: email.split('@')[0]
-      }
+        password
+      })
       
-      localStorage.setItem('user', JSON.stringify(newUser))
-      setUser(newUser)
+      if (signInError) throw signInError
       
       router.push('/')
     } catch (err: any) {
+      console.error('Sign in error:', err)
       setError(err.message || 'Failed to sign in')
     } finally {
       setLoading(false)
@@ -101,20 +135,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Company is required')
       }
       
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 800))
-      
-      const newUser = {
-        id: Math.random().toString(36).substring(2, 9),
+      // Sign up with Supabase
+      const { error: signUpError, data } = await supabase.auth.signUp({
         email,
-        name
+        password,
+        options: {
+          data: {
+            name,
+            company,
+            referrer
+          }
+        }
+      })
+      
+      if (signUpError) throw signUpError
+      
+      // If email confirmation is enabled, notify the user
+      if (!data?.user?.confirmed_at) {
+        alert('Please check your email to confirm your account before signing in.')
+        router.push('/signin')
+      } else {
+        router.push('/')
       }
-      
-      localStorage.setItem('user', JSON.stringify(newUser))
-      setUser(newUser)
-      
-      router.push('/')
     } catch (err: any) {
+      console.error('Sign up error:', err)
       setError(err.message || 'Failed to sign up')
     } finally {
       setLoading(false)
@@ -127,32 +171,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true)
       setError(null)
       
-      // Mock social authentication
-      await new Promise(resolve => setTimeout(resolve, 800))
+      let providerType: 'github' | 'twitter' | 'google';
       
-      const newUser = {
-        id: Math.random().toString(36).substring(2, 9),
-        email: `user@${provider.toLowerCase()}.com`,
-        name: `${provider} User`,
-        provider
+      if (provider.toLowerCase() === 'github') {
+        providerType = 'github'
+      } else if (provider.toLowerCase() === 'twitter') {
+        providerType = 'twitter'
+      } else if (provider.toLowerCase() === 'google') {
+        providerType = 'google'
+      } else {
+        throw new Error(`Authentication provider ${provider} is not supported`)
       }
       
-      localStorage.setItem('user', JSON.stringify(newUser))
-      setUser(newUser)
+      // Sign in with social provider
+      const { error: signInError } = await supabase.auth.signInWithOAuth({
+        provider: providerType,
+        options: {
+          redirectTo: window.location.origin
+        }
+      })
       
-      router.push('/')
+      if (signInError) throw signInError
+      
+      // No need to navigate, the redirect will happen automatically
     } catch (err: any) {
+      console.error('Social sign in error:', err)
       setError(err.message || `Failed to sign in with ${provider}`)
-    } finally {
       setLoading(false)
     }
   }
 
   // Sign out function
-  const signOut = () => {
-    localStorage.removeItem('user')
-    setUser(null)
-    router.push('/signin')
+  const signOut = async () => {
+    try {
+      await supabase.auth.signOut()
+      router.push('/signin')
+    } catch (err: any) {
+      console.error('Sign out error:', err)
+    }
   }
 
   // Reset password function
@@ -165,13 +221,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Please enter a valid email address')
       }
       
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 800))
+      // Send password reset email
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password-confirm`
+      })
       
-      // In a real app, would send password reset email
+      if (resetError) throw resetError
       
-      // Success message (handled in component)
+      // Success message handled in component
     } catch (err: any) {
+      console.error('Reset password error:', err)
       setError(err.message || 'Failed to reset password')
     } finally {
       setLoading(false)
