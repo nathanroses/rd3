@@ -8,7 +8,7 @@ import Particles from '@/components/particles'
 import Illustration from '@/public/images/page-illustration.svg'
 
 // Component for the Create Report Modal
-const CreateReportModal = ({ isOpen, onClose }) => {
+const CreateReportModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [reportName, setReportName] = useState('')
   const [reportType, setReportType] = useState('performance')
   const [loading, setLoading] = useState(false)
