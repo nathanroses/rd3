@@ -8,9 +8,9 @@ import Particles from '@/components/particles'
 import Illustration from '@/public/images/page-illustration.svg'
 
 // Component for the Create Report Modal
-const CreateReportModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const [reportName, setReportName] = useState('')
-  const [reportType, setReportType] = useState('performance')
+const ConnectDataSourceModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [source, setSource] = useState('')
+  const [connectionString, setConnectionString] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,10 +19,11 @@ const CreateReportModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
     
     setTimeout(() => {
       setLoading(false)
-      alert(`Report "${reportName}" created successfully!`)
+      alert(`Data source "${source}" connected successfully!`)
       onClose()
-      setReportName('')
-    }, 1000)
+      setSource('')
+      setConnectionString('')
+    }, 1200)
   }
 
   if (!isOpen)  null
