@@ -78,9 +78,9 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
           console.log('User updated:', formattedUser)
           
           // Navigate based on auth event
-          if (event === 'SIGNED_IN') {
-            router.push('/')
-          }
+           if (event === 'SIGNED_IN') {
+              router.push('/dashboard')
+              }
         } else {
           setUser(null)
           
@@ -113,21 +113,14 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
       }
       
       // Sign in with Supabase
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+        const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
-        password
-      })
-      
-      if (signInError) throw signInError
-      
-      router.push('/')
-    } catch (err: any) {
-      console.error('Sign in error:', err)
-      setError(err.message || 'Failed to sign in')
-    } finally {
-      setLoading(false)
-    }
-  }
+      password
+             })
+
+    if (signInError) throw signInError
+
+    router.push('/dashboard')  // Changed from '/' to '/dashboard'
 
   // Sign-up function
   const signUp = async (email: string, name: string, company: string, password: string, referrer: string) => {
