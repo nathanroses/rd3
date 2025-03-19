@@ -260,7 +260,7 @@ const signOut = async () => {
     }
   }
 
-  return (
+return (
     <AuthContext.Provider value={{ 
       user, 
       loading, 
