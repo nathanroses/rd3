@@ -221,25 +221,31 @@ const signIn = async (email: string, password: string) => {
   // Sign out function
 const signOut = async () => {
   try {
-    setLoading(true)
-    const { error } = await supabase.auth.signOut()
+    setLoading(true);
+    setError(null);
+    
+    // Call Supabase sign out
+    const { error } = await supabase.auth.signOut();
     
     if (error) {
-      console.error('Sign out error:', error)
-      throw error
+      console.error('Sign out error:', error);
+      throw error;
     }
     
-    // User will be set to null via the onAuthStateChange listener
-    console.log('User signed out successfully')
+    // Let the auth state listener handle navigation
+    // Remove the explicit router.push() call
+    console.log('User signed out successfully');
     
-    // Navigate to signin page (this is also handled by the auth state listener)
-    router.push('/signin')
-  } catch (err: any) {
-    console.error('Sign out error:', err)
+    // Optional: Force-clear user state
+    setUser(null);
+    
+  } catch (err) {
+    console.error('Sign out error:', err);
+    setError(err.message || 'Failed to sign out');
   } finally {
-    setLoading(false)
+    setLoading(false);
   }
-}
+};
 
   // Reset password function
   const resetPassword = async (email: string) => {
