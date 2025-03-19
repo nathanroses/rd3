@@ -13,7 +13,7 @@ const CreateReportModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   const [reportType, setReportType] = useState('performance')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     
