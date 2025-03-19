@@ -233,19 +233,18 @@ const signOut = async () => {
     }
     
     // Let the auth state listener handle navigation
-    // Remove the explicit router.push() call
     console.log('User signed out successfully');
     
     // Optional: Force-clear user state
     setUser(null);
     
-  } catch (err) {
+  } catch (err: any) { // Type annotation added here
     console.error('Sign out error:', err);
     setError(err.message || 'Failed to sign out');
   } finally {
     setLoading(false);
   }
-};
+}
 
   // Reset password function
   const resetPassword = async (email: string) => {
