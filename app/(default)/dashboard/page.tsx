@@ -7,9 +7,178 @@ import Link from 'next/link'
 import Particles from '@/components/particles'
 import Illustration from '@/public/images/page-illustration.svg'
 
+// Component for the Create Report Modal
+const CreateReportModal = ({ isOpen, onClose }) => {
+  const [reportName, setReportName] = useState('')
+  const [reportType, setReportType] = useState('performance')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    
+    setTimeout(() => {
+      setLoading(false)
+      alert(`Report "${reportName}" created successfully!`)
+      onClose()
+      setReportName('')
+    }, 1000)
+  }
+
+  if (!isOpen)  null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80">
+      <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-white">Create New Report</h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-white">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="report-name">Report Name</label>
+              <input 
+                id="report-name" 
+                className="form-input w-full bg-slate-700 border border-slate-600 text-white" 
+                type="text" 
+                value={reportName}
+                onChange={(e) => setReportName(e.target.value)}
+                required 
+                placeholder="Q1 Performance Analysis"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="report-type">Report Type</label>
+              <select
+                id="report-type"
+                className="form-select w-full bg-slate-700 border border-slate-600 text-white"
+                value={reportType}
+                onChange={(e) => setReportType(e.target.value)}
+              >
+                <option value="performance">Performance Report</option>
+                <option value="analytics">Analytics Report</option>
+                <option value="financial">Financial Report</option>
+                <option value="custom">Custom Report</option>
+              </select>
+            </div>
+            <div className="flex space-x-3 pt-4">
+              <button 
+                type="button" 
+                onClick={onClose}
+                className="btn-sm text-slate-300 border border-slate-700 hover:bg-slate-700 w-full"
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                className="btn-sm text-white bg-purple-500 hover:bg-purple-600 w-full"
+                disabled={loading}
+              >
+                {loading ? 'Creating...' : 'Create Report'}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+// Component for the Connect Data Source Modal
+const ConnectDataSourceModal = ({ isOpen, onClose }) => {
+  const [source, setSource] = useState('')
+  const [connectionString, setConnectionString] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    
+    setTimeout(() => {
+      setLoading(false)
+      alert(`Data source "${source}" connected successfully!`)
+      onClose()
+      setSource('')
+      setConnectionString('')
+    }, 1200)
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80">
+      <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-white">Connect Data Source</h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-white">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="source-type">Source Type</label>
+              <select
+                id="source-type"
+                className="form-select w-full bg-slate-700 border border-slate-600 text-white"
+                value={source}
+                onChange={(e) => setSource(e.target.value)}
+                required
+              >
+                <option value="">Select a data source</option>
+                <option value="mysql">MySQL Database</option>
+                <option value="postgres">PostgreSQL</option>
+                <option value="mongodb">MongoDB</option>
+                <option value="api">REST API</option>
+                <option value="csv">CSV File</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="connection-string">Connection Details</label>
+              <textarea 
+                id="connection-string" 
+                className="form-textarea w-full bg-slate-700 border border-slate-600 text-white h-24" 
+                value={connectionString}
+                onChange={(e) => setConnectionString(e.target.value)}
+                placeholder="Connection string or API endpoint URL"
+                required
+              />
+            </div>
+            <div className="flex space-x-3 pt-4">
+              <button 
+                type="button" 
+                onClick={onClose}
+                className="btn-sm text-slate-300 border border-slate-700 hover:bg-slate-700 w-full"
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                className="btn-sm text-white bg-green-500 hover:bg-green-600 w-full"
+                disabled={loading}
+              >
+                {loading ? 'Connecting...' : 'Connect Source'}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 export default function Dashboard() {
   const { user } = useAuth()
   const [greeting, setGreeting] = useState('')
+  const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false)
+  const [isConnectDataSourceModalOpen, setIsConnectDataSourceModalOpen] = useState(false)
 
   useEffect(() => {
     // Set personalized greeting based on time of day
@@ -23,8 +192,17 @@ export default function Dashboard() {
     }
   }, [])
 
-  return (
+   (
     <section className="relative">
+      {/* Modals */}
+  <CreateReportModal 
+  isOpen={isCreateReportModalOpen} 
+  onClose={() => setIsCreateReportModalOpen(false)} 
+    />
+  <ConnectDataSourceModal 
+  isOpen={isConnectDataSourceModalOpen} 
+  onClose={() => setIsConnectDataSourceModalOpen(false)} 
+   />
       {/* Radial gradient */}
       <div className="absolute flex items-center justify-center top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 pointer-events-none -z-10 w-[800px] aspect-square" aria-hidden="true">
         <div className="absolute inset-0 translate-z-0 bg-purple-500 rounded-full blur-[120px] opacity-30"></div>
@@ -248,26 +426,32 @@ export default function Dashboard() {
               
               {/* Quick actions */}
               <div className="bg-gradient-to-tr from-slate-800/50 to-slate-800/10 rounded-xl border border-slate-800 p-6">
-                <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
-                <div className="space-y-2">
-                  <button className="flex items-center w-full p-3 bg-slate-800 hover:bg-slate-700 transition-colors rounded-lg text-left">
-                    <div className="bg-blue-500/10 p-2 rounded-lg mr-3">
-                      <svg className="w-5 h-5 fill-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                      </svg>
-                    </div>
-                    <span className="text-sm text-slate-300">Create New Report</span>
-                  </button>
-                  <button className="flex items-center w-full p-3 bg-slate-800 hover:bg-slate-700 transition-colors rounded-lg text-left">
-                    <div className="bg-green-500/10 p-2 rounded-lg mr-3">
-                      <svg className="w-5 h-5 fill-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
-                      </svg>
-                    </div>
-                    <span className="text-sm text-slate-300">Connect Data Source</span>
-                  </button>
-                </div>
-              </div>
+  <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
+  <div className="space-y-2">
+    <button 
+      className="flex items-center w-full p-3 bg-slate-800 hover:bg-slate-700 transition-colors rounded-lg text-left"
+      onClick={() => setIsCreateReportModalOpen(true)}
+    >
+      <div className="bg-blue-500/10 p-2 rounded-lg mr-3">
+        <svg className="w-5 h-5 fill-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+      </div>
+      <span className="text-sm text-slate-300">Create New Report</span>
+    </button>
+    <button 
+      className="flex items-center w-full p-3 bg-slate-800 hover:bg-slate-700 transition-colors rounded-lg text-left"
+      onClick={() => setIsConnectDataSourceModalOpen(true)}
+    >
+      <div className="bg-green-500/10 p-2 rounded-lg mr-3">
+        <svg className="w-5 h-5 fill-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+        </svg>
+      </div>
+      <span className="text-sm text-slate-300">Connect Data Source</span>
+    </button>
+  </div>
+</div>
             </div>
           </div>
         </div>
