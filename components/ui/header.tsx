@@ -13,7 +13,9 @@ export default function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const { user, signOut, loading } = useAuth()
-  const userMenuRef = useRef<HTMLDivElement>(null)
+  
+  // Fix: Change the ref type to HTMLLIElement to match the <li> element
+  const userMenuRef = useRef<HTMLLIElement>(null)
 
   // Handle nav on page scroll
   const scrollHandler = () => {
