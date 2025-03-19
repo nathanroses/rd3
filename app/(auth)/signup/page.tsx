@@ -5,21 +5,49 @@ import Link from 'next/link'
 import AuthLogo from '../auth-logo'
 import { useAuth } from '@/app/context/auth-context'
 
-export default function SignUp() {
-  const [company, setCompany] = useState('')
-  const [fullName, setFullName] = useState('')
+export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [referrer, setReferrer] = useState('Google')
-  const { signUp, loading, error, signInWithSocial } = useAuth()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const { signIn, signInWithSocial } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await signUp(email, fullName, company, password, referrer)
+    
+    // Basic validation
+    if (!email || !email.includes('@')) {
+      setError('Please enter a valid email address')
+      return
+    }
+    
+    if (!password || password.length < 6) {
+      setError('Password must be at least 6 characters')
+      return
+    }
+    
+    setLoading(true)
+    setError(null)
+    
+    try {
+      await signIn(email, password)
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleSocialSignIn = async (provider: string) => {
-    await signInWithSocial(provider)
+    setLoading(true)
+    setError(null)
+    
+    try {
+      await signInWithSocial(provider)
+    } catch (err: any) {
+      setError(`Failed to sign in with ${provider}. Please try again.`)
+      setLoading(false)
+    }
   }
 
   return (
@@ -29,7 +57,7 @@ export default function SignUp() {
         {/* Logo */}
         <AuthLogo />
         {/* Page title */}
-        <h1 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60">Create your free account</h1>
+        <h1 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60">Sign in to your account</h1>
       </div>
 
       {/* Form */}
@@ -43,77 +71,41 @@ export default function SignUp() {
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="company">Company <span className="text-rose-500">*</span></label>
-              <input 
-                id="company" 
-                className="form-input w-full" 
-                type="text" 
-                placeholder="E.g., Acme Inc." 
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                required 
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="full-name">Full Name <span className="text-rose-500">*</span></label>
-              <input 
-                id="full-name" 
-                className="form-input w-full" 
-                type="text" 
-                placeholder="E.g., Mark Rossi" 
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required 
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="email">Email <span className="text-rose-500">*</span></label>
+              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="email">Email</label>
               <input 
                 id="email" 
                 className="form-input w-full" 
                 type="email" 
-                placeholder="markrossi@company.com" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required 
               />
             </div>
             <div>
-              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="password">Password <span className="text-rose-500">*</span></label>
+              <div className="flex justify-between">
+                <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="password">Password</label>
+                <Link className="text-sm font-medium text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out ml-2" href="/reset-password">Forgot?</Link>
+              </div>
               <input 
                 id="password" 
                 className="form-input w-full" 
                 type="password" 
-                autoComplete="new-password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
               />
             </div>
-            <div>
-              <label className="block text-sm text-slate-300 font-medium mb-1" htmlFor="referrer">Where did you hear about us? <span className="text-rose-500">*</span></label>
-              <select 
-                id="referrer" 
-                className="form-select text-sm py-2 w-full" 
-                value={referrer}
-                onChange={(e) => setReferrer(e.target.value)}
-                required
-              >
-                <option>Google</option>
-                <option>Medium</option>
-                <option>GitHub</option>
-              </select>
-            </div>
           </div>
           <div className="mt-6">
             <button 
-              type="submit"
+              type="submit" 
               className="btn text-sm text-white bg-purple-500 hover:bg-purple-600 w-full shadow-sm group"
               disabled={loading}
             >
-              {loading ? 'Creating account...' : (
+              {loading ? 'Signing in...' : (
                 <>
-                  Sign Up <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+                  Sign In <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
                 </>
               )}
             </button>
@@ -122,7 +114,7 @@ export default function SignUp() {
 
         <div className="text-center mt-4">
           <div className="text-sm text-slate-400">
-            Already have an account? <Link className="font-medium text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out" href="/signin">Sign in</Link>
+            Don't have an account? <Link className="font-medium text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out" href="/signup">Sign up</Link>
           </div>
         </div>
 
