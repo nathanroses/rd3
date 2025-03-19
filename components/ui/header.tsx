@@ -74,49 +74,81 @@ export default function Header() {
             </ul>
 
             {/* Desktop sign in links */}
-          <ul className="flex items-center">
-          {user ? (
-            <li>
-              <div className="flex items-center">
-             <Link 
-                href="/dashboard"
-                 className="text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 flex items-center text-sm font-medium mr-2"
-               >
-                Dashboard
-              </Link>
-           <span className="text-sm text-slate-300 mr-3">
-          {user.name || user.email}
-         </span>
-        <button 
-           onClick={handleSignOut}
-          className="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out"
-                  >
-          Sign Out
-        </button>
-      </div>
+         
+                         {/* Desktop navigation */}
+<nav className="hidden md:flex md:grow">
+  {/* Desktop menu links */}
+  <ul className="flex grow flex-wrap items-center font-medium">
+    <li>
+      <Link
+        href="/about"
+        className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/about' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+      >
+        About
+      </Link>
     </li>
-      ) : (
-     <>
+    <li>
+      <Link
+        href="/integrations"
+        className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/integrations' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+      >
+        Integrations
+      </Link>
+    </li>
+    <li>
+      <Link
+        href="/customers"
+        className={`text-sm px-3 py-2 flex items-center transition duration-150 ease-in-out ${pathname === '/customers' ? 'text-purple-500' : 'text-slate-300 hover:text-white'}`}
+      >
+        Customers
+      </Link>
+    </li>
+  </ul>
+
+  {/* Desktop sign in links */}
+  <ul className="flex items-center">
+    {user ? (
       <li>
-        <Link
-          href="/signin"
-          className="text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 flex items-center text-sm font-medium"
-        >
-          Sign In
-        </Link>
-      </li>
-      <li>
-        <Link 
-          href="/signup" 
-          className="btn-sm text-white bg-purple-500 hover:bg-purple-600 ml-3"
+        <div className="flex items-center">
+          <Link 
+            href="/dashboard"
+            className="text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 flex items-center text-sm font-medium mr-2"
           >
-          Get Started
-         </Link>
-       </li>
+            Dashboard
+          </Link>
+          <span className="text-sm text-slate-300 mr-3">
+            {user.name || user.email}
+          </span>
+          <button 
+            onClick={handleSignOut}
+            className="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out"
+          >
+            Sign Out
+          </button>
+        </div>
+      </li>
+    ) : (
+      <>
+        <li>
+          <Link
+            href="/signin"
+            className="text-slate-300 hover:text-white transition duration-150 ease-in-out px-3 py-2 flex items-center text-sm font-medium"
+          >
+            Sign In
+          </Link>
+        </li>
+        <li>
+          <Link 
+            href="/signup" 
+            className="btn-sm text-white bg-purple-500 hover:bg-purple-600 ml-3"
+          >
+            Get Started
+          </Link>
+        </li>
       </>
-      )}
-    </ul>
-             
+    )}
+  </ul>
+</nav>             
 
           {/* Mobile menu */}
           <div className="flex md:hidden">
