@@ -67,7 +67,7 @@ export default function CustomerSingle() {
 
                     <h2>Harnessing AI for Smarter Decision-Making</h2>
                     <p>
-                      Rose Development introduced a comprehensive AI-powered data analytics system that revolutionized The Leading Edge’s approach to manufacturing. The solution focused on:
+                      Rose Development introduced a comprehensive AI-powered data analytics system that revolutionized the approach to construction problems. The solution focused on:
                     </p>
                     <ul>
                       <li>
@@ -93,7 +93,7 @@ export default function CustomerSingle() {
 
                     <blockquote>
                       <p>
-                        “Integrating AI analytics into our operations was a game-changer. The insights provided allowed us to predict, adapt, and optimize like never before. This partnership has truly positioned us for future success.”  
+                        "Integrating AI analytics into our operations was a game-changer. The insights provided allowed us to predict, adapt, and optimize like never before. This partnership has truly positioned us for future success.”  
                         <br />— Tice, Founder of Tice Services 
                       </p>
                     </blockquote>
