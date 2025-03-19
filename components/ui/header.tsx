@@ -5,25 +5,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Logo from '@/public/images/logo.svg'
+import { useAuth } from '@/app/context/auth-context'
 
 export default function Header() {
   const pathname = usePathname()
   const [top, setTop] = useState<boolean>(true)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
-  const [user, setUser] = useState<any>(null)
-
-  // Check for user on component mount
-  useEffect(() => {
-    const userString = localStorage.getItem('user')
-    if (userString) {
-      try {
-        setUser(JSON.parse(userString))
-      } catch (err) {
-        console.error('Error parsing user data:', err)
-        localStorage.removeItem('user')
-      }
-    }
-  }, [])
+  const { user, signOut, loading } = useAuth()
 
   // Handle nav on page scroll
   const scrollHandler = () => {
@@ -38,10 +26,9 @@ export default function Header() {
     }
   }, [top])
 
-  const handleSignOut = () => {
-    localStorage.removeItem('user')
-    setUser(null)
-    window.location.href = '/signin'
+  // Handle sign out
+  const handleSignOut = async () => {
+    await signOut()
   }
 
   return (
@@ -84,7 +71,6 @@ export default function Header() {
                   Customers
                 </Link>
               </li>
-              {/* Removed Changelog link from here */}
             </ul>
 
             {/* Desktop sign in links */}
@@ -93,7 +79,7 @@ export default function Header() {
                 <li>
                   <div className="flex items-center">
                     <span className="text-sm text-slate-300 mr-3">
-                      {user.name}
+                      {user.name || user.email}
                     </span>
                     <button 
                       onClick={handleSignOut}
@@ -206,13 +192,12 @@ export default function Header() {
                         Customers
                       </Link>
                     </li>
-                    {/* Removed Changelog link from mobile menu as well */}
                   </ul>
                   <div className="border-t border-slate-800 pt-6">
                     {user ? (
                       <div className="mb-4">
                         <span className="text-slate-300 mb-2 block">
-                          Welcome, {user.name}
+                          Welcome, {user.name || user.email}
                         </span>
                         <button 
                           onClick={() => {
