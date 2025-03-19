@@ -8,21 +8,23 @@ import { useAuth } from '@/app/context/auth-context'
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [formError, setFormError] = useState<string | null>(null)
   const { signIn, signInWithSocial, loading, error } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Clear any previous form errors
+    setFormError(null)
+    
     // Basic validation with error messages
     if (!email || !email.includes('@')) {
-      // Cannot directly call setError here as it's not defined in scope
-      // Instead, rely on the signIn function to set the error
+      setFormError('Please enter a valid email address')
       return
     }
     
     if (!password || password.length < 6) {
-      // Cannot directly call setError here as it's not defined in scope
-      // Instead, rely on the signIn function to set the error
+      setFormError('Password must be at least 6 characters')
       return
     }
     
@@ -37,9 +39,19 @@ export default function SignIn() {
   }
 
   const handleSocialSignIn = async (provider: string) => {
+    // Clear any previous form errors
+    setFormError(null)
+    
     // Use the auth context signInWithSocial function
-    await signInWithSocial(provider)
+    try {
+      await signInWithSocial(provider)
+    } catch (error) {
+      console.error(`Error signing in with ${provider}:`, error)
+    }
   }
+
+  // Display either the form validation error or the auth context error
+  const displayError = formError || error
 
   return (
     <>
@@ -53,9 +65,9 @@ export default function SignIn() {
 
       {/* Form */}
       <div className="max-w-sm mx-auto">
-        {error && (
+        {displayError && (
           <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg p-3 mb-4">
-            {error}
+            {displayError}
           </div>
         )}
 
