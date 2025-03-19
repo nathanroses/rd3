@@ -74,10 +74,7 @@ export default function CustomerSingle() {
                         Predictive Maintenance – AI algorithms analyzed equipment data, identifying potential failures before they occurred, reducing downtime by 40%.
                       </li>
                       <li>
-                        Supply Chain Optimization – Real-time demand forecasting improved inventory management, reducing waste by 25%.
-                      </li>
-                      <li>
-                        Operational Efficiency – AI-driven insights streamlined production processes, increasing output while lowering costs.
+                        Operational Efficiency – Able to preditic important project timelines, increasing output while lowering costs.
                       </li>
                       <li>
                         Customer Analytics – Advanced models predicted customer demand, enhancing marketing precision and boosting sales conversions.
@@ -133,11 +130,11 @@ export default function CustomerSingle() {
                       <ul className="text-sm">
                         <li className="flex items-center justify-between space-x-2 py-3">
                           <span className="text-slate-400">Industry</span>
-                          <span className="text-slate-300 font-medium">Manufacturing</span>
+                          <span className="text-slate-300 font-medium">Construction</span>
                         </li>
                         <li className="flex items-center justify-between space-x-2 py-3">
-                          <span className="text-slate-400">Construction</span>
-                          <span className="text-slate-300 font-medium">AI Data Storage</span>
+                          <span className="text-slate-400">Product</span>
+                          <span className="text-slate-300 font-medium">Launch</span>
                         </li>
                       </ul>
                     </div>
