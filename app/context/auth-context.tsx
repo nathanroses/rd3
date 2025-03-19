@@ -41,7 +41,7 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
   }
 }
 
-  // Check auth status on mount and subscribe to changes
+    // Check auth status on mount and subscribe to changes
   useEffect(() => {
     // Get initial session
     const initUser = async () => {
@@ -50,9 +50,12 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
         const { data: { session } } = await supabase.auth.getSession()
         
         if (session?.user) {
-          setUser(formatUser(session.user))
+          const formattedUser = formatUser(session.user)
+          setUser(formattedUser)
+          console.log('User logged in:', formattedUser)
         } else {
           setUser(null)
+          console.log('No active session found')
         }
       } catch (err) {
         console.error('Error getting session:', err)
@@ -67,10 +70,24 @@ const formatUser = (supabaseUser: SupabaseUser): User => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: AuthChangeEvent, session: Session | null) => {
+        console.log('Auth state changed:', event)
+        
         if (session?.user) {
-          setUser(formatUser(session.user))
+          const formattedUser = formatUser(session.user)
+          setUser(formattedUser)
+          console.log('User updated:', formattedUser)
+          
+          // Navigate based on auth event
+          if (event === 'SIGNED_IN') {
+            router.push('/')
+          }
         } else {
           setUser(null)
+          
+          // Navigate based on auth event
+          if (event === 'SIGNED_OUT') {
+            router.push('/signin')
+          }
         }
       }
     )
