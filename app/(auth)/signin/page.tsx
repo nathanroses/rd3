@@ -10,18 +10,30 @@ export default function SignIn() {
   const [password, setPassword] = useState('')
   const { signIn, signInWithSocial, loading, error } = useAuth()
 
+  
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Basic validation - keeping your original validation logic
-    if (!email || !email.includes('@')) {
-      return
-    }
-    
-    if (!password || password.length < 6) {
-      return
-    }
-    
+  e.preventDefault()
+  
+  // Basic validation with error messages
+  if (!email || !email.includes('@')) {
+    setError('Please enter a valid email address')
+    return
+  }
+  
+  if (!password || password.length < 6) {
+    setError('Password must be at least 6 characters')
+    return
+  }
+  
+  try {
+    // Use the auth context signIn function
+    await signIn(email, password)
+    // No need to navigate here - the auth context will handle redirection
+  } catch (error) {
+    console.error('Error in handleSubmit:', error)
+    // The error should already be set by the auth context
+  }
+}
     // Use the auth context signIn function instead of localStorage
     await signIn(email, password)
   }
