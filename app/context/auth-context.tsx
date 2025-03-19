@@ -6,8 +6,7 @@ import { supabase } from '@/app/lib/supabase'
 import { 
   AuthChangeEvent, 
   Session, 
-  User as SupabaseUser, 
-  ApiError, 
+  User as SupabaseUser,
   Provider 
 } from '@supabase/supabase-js'
 
