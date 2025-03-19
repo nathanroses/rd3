@@ -1,4 +1,4 @@
-This is a rose dvelopment project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This a Rose Development Project created using Next. JS
 
 ## Getting Started
 
