@@ -18,8 +18,8 @@ export default function PricingSection() {
             <div>
               <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Pricing</div>
             </div>
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Solutions that scale with your needs</h2>
-            <p className="text-lg text-slate-400">Choose your plan below, or talk to us about custom enterprise solutions.</p>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Simple, transparent pricing</h2>
+            <p className="text-lg text-slate-400">Choose your plan or contact us for custom solutions</p>
           </div>
           <Pricing />
         </div>
