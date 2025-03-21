@@ -40,7 +40,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg06,
       name: 'Snowflake',
-      description: 'Connect your Snowflake data warehouse to Rose Development for powerful AI analytics on your enterprise data with secure end-to-end encryption.',
+      description: 'Connect your Snowflake data warehouse for powerful AI analytics on your enterprise data with secure end-to-end encryption.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Data Sources'
@@ -48,7 +48,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg07,
       name: 'MongoDB Atlas',
-      description: 'Bring your MongoDB document data into Rose Development to apply advanced predictive analytics and AI-driven insights to your NoSQL data.',
+      description: 'Bring your MongoDB document data into our platform to apply advanced predictive analytics and AI-driven insights to your NoSQL data.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Data Sources'
@@ -56,7 +56,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg04,
       name: 'AWS S3',
-      description: 'Seamlessly connect your S3 data lake to Rose Development to transform raw storage into actionable analytics insights and visualizations.',
+      description: 'Seamlessly connect your S3 data lake to transform raw storage into actionable analytics insights and visualizations.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Data Sources'
@@ -64,7 +64,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg08,
       name: 'Google BigQuery',
-      description: 'Transform your BigQuery datasets into predictive models with Rose Development\'s AI-powered analytics engine and custom visualization tools.',
+      description: 'Transform your BigQuery datasets into predictive models with AI-powered analytics engine and custom visualization tools.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Data Sources'
@@ -72,7 +72,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg05,
       name: 'Azure Synapse',
-      description: 'Connect Rose Development to your Azure Synapse Analytics environment for comprehensive AI-powered business intelligence and data pipelines.',
+      description: 'Connect to your Azure Synapse Analytics environment for comprehensive AI-powered business intelligence and data pipelines.',
       link: '/integrations/single-post',
       featured: false,
       category: 'Data Sources'
@@ -80,7 +80,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg01,
       name: 'PostgreSQL',
-      description: 'Analyze your PostgreSQL data with Rose Development\'s machine learning models for deeper customer insights and predictive analytics.',
+      description: 'Analyze your PostgreSQL data with machine learning models for deeper customer insights and predictive analytics.',
       link: '/integrations/single-post',
       featured: false,
       category: 'Data Sources'
@@ -90,7 +90,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg02,
       name: 'Tableau',
-      description: 'Enhance your Tableau dashboards with Rose Development\'s AI predictions and anomaly detection for smarter, more actionable visualizations.',
+      description: 'Enhance your Tableau dashboards with AI predictions and anomaly detection for smarter, more actionable visualizations.',
       link: '/integrations/single-post',
       featured: true,
       category: 'BI & Visualization'
@@ -98,7 +98,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg03,
       name: 'Power BI',
-      description: 'Integrate Rose Development\'s AI analytics capabilities directly into Microsoft Power BI for enhanced forecasting and automated insights.',
+      description: 'Integrate AI analytics capabilities directly into Microsoft Power BI for enhanced forecasting and automated insights.',
       link: '/integrations/single-post',
       featured: true,
       category: 'BI & Visualization'
@@ -106,7 +106,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg09,
       name: 'Looker',
-      description: 'Combine Looker\'s data exploration capabilities with Rose Development\'s predictive AI to create forward-looking business intelligence.',
+      description: 'Combine Looker\'s data exploration capabilities with predictive AI to create forward-looking business intelligence.',
       link: '/integrations/single-post',
       featured: true,
       category: 'BI & Visualization'
@@ -114,7 +114,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg10,
       name: 'Grafana',
-      description: 'Add AI-powered anomaly detection and predictive alerts to your Grafana monitoring dashboards with the Rose Development integration.',
+      description: 'Add AI-powered anomaly detection and predictive alerts to your Grafana monitoring dashboards.',
       link: '/integrations/single-post',
       featured: false,
       category: 'BI & Visualization'
@@ -122,7 +122,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg11,
       name: 'Qlik',
-      description: 'Enhance Qlik Sense with Rose Development\'s machine learning models for deeper data insights and automated pattern recognition.',
+      description: 'Enhance Qlik Sense with machine learning models for deeper data insights and automated pattern recognition.',
       link: '/integrations/single-post',
       featured: false,
       category: 'BI & Visualization'
@@ -130,7 +130,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg12,
       name: 'Domo',
-      description: 'Bring Rose Development\'s AI analytics capabilities into your Domo environment for more intelligent data-driven decision making.',
+      description: 'Bring advanced AI analytics capabilities into your Domo environment for more intelligent data-driven decision making.',
       link: '/integrations/single-post',
       featured: false,
       category: 'BI & Visualization'
@@ -140,7 +140,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg13,
       name: 'TensorFlow',
-      description: 'Seamlessly integrate your TensorFlow models with Rose Development to deploy and monitor AI solutions at enterprise scale.',
+      description: 'Seamlessly integrate your TensorFlow models to deploy and monitor AI solutions at enterprise scale.',
       link: '/integrations/single-post',
       featured: true,
       category: 'ML & AI Platforms'
@@ -148,7 +148,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg14,
       name: 'PyTorch',
-      description: 'Deploy and operationalize your PyTorch models through Rose Development\'s enterprise-grade AI management and monitoring platform.',
+      description: 'Deploy and operationalize your PyTorch models through enterprise-grade AI management and monitoring platform.',
       link: '/integrations/single-post',
       featured: true,
       category: 'ML & AI Platforms'
@@ -156,7 +156,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg15,
       name: 'Databricks',
-      description: 'Connect your Databricks lakehouse to Rose Development for enhanced ML model governance, monitoring and business value tracking.',
+      description: 'Connect your Databricks lakehouse for enhanced ML model governance, monitoring and business value tracking.',
       link: '/integrations/single-post',
       featured: true,
       category: 'ML & AI Platforms'
@@ -164,7 +164,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg16,
       name: 'Hugging Face',
-      description: 'Deploy and operationalize Hugging Face transformer models through Rose Development\'s enterprise AI platform with full governance.',
+      description: 'Deploy and operationalize Hugging Face transformer models through enterprise AI platform with full governance.',
       link: '/integrations/single-post',
       featured: false,
       category: 'ML & AI Platforms'
@@ -172,7 +172,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg17,
       name: 'MLflow',
-      description: 'Integrate MLflow model tracking with Rose Development to add enterprise-grade deployment, monitoring and observability.',
+      description: 'Integrate MLflow model tracking to add enterprise-grade deployment, monitoring and observability.',
       link: '/integrations/single-post',
       featured: false,
       category: 'ML & AI Platforms'
@@ -180,7 +180,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg18,
       name: 'SageMaker',
-      description: 'Extend your AWS SageMaker capabilities with Rose Development\'s specialized analytics pipelines and business value tracking.',
+      description: 'Extend your AWS SageMaker capabilities with specialized analytics pipelines and business value tracking.',
       link: '/integrations/single-post',
       featured: true,
       category: 'ML & AI Platforms'
@@ -190,7 +190,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg19,
       name: 'Salesforce',
-      description: 'Apply Rose Development\'s AI analytics to your Salesforce data for predictive sales forecasting and customer churn prevention.',
+      description: 'Apply AI analytics to your Salesforce data for predictive sales forecasting and customer churn prevention.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Business Systems'
@@ -198,7 +198,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg20,
       name: 'SAP',
-      description: 'Transform your SAP ERP data into predictive insights with Rose Development\'s specialized analytics connectors and AI models.',
+      description: 'Transform your SAP ERP data into predictive insights with specialized analytics connectors and AI models.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Business Systems'
@@ -206,7 +206,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg21,
       name: 'HubSpot',
-      description: 'Enhance your HubSpot marketing data with Rose Development\'s AI-powered customer segmentation and predictive lead scoring.',
+      description: 'Enhance your HubSpot marketing data with AI-powered customer segmentation and predictive lead scoring.',
       link: '/integrations/single-post',
       featured: false,
       category: 'Business Systems'
@@ -214,7 +214,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg22,
       name: 'ServiceNow',
-      description: 'Apply intelligent automation to your IT service management with Rose Development\'s predictive analytics for ServiceNow.',
+      description: 'Apply intelligent automation to your IT service management with predictive analytics for issue resolution.',
       link: '/integrations/single-post',
       featured: false,
       category: 'Business Systems'
@@ -222,7 +222,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg23,
       name: 'Workday',
-      description: 'Bring AI-powered workforce analytics to your Workday data with Rose Development\'s specialized HR prediction models.',
+      description: 'Bring AI-powered workforce analytics to your Workday data with specialized HR prediction models.',
       link: '/integrations/single-post',
       featured: false,
       category: 'Business Systems'
@@ -230,7 +230,7 @@ export default function IntegrationsList() {
     {
       img: IntegrationsImg24,
       name: 'Shopify',
-      description: 'Leverage Rose Development\'s AI to transform your Shopify data into actionable customer insights and inventory predictions.',
+      description: 'Transform your Shopify data into actionable customer insights and inventory predictions with analytics integration.',
       link: '/integrations/single-post',
       featured: true,
       category: 'Business Systems'
