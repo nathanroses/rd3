@@ -14,6 +14,12 @@ interface UserStats {
   integrations: number;
   activeUsers: number;
   performance: number;
+  growth?: {
+    dataUsage: number;
+    integrations: number;
+    activeUsers: number;
+    performance: number;
+  }
 }
 
 interface ActiveSolution {
@@ -74,11 +80,17 @@ export default function Dashboard() {
         setTimeout(() => {
           // Simulate fetching user stats
           setStats({
-            dataUsage: 57,
-            integrations: 3,
-            activeUsers: 42,
-            performance: 98.7
-          })
+    dataUsage: 57,
+    integrations: 3,
+    activeUsers: 42,
+      performance: 98.7,
+      growth: {
+          dataUsage: 12,
+         integrations: 1,
+         activeUsers: 8,
+         performance: 1.2
+                  }
+               })
           
           // Simulate fetching active solutions
           setActiveSolutions([
@@ -262,27 +274,30 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
+
+                    {/* Stat 2 */}
+<div className="bg-gradient-to-tr from-slate-800/50 to-slate-800/10 rounded-xl border border-slate-800 p-5">
+  <div className="flex items-center space-x-2">
+    <div className="bg-blue-500/10 p-2 rounded-lg">
+      <svg className="w-6 h-6 fill-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-5h5v5zm5-5h-3v5h3v-5zm0-5H7V7h10v5z"/>
+      </svg>
+    </div>
+    <span className="text-sm text-slate-400">Integrations</span>
+  </div>
+  <div className="flex items-end justify-between mt-3">
+    <div className="text-2xl font-bold text-white">{stats.integrations}</div>
+    <div className="text-sm text-green-400 flex items-center">
+      +{stats.growth?.integrations || 1}
+      <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+      </svg>
+    </div>
+  </div>
+</div>
+
                 
-                {/* Stat 2 */}
-                <div className="bg-gradient-to-tr from-slate-800/50 to-slate-800/10 rounded-xl border border-slate-800 p-5">
-                  <div className="flex items-center space-x-2">
-                    <div className="bg-blue-500/10 p-2 rounded-lg">
-                      <svg className="w-6 h-6 fill-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-5h5v5zm5-5h-3v5h3v-5zm0-5H7V7h10v5z"/>
-                      </svg>
-                    </div>
-                    <span className="text-sm text-slate-400">Integrations</span>
-                  </div>
-                  <div className="flex items-end justify-between mt-3">
-                    <div className="text-2xl font-bold text-white">{stats.integrations}</div>
-                    <div className="text-sm text-green-400 flex items-center">
-                      +1
-                      <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+   
                 
                 {/* Stat 3 */}
                 <div className="bg-gradient-to-tr from-slate-800/50 to-slate-800/10 rounded-xl border border-slate-800 p-5">
