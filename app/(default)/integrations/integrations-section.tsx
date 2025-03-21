@@ -14,6 +14,10 @@ import IntegrationsImg03 from '@/public/images/integrations-03.svg'
 import IntegrationsImg04 from '@/public/images/integrations-04.svg'
 import IntegrationsImg05 from '@/public/images/integrations-05.svg'
 import IntegrationsImg06 from '@/public/images/integrations-06.svg'
+import IntegrationsImg07 from '@/public/images/integrations-07.svg'
+import IntegrationsImg08 from '@/public/images/integrations-08.svg'
+import IntegrationsImg18 from '@/public/images/integrations-18.svg'
+import IntegrationsImg19 from '@/public/images/integrations-19.svg'
 
 export default function IntegrationsSection() {
   const [loaded, setLoaded] = useState(false)
@@ -21,42 +25,42 @@ export default function IntegrationsSection() {
   const [isAnimating, setIsAnimating] = useState(false)
   const carouselRef = useRef<HTMLDivElement>(null)
 
-  // Featured integrations
+  // Featured integrations with corrected image mapping
   const featuredIntegrations = [
     {
       name: "Snowflake",
       description: "Connect your Snowflake data warehouse for powerful AI analytics with end-to-end security.",
-      image: IntegrationsImg01,
+      image: IntegrationsImg06,
       link: "/integrations/single-post"
     },
     {
       name: "MongoDB Atlas",
       description: "Apply predictive analytics to your MongoDB document data for real-time insights.",
-      image: IntegrationsImg02,
+      image: IntegrationsImg07,
       link: "/integrations/single-post"
     },
     {
       name: "Tableau",
       description: "Enhance Tableau dashboards with AI predictions and automated anomaly detection.",
-      image: IntegrationsImg03,
+      image: IntegrationsImg02,
       link: "/integrations/single-post"
     },
     {
       name: "SageMaker",
       description: "Extend AWS SageMaker with specialized analytics pipelines and business value tracking.",
-      image: IntegrationsImg04,
+      image: IntegrationsImg18,
       link: "/integrations/single-post"
     },
     {
       name: "Salesforce",
       description: "Apply AI analytics to your Salesforce data for predictive forecasting and churn prevention.",
-      image: IntegrationsImg05,
+      image: IntegrationsImg19,
       link: "/integrations/single-post"
     },
     {
       name: "Google BigQuery",
       description: "Transform BigQuery datasets into predictive models with custom visualization tools.",
-      image: IntegrationsImg06,
+      image: IntegrationsImg08,
       link: "/integrations/single-post"
     }
   ]
