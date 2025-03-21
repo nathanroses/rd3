@@ -87,10 +87,10 @@ export default function TestimonialsCarousel() {
                       <Image className="mb-3" src={CarouselImg01} width={56} height={56} alt="Icon 01" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Anonymous User</div>
-                        <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
+                        <div className="text-slate-400 mb-3">Protect user privacy while ensuring security.</div>
                       </div>
                       <div className="text-right">
-                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="#0">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="/about">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
                       </div>
                     </div>
                   </div>
@@ -107,10 +107,10 @@ export default function TestimonialsCarousel() {
                       <Image className="mb-3" src={CarouselImg02} width={56} height={56} alt="Icon 02" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Bot Detection</div>
-                        <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
+                        <div className="text-slate-400 mb-3">Identify automated threats with intelligent scanning.</div>
                       </div>
                       <div className="text-right">
-                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="#0">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="/about">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
                       </div>
                     </div>
                   </div>
@@ -127,10 +127,10 @@ export default function TestimonialsCarousel() {
                       <Image className="mb-3" src={CarouselImg03} width={56} height={56} alt="Icon 03" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Social integrations</div>
-                        <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
+                        <div className="text-slate-400 mb-3">Seamlessly connect with existing social platforms.</div>
                       </div>
                       <div className="text-right">
-                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="#0">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="/about">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
                       </div>
                     </div>
                   </div>
@@ -147,10 +147,10 @@ export default function TestimonialsCarousel() {
                       <Image className="mb-3" src={CarouselImg04} width={56} height={56} alt="Icon 04" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Progressive Profiling</div>
-                        <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
+                        <div className="text-slate-400 mb-3">Gather user data gradually, build trust.</div>
                       </div>
                       <div className="text-right">
-                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="#0">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="/about">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
                       </div>
                     </div>
                   </div>
@@ -167,10 +167,10 @@ export default function TestimonialsCarousel() {
                       <Image className="mb-3" src={CarouselImg05} width={56} height={56} alt="Icon 05" />
                       <div className="grow">
                         <div className="font-bold text-lg mb-1">Secure Access</div>
-                        <div className="text-slate-400 mb-3">Incorporate rich user profiling, and facilitate more transactions.</div>
+                        <div className="text-slate-400 mb-3">Control permissions with multi-factor authentication options.</div>
                       </div>
                       <div className="text-right">
-                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="#0">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                        <a className="text-sm font-medium text-slate-300 hover:text-white inline-flex items-center transition duration-150 ease-in-out group" href="/about">Learn More <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
                       </div>
                     </div>
                   </div>
